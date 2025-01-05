@@ -13,14 +13,12 @@ import com.frikinzi.creatures.util.CreaturesLootTables;
 import com.frikinzi.creatures.util.EntityAttributes;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.DrownedEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.fish.CodEntity;
 import net.minecraft.entity.passive.fish.SalmonEntity;
@@ -73,6 +71,12 @@ public class CormorantEntity extends TameableWalkingBirdBase implements IAnimata
             4, new TranslationTextComponent("message.creatures.greatcormorant")
 
     );
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Phalacrocorax varius")
+            .put(2, "Phalacrocorax lucidus")
+            .put(3, "Phalacrocorax auritus")
+            .put(4, "Phalacrocorax carbo")
+            .build();
 
     public CormorantEntity(EntityType<? extends CormorantEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -216,7 +220,7 @@ public class CormorantEntity extends TameableWalkingBirdBase implements IAnimata
     }
 
     public ResourceLocation getDefaultLootTable() {
-        return CreaturesLootTables.PEAFOWL;
+        return CreaturesLootTables.LARGE_BIRD_GENERIC;
     }
 
     public CreaturesEggEntity layEgg(CreaturesBirdEntity animal) {
@@ -515,19 +519,19 @@ public class CormorantEntity extends TameableWalkingBirdBase implements IAnimata
     }
 
     static class SwimUpGoal extends Goal {
-        private final CormorantEntity drowned;
+        private final CormorantEntity cormorant;
         private final double speedModifier;
         private final int seaLevel;
         private boolean stuck;
 
         public SwimUpGoal(CormorantEntity p_i48908_1_, double p_i48908_2_, int p_i48908_4_) {
-            this.drowned = p_i48908_1_;
+            this.cormorant = p_i48908_1_;
             this.speedModifier = p_i48908_2_;
             this.seaLevel = p_i48908_4_;
         }
 
         public boolean canUse() {
-            return this.drowned.isInWater() && this.drowned.getY() < (double)(this.seaLevel)-2;
+            return this.cormorant.isInWater() && this.cormorant.getY() < (double)(this.seaLevel)-2;
         }
 
         public boolean canContinueToUse() {
@@ -535,25 +539,25 @@ public class CormorantEntity extends TameableWalkingBirdBase implements IAnimata
         }
 
         public void tick() {
-            if (this.drowned.getY() < (double)(this.seaLevel - 1) && (this.drowned.getNavigation().isDone() || this.drowned.closeToNextPos())) {
-                Vector3d vector3d = RandomPositionGenerator.getPosTowards(this.drowned, 4, 8, new Vector3d(this.drowned.getX(), (double)(this.seaLevel - 1), this.drowned.getZ()));
+            if (this.cormorant.getY() < (double)(this.seaLevel - 1) && (this.cormorant.getNavigation().isDone() || this.cormorant.closeToNextPos())) {
+                Vector3d vector3d = RandomPositionGenerator.getPosTowards(this.cormorant, 4, 8, new Vector3d(this.cormorant.getX(), (double)(this.seaLevel - 1), this.cormorant.getZ()));
                 if (vector3d == null) {
                     this.stuck = true;
                     return;
                 }
 
-                this.drowned.getNavigation().moveTo(vector3d.x, vector3d.y, vector3d.z, this.speedModifier);
+                this.cormorant.getNavigation().moveTo(vector3d.x, vector3d.y, vector3d.z, this.speedModifier);
             }
 
         }
 
         public void start() {
-            this.drowned.setSearchingForLand(true);
+            this.cormorant.setSearchingForLand(true);
             this.stuck = false;
         }
 
         public void stop() {
-            this.drowned.setSearchingForLand(false);
+            this.cormorant.setSearchingForLand(false);
         }
     }
 
@@ -574,6 +578,10 @@ public class CormorantEntity extends TameableWalkingBirdBase implements IAnimata
 
     public ItemStack getFoodItem() {
         return new ItemStack(Items.COD, 1);
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
     }
 
 

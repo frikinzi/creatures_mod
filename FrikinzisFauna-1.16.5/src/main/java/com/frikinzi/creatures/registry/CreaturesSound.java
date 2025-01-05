@@ -57,8 +57,6 @@ public class CreaturesSound {
     public static final SoundEvent PIRANHA_AMBIENT = createSoundEvent("entity.piranha.piranha_ambient");
     public static final SoundEvent EGG_HATCH = createSoundEvent("entity.egg.hatch");
     public static final SoundEvent MOURNING_DOVE = createSoundEvent("entity.dove.mourning_dove_ambient");
-<<<<<<< Updated upstream
-=======
     public static final SoundEvent STORK_AMBIENT = createSoundEvent("entity.stork.stork_ambient");
     public static final SoundEvent STORK_HURT = createSoundEvent("entity.stork.stork_hurt");
     public static final SoundEvent LADY_AMHERST = createSoundEvent("entity.pheasant.lady_amherst_ambient");
@@ -69,7 +67,22 @@ public class CreaturesSound {
     public static final SoundEvent SHOEBILL = createSoundEvent("entity.shoebill.shoebill_ambient");
     public static final SoundEvent STARLING = createSoundEvent("entity.starling.starling_ambient");
     public static final SoundEvent CORMORANT = createSoundEvent("entity.cormorant.cormorant_ambient");
->>>>>>> Stashed changes
+    public static final SoundEvent PUFFIN = createSoundEvent("entity.puffin.puffin_ambient");
+    public static final SoundEvent PUFFIN_HURT = createSoundEvent("entity.puffin.puffin_hurt");
+    public static final SoundEvent SEAGULL = createSoundEvent("entity.seagull.seagull_ambient");
+    public static final SoundEvent BOOBY = createSoundEvent("entity.booby.booby_ambient");
+    public static final SoundEvent BOOBY_HURT = createSoundEvent("entity.booby.booby_hurt");
+    public static final SoundEvent BANDEDPENGUIN = createSoundEvent("entity.bandedpenguin.bandedpenguin_ambient");
+    public static final SoundEvent RAIL = createSoundEvent("entity.rail.rail_ambient");
+    public static final SoundEvent AVOCET = createSoundEvent("entity.avocet.avocet_ambient");
+    public static final SoundEvent CRESTED_PENGUIN = createSoundEvent("entity.crestedpenguin.crestedpenguin_ambient");
+    public static final SoundEvent YELLOWEYED_PENGUIN = createSoundEvent("entity.yelloweyedpenguin.yelloweyedpenguin_ambient");
+    public static final SoundEvent BRUSHTAILED_PENGUIN = createSoundEvent("entity.brushtailedpenguin.brushtailedpenguin_ambient");
+    public static final SoundEvent LARGE_PENGUIN = createSoundEvent("entity.largepenguin.largepenguin_ambient");
+    public static final SoundEvent FRIGATE_AMBIENT = createSoundEvent("entity.frigate.frigate_ambient");
+    public static final SoundEvent STILT_AMBIENT = createSoundEvent("entity.stilt.stilt_ambient");
+    public static final SoundEvent STILT_HURT = createSoundEvent("entity.stilt.stilt_hurt");
+    public static final SoundEvent LITTLE_PENGUIN = createSoundEvent("entity.littlepenguin.littlepenguin_ambient");
 
     private static SoundEvent createSoundEvent(final String soundName) {
         final ResourceLocation soundID = new ResourceLocation(Creatures.MODID, soundName);

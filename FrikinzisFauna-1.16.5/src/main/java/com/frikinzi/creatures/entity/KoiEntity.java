@@ -155,12 +155,26 @@ public class KoiEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
 
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, PlayerEntity.class, 8.0F, 2.2D, 2.2D));
     }
+
+    public int getIUCNStatus() {
+        return -1;
+    }
+
+    public String getScientificName() {
+        return "Cyprinus rubrofuscus";
+    }
+
+    public int determineVariant() {
+        return 10;
+    }
+
+
 
 }

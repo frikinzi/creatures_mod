@@ -1,5 +1,6 @@
 package com.frikinzi.creatures.item;
 
+import com.frikinzi.creatures.Creatures;
 import com.frikinzi.creatures.entity.*;
 import com.frikinzi.creatures.entity.base.AbstractCrabBase;
 import com.frikinzi.creatures.entity.base.CreaturesBirdEntity;
@@ -7,16 +8,24 @@ import com.frikinzi.creatures.entity.base.FishBase;
 import com.frikinzi.creatures.entity.base.GroupFishBase;
 import com.frikinzi.creatures.registry.ModEntityTypes;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.Stats;
+import net.minecraft.tileentity.MobSpawnerTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -27,6 +36,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
@@ -40,6 +50,7 @@ import java.util.*;
 
 public class ModSpawnEggVariants extends ModSpawnEgg {
     private int currentSpecies;
+    private int currentSubSpecies;
     protected static final List<ModSpawnEgg> UNADDED_EGGS = new ArrayList<>();
     private final Lazy<? extends EntityType<?>> entityTypeSupplier;
 
@@ -47,6 +58,7 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
                        final int p_i48465_3_, final Properties p_i48465_4_) {
         super(entityTypeSupplier, p_i48465_2_, p_i48465_3_, p_i48465_4_);
         this.currentSpecies = 0;
+        this.currentSubSpecies = 0;
         this.entityTypeSupplier = Lazy.of(entityTypeSupplier::get);
         UNADDED_EGGS.add(this);
     }
@@ -72,6 +84,10 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
             if (stack.getTag().contains("EntityTag")) {
                 this.currentSpecies = stack.getTag().getCompound("EntityTag").getInt("Variant");
             }
+        }
+        if (this.currentSpecies == 0) {
+            TranslationTextComponent c = new TranslationTextComponent("creatures.random");
+            return c.getString();
         }
         EntityType<?> entitytype = this.getType(stack.getTag());
         if (entitytype == ModEntityTypes.LOVEBIRD.get()) {
@@ -306,7 +322,22 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
                     return CormorantEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
                 }
             }
-        } if (entitytype == ModEntityTypes.RED_SNAPPER.get()) {
+        }
+        if (entitytype == ModEntityTypes.PUFFIN.get()) {
+            if (this.currentSpecies > 0) {
+                if (PuffinEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return PuffinEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        }
+        if (entitytype == ModEntityTypes.SEAGULL.get()) {
+            if (this.currentSpecies > 0) {
+                if (SeagullEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return SeagullEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        }
+        if (entitytype == ModEntityTypes.RED_SNAPPER.get()) {
             if (this.currentSpecies > 0) {
                 if (RedSnapperEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
                     return RedSnapperEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
@@ -360,8 +391,163 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
                     return TigerBarbEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
                 }
             }
+        } if (entitytype == ModEntityTypes.STINGRAY.get()) {
+            if (this.currentSpecies > 0) {
+                if (StingrayEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return StingrayEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.SWORDFISH.get()) {
+            if (this.currentSpecies > 0) {
+                if (SwordfishEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return SwordfishEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.BOOBY.get()) {
+            if (this.currentSpecies > 0) {
+                if (BoobyEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return BoobyEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.SQUID.get()) {
+            if (this.currentSpecies > 0) {
+                if (SquidEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return SquidEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.BANDED_PENGUIN.get()) {
+            if (this.currentSpecies > 0) {
+                if (BandedPenguinEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return BandedPenguinEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.BARRACUDA.get()) {
+            if (this.currentSpecies > 0) {
+                if (BarracudaEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return BarracudaEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.AVOCET.get()) {
+            if (this.currentSpecies > 0) {
+                if (AvocetEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return AvocetEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.SEADRAGON.get()) {
+            if (this.currentSpecies > 0) {
+                if (SeaDragonEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return SeaDragonEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.TRUMPETFISH.get()) {
+            if (this.currentSpecies > 0) {
+                if (TrumpetfishEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return TrumpetfishEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.CRESTED_PENGUIN.get()) {
+            if (this.currentSpecies > 0) {
+                if (CrestedPenguinEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return CrestedPenguinEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.PARROTFISH.get()) {
+            if (this.currentSpecies > 0) {
+                if (ParrotfishEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return ParrotfishEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.BRUSH_TAILED_PENGUIN.get()) {
+            if (this.currentSpecies > 0) {
+                if (BrushTailedPenguinEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return BrushTailedPenguinEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.LARGE_PENGUIN.get()) {
+            if (this.currentSpecies > 0) {
+                if (LargePenguinEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return LargePenguinEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.FRIGATE.get()) {
+            if (this.currentSpecies > 0) {
+                if (FrigateBirdEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return FrigateBirdEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.CLOWNFISH.get()) {
+            if (this.currentSpecies > 0) {
+                if (ClownfishEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return ClownfishEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.STILT.get()) {
+            if (this.currentSpecies > 0) {
+                if (StiltEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return StiltEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.LUNGFISH.get()) {
+            if (this.currentSpecies > 0) {
+                if (LungfishEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return LungfishEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.LITTLE_PENGUIN.get()) {
+            if (this.currentSpecies > 0) {
+                if (LittlePenguinEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return LittlePenguinEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.BLUE_TANG.get()) {
+            if (this.currentSpecies > 0) {
+                if (BlueTangEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return BlueTangEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.SEA_EAGLE.get()) {
+            if (this.currentSpecies > 0) {
+                if (SeaEagleEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return SeaEagleEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.MANTIS_SHRIMP.get()) {
+            if (this.currentSpecies > 0) {
+                int no = 1;
+                if (this.currentSpecies == 6) {
+                    no = 2;
+                }
+                if (MantisShrimpEntity.SPECIES_NAMES.get(no) != null) {
+                    return MantisShrimpEntity.SPECIES_NAMES.get(no).getString() + " " + this.currentSpecies;
+                }
+            }
+        } if (entitytype == ModEntityTypes.RAIL.get()) {
+            if (this.currentSpecies > 0) {
+                if (RailEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return RailEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.SAWFISH.get()) {
+            if (this.currentSpecies > 0) {
+                if (SawfishEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return SawfishEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.GHOST_CRAB.get()) {
+            if (this.currentSpecies > 0) {
+                if (GhostCrabEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return GhostCrabEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
+        } if (entitytype == ModEntityTypes.EDIBLE_CRAB.get()) {
+            if (this.currentSpecies > 0) {
+                if (EdibleCrabEntity.SPECIES_NAMES.get(this.currentSpecies) != null) {
+                    return EdibleCrabEntity.SPECIES_NAMES.get(this.currentSpecies).getString();
+                }
+            }
         }
-        return "";
+        int i = this.currentSpecies;
+        return Integer.toString(i);
     }
 
     public void increaseSpeciesCount(World world) {
@@ -369,27 +555,27 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
             CreaturesBirdEntity bird = (CreaturesBirdEntity) this.entityTypeSupplier.get().create(world);
             this.currentSpecies += 1;
             if (this.currentSpecies >= bird.determineVariant()) {
-                this.currentSpecies = 1;
+                this.currentSpecies = 0;
             }
         } catch (ClassCastException e) {
             try {
                 FishBase fish = (FishBase) this.entityTypeSupplier.get().create(world);
                 this.currentSpecies += 1;
                 if (this.currentSpecies >= fish.determineVariant()) {
-                    this.currentSpecies = 1;
+                    this.currentSpecies = 0;
                 }
             } catch (ClassCastException i) {
                 try {
                     AbstractCrabBase crab = (AbstractCrabBase) this.entityTypeSupplier.get().create(world);
                     this.currentSpecies += 1;
                     if (this.currentSpecies >= crab.determineVariant()) {
-                        this.currentSpecies = 1;
+                        this.currentSpecies = 0;
                     }
                 } catch (ClassCastException j) {
                     GroupFishBase group_fish = (GroupFishBase) this.entityTypeSupplier.get().create(world);
                     this.currentSpecies += 1;
                     if (this.currentSpecies >= group_fish.determineVariant()) {
-                        this.currentSpecies = 1;
+                        this.currentSpecies = 0;
                     }
                 }
 
@@ -398,23 +584,97 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
 
         }
 
-        //System.out.println(this.currentSpecies);
+    }
+
+    public ActionResultType useOn(ItemUseContext p_195939_1_) {
+        World world = p_195939_1_.getLevel();
+        if (!(world instanceof ServerWorld)) {
+            return ActionResultType.SUCCESS;
+        }
+        else {
+            ItemStack itemstack = p_195939_1_.getItemInHand();
+
+            BlockPos blockpos = p_195939_1_.getClickedPos();
+            Direction direction = p_195939_1_.getClickedFace();
+            BlockState blockstate = world.getBlockState(blockpos);
+            if (blockstate.is(Blocks.SPAWNER)) {
+                TileEntity tileentity = world.getBlockEntity(blockpos);
+                if (tileentity instanceof MobSpawnerTileEntity) {
+                    AbstractSpawner abstractspawner = ((MobSpawnerTileEntity)tileentity).getSpawner();
+                    EntityType<?> entitytype1 = this.getType(itemstack.getTag());
+                    abstractspawner.setEntityId(entitytype1);
+                    tileentity.setChanged();
+                    world.sendBlockUpdated(blockpos, blockstate, blockstate, 3);
+                    itemstack.shrink(1);
+                    return ActionResultType.CONSUME;
+                }
+            }
+
+            BlockPos blockpos1;
+            if (blockstate.getCollisionShape(world, blockpos).isEmpty()) {
+                blockpos1 = blockpos;
+            } else {
+                blockpos1 = blockpos.relative(direction);
+            }
+            if (itemstack.getTag() != null) {
+                if (itemstack.getTag().contains("EntityTag")) {
+                    LivingEntity ent = (LivingEntity)this.entityTypeSupplier.get().create(world);
+
+                    if (ent instanceof CreaturesBirdEntity) {
+                        CreaturesBirdEntity bird = (CreaturesBirdEntity) ent;
+                        bird.setVariant(this.currentSpecies);
+                        this.currentSubSpecies = bird.methodOfDeterminingSubVariant();
+                    } if (ent instanceof FishBase) {
+                        FishBase fish = (FishBase) ent;
+                        fish.setVariant(this.currentSpecies);
+                        this.currentSubSpecies = fish.methodOfDeterminingSubVariant();
+                    } if (ent instanceof GroupFishBase) {
+                        GroupFishBase fish = (GroupFishBase) ent;
+                        fish.setVariant(this.currentSpecies);
+                        this.currentSubSpecies = fish.methodOfDeterminingSubVariant();
+                    }
+                    itemstack.getTag().getCompound("EntityTag").putInt("Subvariant", this.currentSubSpecies);
+                }
+            }
+
+            EntityType<?> entitytype = this.getType(itemstack.getTag());
+            if (entitytype.spawn((ServerWorld)world, itemstack, p_195939_1_.getPlayer(), blockpos1, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockpos, blockpos1) && direction == Direction.UP) != null) {
+                itemstack.shrink(1);
+            }
+
+            return ActionResultType.CONSUME;
+        }
     }
 
 
     @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
-        if (!(worldIn instanceof ServerWorld)) {
-            return ActionResult.success(itemstack);
-        }
-        if (playerIn.isSteppingCarefully()) {
+        if (!worldIn.isClientSide && playerIn.isSteppingCarefully()) {
             this.increaseSpeciesCount(worldIn);
+
             itemstack.setTag(new CompoundNBT());
-            if (!(this.currentSpecies < 0)) {
+            if (!(this.currentSpecies <= 0)) {
                 CompoundNBT entityNBT = new CompoundNBT();
                 entityNBT.putInt("Variant", this.currentSpecies);
+                LivingEntity ent = (LivingEntity)this.entityTypeSupplier.get().create(worldIn);
+
+                if (ent instanceof CreaturesBirdEntity) {
+                    CreaturesBirdEntity bird = (CreaturesBirdEntity) ent;
+                    bird.setVariant(this.currentSpecies);
+                    this.currentSubSpecies = bird.methodOfDeterminingSubVariant();
+                } if (ent instanceof FishBase) {
+                    FishBase fish = (FishBase) ent;
+                    fish.setVariant(this.currentSpecies);
+                    this.currentSubSpecies = fish.methodOfDeterminingSubVariant();
+                } if (ent instanceof GroupFishBase) {
+                    GroupFishBase fish = (GroupFishBase) ent;
+                    fish.setVariant(this.currentSpecies);
+                    this.currentSubSpecies = fish.methodOfDeterminingSubVariant();
+                }
+                entityNBT.putInt("Subvariant", this.currentSubSpecies);
                 itemstack.getTag().put("EntityTag", entityNBT);
+
             }
             playerIn.displayClientMessage(new TranslationTextComponent("item.creatures.spawn_egg_change",  this.getCurrentSpeciesName(itemstack)), true);
             return ActionResult.pass(itemstack);
@@ -423,111 +683,42 @@ public class ModSpawnEggVariants extends ModSpawnEgg {
         BlockRayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
         if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
             return ActionResult.pass(itemstack);
-        } else {
+        } else if (!(worldIn instanceof ServerWorld)) {
+            return ActionResult.success(itemstack);
+        }
+         else {
             BlockPos blockpos = raytraceresult.getBlockPos();
             if (!(worldIn.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock)) {
                 return ActionResult.pass(itemstack);
             } else if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos, raytraceresult.getDirection(), itemstack)) {
-                EntityType<?> entitytype = this.getType(itemstack.getTag());
+                if (itemstack.getTag() != null) {
+                    if (itemstack.getTag().contains("EntityTag")) {
+                        LivingEntity ent = (LivingEntity)this.entityTypeSupplier.get().create(worldIn);
 
-                try {
-                    CreaturesBirdEntity bird = (CreaturesBirdEntity) entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false);
-                    //System.out.println(this.currentSpecies);
-                    if (bird == null) {
-                        return ActionResult.pass(itemstack);
-                    } else {
-                        if (!playerIn.abilities.instabuild) {
-                            itemstack.shrink(1);
-                        }
-
-                        if (this.currentSpecies == 0) {
-                            //System.out.println("Random variant");
-                            bird.setVariant(bird.determineVariant()-1);
-                        }
-                        else if (this.currentSpecies > 0) {
-                            //System.out.println("Setting variant");
+                        if (ent instanceof CreaturesBirdEntity) {
+                            CreaturesBirdEntity bird = (CreaturesBirdEntity) ent;
                             bird.setVariant(this.currentSpecies);
+                            this.currentSubSpecies = bird.methodOfDeterminingSubVariant();
+                        } if (ent instanceof FishBase) {
+                            FishBase fish = (FishBase) ent;
+                            fish.setVariant(this.currentSpecies);
+                            this.currentSubSpecies = fish.methodOfDeterminingSubVariant();
+                        } if (ent instanceof GroupFishBase) {
+                            GroupFishBase fish = (GroupFishBase) ent;
+                            fish.setVariant(this.currentSpecies);
+                            this.currentSubSpecies = fish.methodOfDeterminingSubVariant();
                         }
-                        ((ServerWorld) worldIn).addFreshEntityWithPassengers(bird);
-                        playerIn.awardStat(Stats.ITEM_USED.get(this));
-                        return ActionResult.consume(itemstack);
+                        itemstack.getTag().getCompound("EntityTag").putInt("Subvariant", this.currentSubSpecies);
                     }
-
-                } catch (ClassCastException e) {
-                    try {
-                        AbstractCrabBase bird = (AbstractCrabBase) entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false);
-                        //System.out.println(this.currentSpecies);
-                        if (bird == null) {
-                            return ActionResult.pass(itemstack);
-                        } else {
-                            if (!playerIn.abilities.instabuild) {
-                                itemstack.shrink(1);
-                            }
-
-                            if (this.currentSpecies == 0) {
-                                //System.out.println("Random variant");
-                                bird.setVariant(bird.determineVariant()-1);
-                            }
-                            else if (this.currentSpecies > 0) {
-                                //System.out.println("Setting variant");
-                                bird.setVariant(this.currentSpecies);
-                            }
-                            ((ServerWorld) worldIn).addFreshEntityWithPassengers(bird);
-                            playerIn.awardStat(Stats.ITEM_USED.get(this));
-                            return ActionResult.consume(itemstack);
-                        }
-                    } catch (ClassCastException c) {
-                        try {
-                            FishBase bird = (FishBase) entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false);
-                            //System.out.println(this.currentSpecies);
-                            if (bird == null) {
-                                return ActionResult.pass(itemstack);
-                            } else {
-                                if (!playerIn.abilities.instabuild) {
-                                    itemstack.shrink(1);
-                                }
-
-                                if (this.currentSpecies == 0) {
-                                    //System.out.println("Random variant");
-                                    bird.setVariant(bird.determineVariant()-1);
-                                }
-                                else if (this.currentSpecies > 0) {
-                                    //System.out.println("Setting variant");
-                                    bird.setVariant(this.currentSpecies);
-                                }
-                                ((ServerWorld) worldIn).addFreshEntityWithPassengers(bird);
-                                playerIn.awardStat(Stats.ITEM_USED.get(this));
-                                return ActionResult.consume(itemstack);
-                            }
-                        } catch (ClassCastException j) {
-                            GroupFishBase bird = (GroupFishBase) entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false);
-                            //System.out.println(this.currentSpecies);
-                            if (bird == null) {
-                                return ActionResult.pass(itemstack);
-                            } else {
-                                if (!playerIn.abilities.instabuild) {
-                                    itemstack.shrink(1);
-                                }
-
-                                if (this.currentSpecies == 0) {
-                                    //System.out.println("Random variant");
-                                    bird.setVariant(bird.determineVariant()-1);
-                                }
-                                else if (this.currentSpecies > 0) {
-                                    //System.out.println("Setting variant");
-                                    bird.setVariant(this.currentSpecies);
-                                }
-                                ((ServerWorld) worldIn).addFreshEntityWithPassengers(bird);
-                                playerIn.awardStat(Stats.ITEM_USED.get(this));
-                                return ActionResult.consume(itemstack);
-                            }
-                        }
-                    }
-
+                }
+                EntityType<?> entitytype = this.getType(itemstack.getTag());
+                if (entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null) {
+                    return ActionResult.pass(itemstack);
                 }
             } else {
                 return ActionResult.fail(itemstack);
             }
+            return ActionResult.pass(itemstack);
         }
     }
 

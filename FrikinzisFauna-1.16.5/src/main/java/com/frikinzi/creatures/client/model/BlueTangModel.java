@@ -10,18 +10,18 @@ public class BlueTangModel extends AnimatedGeoModel<BlueTangEntity> {
     @Override
     public ResourceLocation getModelLocation(BlueTangEntity object)
     {
-        return new ResourceLocation(Creatures.MODID, "geo/entity/blue_tang/blue_tang.geo.json");
+        return new ResourceLocation(Creatures.MODID, "geo/entity/blue_tang/tang.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(BlueTangEntity object)
     {
-        return new ResourceLocation(Creatures.MODID, "textures/entity/blue_tang/blue_tang.png");
+        return new ResourceLocation(Creatures.MODID, "textures/entity/blue_tang/tang" + object.getVariant() + ".png");
     }
 
     @Override
     public ResourceLocation getAnimationFileLocation(BlueTangEntity object)
     {
-        return new ResourceLocation(Creatures.MODID, "animations/animation.goldfish.json");
+        return new ResourceLocation(Creatures.MODID, "animations/animation.tang.json");
     }
 }

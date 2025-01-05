@@ -2,12 +2,7 @@ package com.frikinzi.creatures.registry;
 
 import com.frikinzi.creatures.Creatures;
 import com.frikinzi.creatures.client.block.CreaturesBlocks;
-<<<<<<< Updated upstream
-import com.frikinzi.creatures.item.CreaturesFishBucket;
-import com.frikinzi.creatures.item.CreaturesFood;
-=======
 import com.frikinzi.creatures.item.*;
->>>>>>> Stashed changes
 import com.frikinzi.creatures.item.EggItem;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluids;
@@ -43,11 +38,14 @@ public class CreaturesItems {
     public static Item TIGER_BARB_BUCKET = new FishBucketItem(() -> ModEntityTypes.TIGERBARB.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
     public static Item ARAPAIMA_BUCKET = new FishBucketItem(() -> ModEntityTypes.ARAPAIMA.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
     public static Item PIRANHA_BUCKET = new FishBucketItem(() -> ModEntityTypes.PIRANHA.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
-<<<<<<< Updated upstream
-=======
     public static Item TAMBAQUI_BUCKET = new FishBucketItem(() -> ModEntityTypes.TAMBAQUI.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
     public static Item ELEPHANTNOSE_BUCKET = new FishBucketItem(() -> ModEntityTypes.ELEPHANTNOSE.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
->>>>>>> Stashed changes
+    public static Item CLOWNFISH_BUCKET = new FishBucketItem(() -> ModEntityTypes.CLOWNFISH.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
+    public static Item LOOKDOWN_BUCKET = new FishBucketItem(() -> ModEntityTypes.LOOKDOWN.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
+    public static Item SEADRAGON_BUCKET = new FishBucketItem(() -> ModEntityTypes.SEADRAGON.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
+    public static Item MANTIS_SHRIMP_BUCKET = new FishBucketItem(() -> ModEntityTypes.MANTIS_SHRIMP.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
+    public static Item TRUMPETFISH_BUCKET = new FishBucketItem(() -> ModEntityTypes.TRUMPETFISH.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
+    public static Item PARROTFISH_BUCKET = new FishBucketItem(() -> ModEntityTypes.PARROTFISH.get(), () -> Fluids.WATER, new Item.Properties().tab(Creatures.CreaturesItemGroup));
 
     static int i = 0;
     public static Item LOVEBIRD_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
@@ -91,8 +89,6 @@ public class CreaturesItems {
     public static Item FINCH_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
     public static Item CAPERCAILLIE_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
     public static Item PHEASANT_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
-<<<<<<< Updated upstream
-=======
     public static Item STORK_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
     public static Item WHISTLINGDUCK_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
     public static Item GROUND_HORNBILL_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
@@ -100,7 +96,19 @@ public class CreaturesItems {
     public static Item SHOEBILL_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
     public static Item STARLING_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
     public static Item CORMORANT_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
->>>>>>> Stashed changes
+    public static Item PUFFIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item SEAGULL_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item BOOBY_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item PENGUIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item RAIL_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item AVOCET_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item CRESTED_PENGUIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item YELLOWEYED_PENGUIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item BRUSHTAILED_PENGUIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item LARGE_PENGUIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item FRIGATE_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item STILT_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static Item LITTLEPENGUIN_EGG = new EggItem(i++,(new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
 
     public static Item RAW_KOI = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_KOI));
     public static Item ROASTED_KOI = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.ROASTED_KOI));
@@ -125,11 +133,25 @@ public class CreaturesItems {
     public static Item RAW_PIRANHA = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_PIRANHA));
     public static Item COOKED_PIRANHA = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_PIRANHA));
     public static Item MEALWORMS = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.MEALWORMS));
-<<<<<<< Updated upstream
-=======
     public static Item RAW_TAMBAQUI = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_TAMBAQUI));
     public static Item COOKED_TAMBAQUI = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_TAMBAQUI));
->>>>>>> Stashed changes
+    public static Item RAW_SWORDFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_SWORDFISH));
+    public static Item COOKED_SWORDFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_SWORDFISH));
+    public static Item RAW_SQUID = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_SQUID));
+    public static Item CALAMARI = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.CALAMARI));
+    public static Item RED_SNAPPER_SASHIMI = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RED_SNAPPER_SASHIMI));
+    public static Item RAW_EDIBLECRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_EDIBLECRAB));
+    public static Item COOKED_EDIBLECRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_EDIBLECRAB));
+    public static Item RAW_BLUECRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_BLUE_CRAB));
+    public static Item COOKED_BLUECRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_BLUE_CRAB));
+    public static Item RAW_DUNGENESSCRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_DUNGENESS_CRAB));
+    public static Item COOKED_DUNGENESSCRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_DUNGENESS_CRAB));
+    public static Item RAW_LUNGFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_LUNGFISH));
+    public static Item COOKED_LUNGFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_LUNGFISH));
+    public static Item RAW_PARROTFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_PARROTFISH));
+    public static Item COOKED_PARROTFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_PARROTFISH));
+    public static Item RAW_ROCKCRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.RAW_ROCK_CRAB));
+    public static Item COOKED_ROCKCRAB = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup).food(CreaturesFood.COOKED_ROCK_CRAB));
 
     public static final Item GUPPY_TAIL = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
     public static final Item GOLDFISH = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
@@ -140,11 +162,11 @@ public class CreaturesItems {
     public static final Item PARROT_FEATHER = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
     public static final Item FF_GUIDE = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
     public static final Item PEAFOWL_FEATHER = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
-<<<<<<< Updated upstream
-=======
-    public static final Item BIRD_CARRIER = new BirdCarrierItem((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
-    public static final Item CRITTER_KEEPER = new CritterKeeperItem((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
->>>>>>> Stashed changes
+    public static final Item BIRD_CARRIER = new BirdCarrierItem((new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static final Item CRITTER_KEEPER = new CritterKeeperItem((new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
+    public static final Item FISH_FOOD = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
+    public static final Item ALGAE_WAFER = new Item((new Item.Properties()).tab(Creatures.CreaturesItemGroup));
+    public static final Item FISHING_NET = new FishNetItem((new Item.Properties()).stacksTo(1).tab(Creatures.CreaturesItemGroup));
 
     //public static final Item TOY1 = new BlockItem(CreaturesBlocks.TOY1.get(),(new Item.Properties()).tab(Creatures.CreaturesItemGroup));
 
@@ -156,7 +178,7 @@ public class CreaturesItems {
         //buckets
         registerItem(registry, setup(KOI_BUCKET, "bucket_of_koi"));
         registerItem(registry, setup(DOTTYBACK_BUCKET, "bucket_of_dottyback"));
-        registerItem(registry, setup(PIKE_BUCKET, "bucket_of_pike"));
+        //registerItem(registry, setup(PIKE_BUCKET, "bucket_of_pike"));
         registerItem(registry, setup(GUPPY_BUCKET, "bucket_of_guppy"));
         registerItem(registry, setup(AROWANA_BUCKET, "bucket_of_arowana"));
         registerItem(registry, setup(SHRIMP_BUCKET, "bucket_of_shrimp"));
@@ -169,13 +191,16 @@ public class CreaturesItems {
         registerItem(registry, setup(FLAME_ANGELFISH_BUCKET, "bucket_of_flame_angelfish"));
         registerItem(registry, setup(RED_SNAPPER_BUCKET, "bucket_of_red_snapper"));
         registerItem(registry, setup(TIGER_BARB_BUCKET, "bucket_of_tigerbarb"));
-        registerItem(registry, setup(ARAPAIMA_BUCKET, "bucket_of_arapaima"));
+        //registerItem(registry, setup(ARAPAIMA_BUCKET, "bucket_of_arapaima"));
         registerItem(registry, setup(PIRANHA_BUCKET, "bucket_of_piranha"));
-<<<<<<< Updated upstream
-=======
-        registerItem(registry, setup(TAMBAQUI_BUCKET, "bucket_of_tambaqui"));
+        //registerItem(registry, setup(TAMBAQUI_BUCKET, "bucket_of_tambaqui"));
         registerItem(registry, setup(ELEPHANTNOSE_BUCKET, "bucket_of_elephant_nose"));
->>>>>>> Stashed changes
+        registerItem(registry, setup(CLOWNFISH_BUCKET, "bucket_of_clownfish"));
+        registerItem(registry, setup(TRUMPETFISH_BUCKET, "bucket_of_trumpetfish"));
+        registerItem(registry, setup(SEADRAGON_BUCKET, "bucket_of_seadragon"));
+        registerItem(registry, setup(LOOKDOWN_BUCKET, "bucket_of_lookdown"));
+        registerItem(registry, setup(MANTIS_SHRIMP_BUCKET, "bucket_of_mantis_shrimp"));
+        registerItem(registry, setup(PARROTFISH_BUCKET, "bucket_of_parrotfish"));
 
         //food
         registerItem(registry, setup(RAW_KOI, "raw_koi"));
@@ -200,12 +225,25 @@ public class CreaturesItems {
         registerItem(registry, setup(COOKED_ARAPAIMA, "cooked_arapaima"));
         registerItem(registry, setup(RAW_PIRANHA, "raw_piranha"));
         registerItem(registry, setup(COOKED_PIRANHA, "cooked_piranha"));
-<<<<<<< Updated upstream
-=======
         registerItem(registry, setup(RAW_TAMBAQUI, "raw_tambaqui"));
         registerItem(registry, setup(COOKED_TAMBAQUI, "cooked_tambaqui"));
->>>>>>> Stashed changes
-
+        registerItem(registry, setup(RAW_SWORDFISH, "raw_swordfish_steak"));
+        registerItem(registry, setup(COOKED_SWORDFISH, "cooked_swordfish_steak"));
+        registerItem(registry, setup(RAW_SQUID, "raw_squid"));
+        registerItem(registry, setup(CALAMARI, "calamari"));
+        registerItem(registry, setup(RED_SNAPPER_SASHIMI, "red_snapper_sashimi"));
+        registerItem(registry, setup(RAW_EDIBLECRAB, "ediblecrab"));
+        registerItem(registry, setup(COOKED_EDIBLECRAB, "cooked_ediblecrab"));
+        registerItem(registry, setup(RAW_BLUECRAB, "raw_bluecrab"));
+        registerItem(registry, setup(COOKED_BLUECRAB, "cooked_bluecrab"));
+        registerItem(registry, setup(RAW_DUNGENESSCRAB, "raw_dungenesscrab"));
+        registerItem(registry, setup(COOKED_DUNGENESSCRAB, "cooked_dungenesscrab"));
+        registerItem(registry, setup(RAW_LUNGFISH, "raw_lungfish"));
+        registerItem(registry, setup(COOKED_LUNGFISH, "cooked_lungfish"));
+        registerItem(registry, setup(RAW_PARROTFISH, "raw_parrotfish"));
+        registerItem(registry, setup(COOKED_PARROTFISH, "cooked_parrotfish"));
+        registerItem(registry, setup(RAW_ROCKCRAB, "raw_rockcrab"));
+        registerItem(registry, setup(COOKED_ROCKCRAB, "cooked_rockcrab"));
         //egg
         registerItem(registry, setup(LOVEBIRD_EGG, "lovebird_egg"));
         registerItem(registry, setup(SPOONBILL_EGG, "spoonbill_egg"));
@@ -248,10 +286,6 @@ public class CreaturesItems {
         registerItem(registry, setup(FINCH_EGG, "finch_egg"));
         registerItem(registry, setup(CAPERCAILLIE_EGG, "capercaillie_egg"));
         registerItem(registry, setup(PHEASANT_EGG, "pheasant_egg"));
-<<<<<<< Updated upstream
-
-
-=======
         registerItem(registry, setup(WHISTLINGDUCK_EGG, "whistlingduck_egg"));
         registerItem(registry, setup(GROUND_HORNBILL_EGG, "groundhornbill_egg"));
         registerItem(registry, setup(SECRETARYBIRD_EGG, "secretarybird_egg"));
@@ -259,7 +293,19 @@ public class CreaturesItems {
         registerItem(registry, setup(STARLING_EGG, "starling_egg"));
         registerItem(registry, setup(CORMORANT_EGG, "cormorant_egg"));
         registerItem(registry, setup(STORK_EGG, "stork_egg"));
->>>>>>> Stashed changes
+        registerItem(registry, setup(PUFFIN_EGG, "puffin_egg"));
+        registerItem(registry, setup(SEAGULL_EGG, "seagull_egg"));
+        registerItem(registry, setup(BOOBY_EGG, "booby_egg"));
+        registerItem(registry, setup(RAIL_EGG, "rail_egg"));
+        registerItem(registry, setup(PENGUIN_EGG, "bandedpenguin_egg"));
+        registerItem(registry, setup(AVOCET_EGG, "avocet_egg"));
+        registerItem(registry, setup(CRESTED_PENGUIN_EGG, "crestedpenguin_egg"));
+        registerItem(registry, setup(YELLOWEYED_PENGUIN_EGG, "yelloweyedpenguin_egg"));
+        registerItem(registry, setup(BRUSHTAILED_PENGUIN_EGG, "brushtailedpenguin_egg"));
+        registerItem(registry, setup(LARGE_PENGUIN_EGG, "largepenguin_egg"));
+        registerItem(registry, setup(FRIGATE_EGG, "frigate_egg"));
+        registerItem(registry, setup(STILT_EGG, "stilt_egg"));
+        registerItem(registry, setup(LITTLEPENGUIN_EGG, "littlepenguin_egg"));
 
         //other
         registerItem(registry, setup(GUPPY_TAIL, "guppy_tail"));
@@ -272,13 +318,11 @@ public class CreaturesItems {
         registerItem(registry, setup(FF_GUIDE, "ff_guide"));
         registerItem(registry, setup(PEAFOWL_FEATHER, "peafowl_feather"));
         registerItem(registry, setup(MEALWORMS, "mealworms"));
-<<<<<<< Updated upstream
-=======
         registerItem(registry, setup(BIRD_CARRIER, "bird_carrier"));
         registerItem(registry, setup(CRITTER_KEEPER, "critter_keeper"));
->>>>>>> Stashed changes
-
-        //blocks
+        registerItem(registry, setup(FISH_FOOD, "fish_food"));
+        registerItem(registry, setup(ALGAE_WAFER, "algae_wafer"));
+        registerItem(registry, setup(FISHING_NET, "fishingnet"));
 
     }
 

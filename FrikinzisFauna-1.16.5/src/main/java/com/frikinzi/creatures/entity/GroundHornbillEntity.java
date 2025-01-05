@@ -43,6 +43,10 @@ public class GroundHornbillEntity extends NonTameableBirdBase implements IAnimat
             .put(1, new TranslationTextComponent("message.creatures.southernhornbill"))
             .put(2, new TranslationTextComponent("message.creatures.abyssinian"))
             .build();
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Bucorvus leadbeateri")
+            .put(2, "Bucorvus abyssinicus")
+            .build();
 
     public GroundHornbillEntity(EntityType<? extends GroundHornbillEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -151,6 +155,16 @@ public class GroundHornbillEntity extends NonTameableBirdBase implements IAnimat
 
     public ItemStack getFoodItem() {
         return new ItemStack(CreaturesItems.MEALWORMS, 1);
+    }
+    public int getIUCNStatus() {
+        if (this.getVariant()== 1) {
+            return 2;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
     }
 
 

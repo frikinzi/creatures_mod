@@ -2,17 +2,8 @@ package com.frikinzi.creatures.registry;
 
 import com.frikinzi.creatures.Creatures;
 import com.frikinzi.creatures.config.CreaturesConfig;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.ParrotEntity;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraft.util.registry.Registry;
@@ -22,8 +13,6 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = Creatures.MODID)
@@ -39,17 +28,14 @@ public class ModEntitySpawn {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.KOI.get(), CreaturesConfig.koi_spawn_weight.get(), CreaturesConfig.koi_min_group.get(), CreaturesConfig.koi_max_group.get()));
         }
-
         if (CreaturesConfig.dottyback_spawns.get() && types.contains(BiomeDictionary.Type.OCEAN) && types.contains(BiomeDictionary.Type.HOT)) {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.DOTTYBACK.get(), CreaturesConfig.dottyback_spawn_weight.get(), CreaturesConfig.dottyback_min_group.get(), CreaturesConfig.dottyback_max_group.get()));
         }
-
         if (CreaturesConfig.red_snapper_spawns.get() && types.contains(BiomeDictionary.Type.OCEAN) && (!types.contains(BiomeDictionary.Type.COLD))) {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.RED_SNAPPER.get(), CreaturesConfig.red_snapper_spawn_weight.get(), CreaturesConfig.red_snapper_min_group.get(), CreaturesConfig.red_snapper_max_group.get()));
         }
-
         if (CreaturesConfig.pike_spawns.get() && types.contains(BiomeDictionary.Type.RIVER)) {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.PIKE.get(), CreaturesConfig.pike_spawn_weight.get(), CreaturesConfig.pike_min_group.get(), CreaturesConfig.pike_max_group.get()));
@@ -96,15 +82,15 @@ public class ModEntitySpawn {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.SPOONBILL.get(), CreaturesConfig.spoonbill_spawn_weight.get(), CreaturesConfig.spoonbill_min_group.get(), CreaturesConfig.spoonbill_max_group.get()));
         }
-        if (CreaturesConfig.dove_spawns.get() && !types.contains(BiomeDictionary.Type.NETHER) && ((types.contains(BiomeDictionary.Type.JUNGLE) || types.contains(BiomeDictionary.Type.FOREST) || types.contains(BiomeDictionary.Type.PLAINS) || types.contains(BiomeDictionary.Type.SWAMP) || types.contains(BiomeDictionary.Type.MESA)))) {
+        if (CreaturesConfig.dove_spawns.get() && !types.contains(BiomeDictionary.Type.NETHER) && ((types.contains(BiomeDictionary.Type.MOUNTAIN) || ((types.contains(BiomeDictionary.Type.JUNGLE) || types.contains(BiomeDictionary.Type.FOREST) || types.contains(BiomeDictionary.Type.PLAINS) || types.contains(BiomeDictionary.Type.SWAMP) || types.contains(BiomeDictionary.Type.MESA)))))) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.DOVE.get(), CreaturesConfig.dove_spawn_weight.get(), CreaturesConfig.dove_min_group.get(), CreaturesConfig.dove_max_group.get()));
         }
-        if (CreaturesConfig.mandarin_duck_spawns.get() && !types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.RIVER) || types.contains(BiomeDictionary.Type.FOREST))) {
+        if (CreaturesConfig.mandarin_duck_spawns.get() && !types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.RIVER))) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.MANDARIN_DUCK.get(), CreaturesConfig.mandarin_duck_spawn_weight.get(), CreaturesConfig.mandarin_duck_min_group.get(), CreaturesConfig.mandarin_duck_max_group.get()));
         }
-        if (CreaturesConfig.kakapo_spawns.get() && types.contains(BiomeDictionary.Type.FOREST) && !types.contains(BiomeDictionary.Type.NETHER)) {
+        if (CreaturesConfig.kakapo_spawns.get() && types.contains(BiomeDictionary.Type.FOREST) && !types.contains(BiomeDictionary.Type.NETHER)  && !types.contains(BiomeDictionary.Type.COLD)) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.KAKAPO.get(), CreaturesConfig.kakapo_spawn_weight.get(), CreaturesConfig.kakapo_min_group.get(), CreaturesConfig.kakapo_max_group.get()));
         }
@@ -112,7 +98,7 @@ public class ModEntitySpawn {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.RAVEN.get(), CreaturesConfig.raven_spawn_weight.get(), CreaturesConfig.raven_min_group.get(), CreaturesConfig.raven_max_group.get()));
         }
-        if (CreaturesConfig.fairywren_spawns.get() && types.contains(BiomeDictionary.Type.FOREST) && !types.contains(BiomeDictionary.Type.NETHER)) {
+        if (CreaturesConfig.fairywren_spawns.get() && types.contains(BiomeDictionary.Type.FOREST) && !types.contains(BiomeDictionary.Type.NETHER) && !types.contains(BiomeDictionary.Type.COLD)) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.FAIRYWREN.get(), CreaturesConfig.fairywren_spawn_weight.get(), CreaturesConfig.fairywren_min_group.get(), CreaturesConfig.fairywren_max_group.get()));
         }
@@ -120,7 +106,7 @@ public class ModEntitySpawn {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.GOLDEN_EAGLE.get(), CreaturesConfig.golden_eagle_spawn_weight.get(), CreaturesConfig.golden_eagle_min_group.get(), CreaturesConfig.golden_eagle_max_group.get()));
         }
-        if (CreaturesConfig.gyrfalcon_spawns.get() && types.contains(BiomeDictionary.Type.SNOWY)) {
+        if (CreaturesConfig.gyrfalcon_spawns.get() && types.contains(BiomeDictionary.Type.SNOWY) && types.contains(BiomeDictionary.Type.MOUNTAIN)) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.GYRFALCON.get(), CreaturesConfig.gyrfalcon_spawn_weight.get(), CreaturesConfig.gyrfalcon_min_group.get(), CreaturesConfig.gyrfalcon_max_group.get()));
         }
@@ -130,7 +116,7 @@ public class ModEntitySpawn {
         }
         if (CreaturesConfig.stellers_sea_eagle_spawns.get() && types.contains(BiomeDictionary.Type.SNOWY)) {
             spawns.addSpawn(EntityClassification.CREATURE,
-                    new MobSpawnInfo.Spawners(ModEntityTypes.STELLERS_SEA_EAGLE.get(), CreaturesConfig.stellers_sea_eagle_spawn_weight.get(), CreaturesConfig.stellers_sea_eagle_min_group.get(), CreaturesConfig.stellers_sea_eagle_max_group.get()));
+                    new MobSpawnInfo.Spawners(ModEntityTypes.SEA_EAGLE.get(), CreaturesConfig.stellers_sea_eagle_spawn_weight.get(), CreaturesConfig.stellers_sea_eagle_min_group.get(), CreaturesConfig.stellers_sea_eagle_max_group.get()));
         }
         if (CreaturesConfig.pygmy_falcon_spawns.get() && types.contains(BiomeDictionary.Type.DRY) && !types.contains(BiomeDictionary.Type.NETHER)) {
             spawns.addSpawn(EntityClassification.CREATURE,
@@ -204,7 +190,7 @@ public class ModEntitySpawn {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.BUSHTIT.get(), CreaturesConfig.bushtit_spawn_weight.get(), CreaturesConfig.bushtit_min_group.get(), CreaturesConfig.bushtit_max_group.get()));
         }
-        if (CreaturesConfig.laughingthrush_spawns.get() && types.contains(BiomeDictionary.Type.FOREST)) {
+        if (CreaturesConfig.laughingthrush_spawns.get() && !(types.contains(BiomeDictionary.Type.NETHER)) && (types.contains(BiomeDictionary.Type.FOREST) || types.contains(BiomeDictionary.Type.MOUNTAIN))) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.LAUGHINGTHRUSH.get(), CreaturesConfig.laughingthrush_spawn_weight.get(), CreaturesConfig.laughingthrush_min_group.get(), CreaturesConfig.laughingthrush_max_group.get()));
         }
@@ -276,27 +262,19 @@ public class ModEntitySpawn {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.TIGERBARB.get(), CreaturesConfig.tigerbarb_spawn_weight.get(), CreaturesConfig.tigerbarb_min_group.get(), CreaturesConfig.tigerbarb_max_group.get()));
         }
-<<<<<<< Updated upstream
-        if (CreaturesConfig.piranha_spawns.get() && types.contains(BiomeDictionary.Type.RIVER)) {
-=======
         if (CreaturesConfig.piranha_spawns.get() && types.contains(BiomeDictionary.Type.RIVER) && !types.contains(BiomeDictionary.Type.COLD)) {
->>>>>>> Stashed changes
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.PIRANHA.get(), CreaturesConfig.piranha_spawn_weight.get(), CreaturesConfig.piranha_min_group.get(), CreaturesConfig.piranha_max_group.get()));
         }
 
-<<<<<<< Updated upstream
-=======
         if (CreaturesConfig.tambaqui_spawns.get() && types.contains(BiomeDictionary.Type.RIVER) && !types.contains(BiomeDictionary.Type.COLD)) {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.TAMBAQUI.get(), CreaturesConfig.tambaqui_spawn_weight.get(), CreaturesConfig.tambaqui_min_group.get(), CreaturesConfig.tambaqui_max_group.get()));
         }
-
         if (CreaturesConfig.elephantnose_spawns.get() && types.contains(BiomeDictionary.Type.RIVER) && !types.contains(BiomeDictionary.Type.COLD)) {
             spawns.addSpawn(EntityClassification.WATER_AMBIENT,
                     new MobSpawnInfo.Spawners(ModEntityTypes.ELEPHANTNOSE.get(), CreaturesConfig.elephantnose_spawn_weight.get(), CreaturesConfig.elephantnose_min_group.get(), CreaturesConfig.elephantnose_max_group.get()));
         }
-
         if (CreaturesConfig.stork_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.SWAMP)))) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.PHEASANT.get(), CreaturesConfig.stork_spawn_weight.get(), CreaturesConfig.stork_min_group.get(), CreaturesConfig.stork_max_group.get()));
@@ -318,9 +296,90 @@ public class ModEntitySpawn {
         }   if (CreaturesConfig.starling_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.SAVANNA)))) {
             spawns.addSpawn(EntityClassification.CREATURE,
                     new MobSpawnInfo.Spawners(ModEntityTypes.STARLING.get(), CreaturesConfig.starling_spawn_weight.get(), CreaturesConfig.starling_min_group.get(), CreaturesConfig.starling_max_group.get()));
+        }   if (CreaturesConfig.stingray_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN)) && types.contains(BiomeDictionary.Type.HOT))) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.STINGRAY.get(), CreaturesConfig.stingray_spawn_weight.get(), CreaturesConfig.stingray_min_group.get(), CreaturesConfig.stingray_max_group.get()));
+        }   if (CreaturesConfig.puffin_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.BEACH)) && (types.contains(BiomeDictionary.Type.COLD)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.PUFFIN.get(), CreaturesConfig.puffin_spawn_weight.get(), CreaturesConfig.puffin_min_group.get(), CreaturesConfig.puffin_max_group.get()));
+        }   if (CreaturesConfig.sawfish_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN)) && !(types.contains(BiomeDictionary.Type.COLD)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.SAWFISH.get(), CreaturesConfig.sawfish_spawn_weight.get(), CreaturesConfig.sawfish_min_group.get(), CreaturesConfig.sawfish_max_group.get()));
+        }   if (CreaturesConfig.seagull_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.BEACH)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.SEAGULL.get(), CreaturesConfig.seagull_spawn_weight.get(), CreaturesConfig.seagull_min_group.get(), CreaturesConfig.seagull_max_group.get()));
+        }   if (CreaturesConfig.swordfish_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.SWORDFISH.get(), CreaturesConfig.swordfish_spawn_weight.get(), CreaturesConfig.swordfish_min_group.get(), CreaturesConfig.swordfish_max_group.get()));
+        }   if (CreaturesConfig.booby_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.BEACH))&& !(types.contains(BiomeDictionary.Type.COLD)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.BOOBY.get(), CreaturesConfig.booby_spawn_weight.get(), CreaturesConfig.booby_min_group.get(), CreaturesConfig.booby_max_group.get()));
+        }   if (CreaturesConfig.squid_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.SQUID.get(), CreaturesConfig.squid_spawn_weight.get(), CreaturesConfig.squid_min_group.get(), CreaturesConfig.squid_max_group.get()));
+        }   if (CreaturesConfig.lookdown_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& !(types.contains(BiomeDictionary.Type.COLD)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.LOOKDOWN.get(), CreaturesConfig.lookdown_spawn_weight.get(), CreaturesConfig.lookdown_min_group.get(), CreaturesConfig.lookdown_max_group.get()));
+        }   if (CreaturesConfig.penguin_spawns.get()) {
+            if (types.contains(BiomeDictionary.Type.COLD) && types.contains(BiomeDictionary.Type.SNOWY) && !types.contains(BiomeDictionary.Type.FOREST) && !types.contains(BiomeDictionary.Type.MOUNTAIN)) {
+                spawns.addSpawn(EntityClassification.CREATURE,
+                        new MobSpawnInfo.Spawners(ModEntityTypes.LARGE_PENGUIN.get(), CreaturesConfig.penguin_spawn_weight.get(), CreaturesConfig.penguin_min_group.get(), CreaturesConfig.penguin_max_group.get()));
+                spawns.addSpawn(EntityClassification.CREATURE,
+                        new MobSpawnInfo.Spawners(ModEntityTypes.BRUSH_TAILED_PENGUIN.get(), CreaturesConfig.penguin_spawn_weight.get(), CreaturesConfig.penguin_min_group.get(), CreaturesConfig.penguin_max_group.get()));
+            }
+            if (types.contains(BiomeDictionary.Type.BEACH)) {
+                if (!(types.contains(BiomeDictionary.Type.COLD))) {
+                    spawns.addSpawn(EntityClassification.CREATURE,
+                            new MobSpawnInfo.Spawners(ModEntityTypes.BANDED_PENGUIN.get(), CreaturesConfig.penguin_spawn_weight.get(), CreaturesConfig.penguin_min_group.get(), CreaturesConfig.penguin_max_group.get()));
+                    spawns.addSpawn(EntityClassification.CREATURE,
+                            new MobSpawnInfo.Spawners(ModEntityTypes.YELLOW_EYED_PENGUIN.get(), CreaturesConfig.penguin_spawn_weight.get(), CreaturesConfig.penguin_min_group.get(), CreaturesConfig.penguin_max_group.get()));
+                    spawns.addSpawn(EntityClassification.CREATURE,
+                            new MobSpawnInfo.Spawners(ModEntityTypes.CRESTED_PENGUIN.get(), CreaturesConfig.penguin_spawn_weight.get(), CreaturesConfig.penguin_min_group.get(), CreaturesConfig.penguin_max_group.get()));
+                    spawns.addSpawn(EntityClassification.CREATURE,
+                            new MobSpawnInfo.Spawners(ModEntityTypes.LITTLE_PENGUIN.get(), CreaturesConfig.penguin_spawn_weight.get(), CreaturesConfig.penguin_min_group.get(), CreaturesConfig.penguin_max_group.get()));
+                }
+
+
+            }
+
+        }   if (CreaturesConfig.mantisshrimp_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& (types.contains(BiomeDictionary.Type.HOT)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.MANTIS_SHRIMP.get(), CreaturesConfig.mantisshrimp_spawn_weight.get(), CreaturesConfig.mantisshrimp_min_group.get(), CreaturesConfig.mantisshrimp_max_group.get()));
+        }   if (CreaturesConfig.rail_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.FOREST))&& !(types.contains(BiomeDictionary.Type.COLD)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.RAIL.get(), CreaturesConfig.rail_spawn_weight.get(), CreaturesConfig.rail_min_group.get(), CreaturesConfig.rail_max_group.get()));
+        }   if (CreaturesConfig.barracuda_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& (types.contains(BiomeDictionary.Type.HOT)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.BARRACUDA.get(), CreaturesConfig.barracuda_spawn_weight.get(), CreaturesConfig.barracuda_min_group.get(), CreaturesConfig.barracuda_max_group.get()));
+        }   if (CreaturesConfig.avocet_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.SWAMP)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.AVOCET.get(), CreaturesConfig.avocet_spawn_weight.get(), CreaturesConfig.avocet_min_group.get(), CreaturesConfig.avocet_max_group.get()));
+        }   if (CreaturesConfig.seadragon_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& (types.contains(BiomeDictionary.Type.HOT)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.SEADRAGON.get(), CreaturesConfig.seadragon_spawn_weight.get(), CreaturesConfig.seadragon_min_group.get(), CreaturesConfig.seadragon_max_group.get()));
+        }   if (CreaturesConfig.trumpetfish_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& (types.contains(BiomeDictionary.Type.HOT)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.TRUMPETFISH.get(), CreaturesConfig.trumpetfish_spawn_weight.get(), CreaturesConfig.trumpetfish_min_group.get(), CreaturesConfig.trumpetfish_max_group.get()));
+        }   if (CreaturesConfig.parrotfish_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& (types.contains(BiomeDictionary.Type.HOT)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.PARROTFISH.get(), CreaturesConfig.parrotfish_spawn_weight.get(), CreaturesConfig.parrotfish_min_group.get(), CreaturesConfig.parrotfish_max_group.get()));
+        }   if (CreaturesConfig.frigate_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.BEACH))&& !(types.contains(BiomeDictionary.Type.COLD)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.FRIGATE.get(), CreaturesConfig.frigate_spawn_weight.get(), CreaturesConfig.frigate_min_group.get(), CreaturesConfig.frigate_max_group.get()));
+        }   if (CreaturesConfig.clownfish_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.OCEAN))&& (types.contains(BiomeDictionary.Type.HOT)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.CLOWNFISH.get(), CreaturesConfig.clownfish_spawn_weight.get(), CreaturesConfig.clownfish_min_group.get(), CreaturesConfig.clownfish_max_group.get()));
+        }   if (CreaturesConfig.stilt_spawns.get() && (!types.contains(BiomeDictionary.Type.NETHER) && (types.contains(BiomeDictionary.Type.SWAMP)) )) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.STILT.get(), CreaturesConfig.stilt_spawn_weight.get(), CreaturesConfig.stilt_min_group.get(), CreaturesConfig.stilt_max_group.get()));
+        }   if (CreaturesConfig.lungfish_spawns.get() && (types.contains(BiomeDictionary.Type.OVERWORLD) && (types.contains(BiomeDictionary.Type.SWAMP)) )) {
+            spawns.addSpawn(EntityClassification.WATER_AMBIENT,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.LUNGFISH.get(), CreaturesConfig.lungfish_spawn_weight.get(), CreaturesConfig.lungfish_min_group.get(), CreaturesConfig.lungfish_max_group.get()));
+        }  if (CreaturesConfig.ediblecrab_spawns.get() && types.contains(BiomeDictionary.Type.OCEAN)) {
+            spawns.addSpawn(EntityClassification.CREATURE,
+                    new MobSpawnInfo.Spawners(ModEntityTypes.EDIBLE_CRAB.get(), CreaturesConfig.ediblecrab_spawn_weight.get(), CreaturesConfig.ediblecrab_min_group.get(), CreaturesConfig.ediblecrab_max_group.get()));
         }
 
->>>>>>> Stashed changes
 
     }
 

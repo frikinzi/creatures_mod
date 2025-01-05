@@ -21,6 +21,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -169,5 +171,13 @@ public class PygmyFalconEntity extends RaptorBase implements IAnimatable {
     protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
         return 0.3F;
     }
+    public String getScientificName() {
+        return "Polihierax semitorquatus";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.pygmyfalcon");
+    }
+
 
 }

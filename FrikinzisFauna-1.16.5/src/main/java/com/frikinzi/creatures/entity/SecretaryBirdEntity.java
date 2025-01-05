@@ -18,14 +18,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.play.server.SAnimateHandPacket;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectUtils;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerChunkProvider;
 import net.minecraft.world.server.ServerWorld;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -39,7 +43,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class SecretaryBirdEntity extends NonTameableBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.SPIDER_EYE);
-    private int attackTime = 14;
+    public int swingTime;
 
     public SecretaryBirdEntity(EntityType<? extends SecretaryBirdEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -61,12 +65,9 @@ public class SecretaryBirdEntity extends NonTameableBirdBase implements IAnimata
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.swinging && event.getController().getAnimationState().equals(AnimationState.Stopped)){
-            event.getController().markNeedsReload();
+        if (this.swinging){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", false));
-            if (!this.level.isClientSide && --attackTime <= 0)
-            this.swinging = false;
-            this.attackTime = 14;
+            return PlayState.CONTINUE;
         }
         if (this.isAggressive()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("run", true));
@@ -158,6 +159,7 @@ public class SecretaryBirdEntity extends NonTameableBirdBase implements IAnimata
 
     public boolean doHurtTarget(Entity p_70652_1_) {
         if (super.doHurtTarget(p_70652_1_)) {
+
             if (p_70652_1_ instanceof SpiderEntity) {
                 int i = 0;
                 if (this.level.getDifficulty() == Difficulty.NORMAL) {
@@ -179,6 +181,58 @@ public class SecretaryBirdEntity extends NonTameableBirdBase implements IAnimata
 
     public ItemStack getFoodItem() {
         return new ItemStack(Items.SPIDER_EYE, 1);
+    }
+
+    public void aiStep() {
+        this.updateSwingTime();
+        super.aiStep();
+    }
+
+    private int getCurrentSwingDuration() {
+        return 14;
+    }
+
+    public void swing(Hand p_226292_1_, boolean p_226292_2_) {
+        ItemStack stack = this.getItemInHand(p_226292_1_);
+        if (!stack.isEmpty() && stack.onEntitySwing(this)) return;
+        if (!this.swinging || this.swingTime >= this.getCurrentSwingDuration() / 2 || this.swingTime < 0) {
+            this.swingTime = -1;
+            this.swinging = true;
+            this.swingingArm = p_226292_1_;
+            if (this.level instanceof ServerWorld) {
+                SAnimateHandPacket sanimatehandpacket = new SAnimateHandPacket(this, p_226292_1_ == Hand.MAIN_HAND ? 0 : 3);
+                ServerChunkProvider serverchunkprovider = ((ServerWorld)this.level).getChunkSource();
+                if (p_226292_2_) {
+                    serverchunkprovider.broadcastAndSend(this, sanimatehandpacket);
+                } else {
+                    serverchunkprovider.broadcast(this, sanimatehandpacket);
+                }
+            }
+        }
+
+    }
+
+    protected void updateSwingTime() {
+        int i = this.getCurrentSwingDuration();
+        if (this.swinging) {
+            ++this.swingTime;
+            if (this.swingTime >= i) {
+                this.swingTime = 0;
+                this.swinging = false;
+            }
+        } else {
+            this.swingTime = 0;
+        }
+
+        this.attackAnim = (float)this.swingTime / (float)i;
+    }
+
+    public int getIUCNStatus() {
+        return 3;
+    }
+
+    public String getScientificName() {
+        return "Sagittarius serpentarius";
     }
 
 

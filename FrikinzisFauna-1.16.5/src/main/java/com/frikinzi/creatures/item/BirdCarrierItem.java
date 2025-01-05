@@ -46,6 +46,7 @@ public class BirdCarrierItem extends Item {
                 if (bird.isTame()) {
                     tags.putString("OwnerName", player.getName().getString());
                 }
+                tags.putFloat("SizeMultiplier", bird.getHeightMultiplier());
                 tags.putInt("Variant", bird.getVariant());
                 if (target.hasCustomName()) tags.putString("DisplayName", bird.getDisplayName().getString());
                 tags.putString("Species", bird.getSpeciesName());

@@ -1,29 +1,6 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-<<<<<<< Updated upstream
-		"animation.pike.idle": {
-			"loop": true,
-			"animation_length": 1,
-			"bones": {
-				"Face": {
-					"rotation": {
-						"0.0833": {
-							"vector": [2.5, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"0.9583": {
-							"vector": [2.5, 0, 0]
-						}
-					}
-				},
-				"Left": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 22.5]
-=======
 		"swim": {
 			"loop": true,
 			"animation_length": 1,
@@ -71,108 +48,17 @@
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 17.5]
->>>>>>> Stashed changes
 						},
 						"0.5": {
 							"vector": [0, 0, 0]
 						},
 						"1.0": {
-<<<<<<< Updated upstream
-							"vector": [0, 0, 22.5]
-						}
-					}
-				},
-				"Right": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, -22.5]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, -22.5]
-=======
 							"vector": [0, 0, 17.5]
->>>>>>> Stashed changes
 						}
 					}
 				}
 			}
 		},
-<<<<<<< Updated upstream
-		"animation.pike.swim": {
-			"loop": true,
-			"animation_length": 1,
-			"bones": {
-				"Face": {
-					"rotation": {
-						"0.0833": {
-							"vector": [2.5, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"0.9583": {
-							"vector": [2.5, 0, 0]
-						}
-					}
-				},
-				"Tail": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 12.5, 0]
-						},
-						"0.125": {
-							"vector": [0, -12.5, 0]
-						},
-						"0.25": {
-							"vector": [0, 0, 0]
-						},
-						"0.375": {
-							"vector": [0, 12.5, 0]
-						},
-						"0.5": {
-							"vector": [0, -12.5, 0]
-						},
-						"0.625": {
-							"vector": [0, 0, 0]
-						},
-						"0.75": {
-							"vector": [0, 12.5, 0]
-						},
-						"0.875": {
-							"vector": [0, -12.5, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"Left": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 22.5]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, 22.5]
-						}
-					}
-				},
-				"Right": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, -22.5]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, -22.5]
-=======
 		"attack": {
 			"loop": true,
 			"animation_length": 0.45833,
@@ -239,44 +125,11 @@
 						},
 						"0.4167": {
 							"vector": [12.5, 0, 0]
->>>>>>> Stashed changes
 						}
 					}
 				}
 			}
 		},
-<<<<<<< Updated upstream
-		"animation.pike.flop": {
-			"loop": true,
-			"animation_length": 1,
-			"bones": {
-				"Face": {
-					"rotation": {
-						"0.0833": {
-							"vector": [2.5, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"0.9583": {
-							"vector": [2.5, 0, 0]
-						}
-					}
-				},
-				"Tail": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 12.5, 0]
-						},
-						"0.125": {
-							"vector": [0, -12.5, 0]
-						},
-						"0.25": {
-							"vector": [0, 0, 0]
-						},
-						"0.375": {
-							"vector": [0, 12.5, 0]
-=======
 		"flop": {
 			"loop": true,
 			"animation_length": 1,
@@ -285,31 +138,10 @@
 					"rotation": {
 						"0.0": {
 							"vector": [0, 20, 0]
->>>>>>> Stashed changes
 						},
 						"0.5": {
 							"vector": [0, -12.5, 0]
 						},
-<<<<<<< Updated upstream
-						"0.625": {
-							"vector": [0, 0, 0]
-						},
-						"0.75": {
-							"vector": [0, 12.5, 0]
-						},
-						"0.875": {
-							"vector": [0, -12.5, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"Left": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 22.5]
-=======
 						"1.0": {
 							"vector": [0, 20, 0]
 						}
@@ -345,34 +177,11 @@
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 17.5]
->>>>>>> Stashed changes
 						},
 						"0.5": {
 							"vector": [0, 0, 0]
 						},
 						"1.0": {
-<<<<<<< Updated upstream
-							"vector": [0, 0, 22.5]
-						}
-					}
-				},
-				"Right": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, -22.5]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						},
-						"1.0": {
-							"vector": [0, 0, -22.5]
-						}
-					}
-				},
-				"Main": {
-					"rotation": {
-						"vector": [0, 0, 95]
-=======
 							"vector": [0, 0, 17.5]
 						}
 					}
@@ -383,7 +192,6 @@
 					},
 					"position": {
 						"vector": [3, 4, -3]
->>>>>>> Stashed changes
 					}
 				}
 			}

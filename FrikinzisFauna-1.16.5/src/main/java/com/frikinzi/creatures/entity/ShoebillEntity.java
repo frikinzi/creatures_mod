@@ -21,6 +21,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -140,5 +141,16 @@ public class ShoebillEntity extends NonTameableBirdBase implements IAnimatable {
         return new ItemStack(Items.SALMON, 1);
     }
 
+    public int getIUCNStatus() {
+        return 2;
+    }
+
+    public String getScientificName() {
+        return "Balaeniceps rex";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.shoebill");
+    }
 
 }

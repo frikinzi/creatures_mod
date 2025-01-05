@@ -60,7 +60,16 @@ public class NonTameableFlyingBirdBase extends CreaturesBirdEntity implements IF
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
-        this.setVariant(this.methodofDeterminingVariant(p_213386_1_));
+        int color;
+        if (p_213386_4_ instanceof CreaturesBirdEntity.BirdData) {
+            color = ((CreaturesBirdEntity.BirdData)p_213386_4_).variant;
+        } else {
+            color = methodofDeterminingVariant(p_213386_1_);
+            p_213386_4_ = new CreaturesBirdEntity.BirdData(color);
+        }
+        //this.setVariant(this.random.nextInt(determineVariant()));
+        this.setVariant(color);
+        //this.setVariant(this.methodofDeterminingVariant(p_213386_1_));
         this.setGender(this.random.nextInt(2));
         if (p_213386_4_ == null) {
             p_213386_4_ = new AgeableData(false);
@@ -70,9 +79,9 @@ public class NonTameableFlyingBirdBase extends CreaturesBirdEntity implements IF
     }
 
     public int methodofDeterminingVariant(IWorld p_213610_1_) {
-        return this.random.nextInt(determineVariant());
+        int variant = Math.max(determineVariant(), 2);
+        return this.random.nextInt(variant - 1) + 1;
     }
-
 
     @Override
     protected void registerGoals() {

@@ -4,6 +4,7 @@ import com.frikinzi.creatures.Creatures;
 import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.GhostCrabEntity;
 import com.frikinzi.creatures.registry.CreaturesItems;
+import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SpawnReason;
@@ -19,20 +20,20 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 abstract public class AbstractCrabBase extends AnimalEntity {
     private static final DataParameter<Float> HEIGHT_MULTIPLIER = EntityDataManager.defineId(AbstractCrabBase.class, DataSerializers.FLOAT);
-<<<<<<< Updated upstream
-=======
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(AbstractCrabBase.class, DataSerializers.INT);
+    private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(AbstractCrabBase.class, DataSerializers.INT);
 
->>>>>>> Stashed changes
 
     public AbstractCrabBase(EntityType<? extends AbstractCrabBase> p_i48567_1_, World p_i48567_2_) {
         super(p_i48567_1_, p_i48567_2_);
@@ -43,6 +44,14 @@ abstract public class AbstractCrabBase extends AnimalEntity {
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
         if (p_213386_4_ == null) {
             p_213386_4_ = new AgeableData(false);
+        }
+        int color;
+        if (p_213386_4_ instanceof AbstractCrabBase.CrabData) {
+            color = ((AbstractCrabBase.CrabData)p_213386_4_).variant;
+            this.setVariant(color);
+        } else {
+            int variant = Math.max(determineVariant(), 2);
+            this.setVariant(this.random.nextInt(variant-1)+1);
         }
 
         float f = (float)(this.random.nextGaussian() * CreaturesConfig.height_standard_deviation.get() + CreaturesConfig.height_base_multiplier.get());
@@ -83,6 +92,8 @@ abstract public class AbstractCrabBase extends AnimalEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(HEIGHT_MULTIPLIER, 1.0F);
+        this.entityData.define(GENDER, 0);
+
     }
 
     public float getHeightMultiplier() {
@@ -128,7 +139,16 @@ abstract public class AbstractCrabBase extends AnimalEntity {
 
     public void addAdditionalSaveData(CompoundNBT p_213281_1_) {
         p_213281_1_.putFloat("HeightMultiplier", this.getHeightMultiplier());
+        p_213281_1_.putFloat("Gender", this.getGender());
         super.addAdditionalSaveData(p_213281_1_);
+    }
+
+    public int getGender() {
+        return MathHelper.clamp(this.entityData.get(GENDER), 0, 2);
+    }
+
+    public void setGender(int p_191997_1_) {
+        this.entityData.set(GENDER, p_191997_1_);
     }
 
     public void readAdditionalSaveData(CompoundNBT p_70037_1_) {
@@ -139,8 +159,6 @@ abstract public class AbstractCrabBase extends AnimalEntity {
             this.setHeightMultiplier(p_70037_1_.getFloat("HeightMultiplier")); }
     }
 
-<<<<<<< Updated upstream
-=======
     public void setVariant(int p_191997_1_) {
         this.entityData.set(DATA_VARIANT_ID, p_191997_1_);
     }
@@ -153,6 +171,71 @@ abstract public class AbstractCrabBase extends AnimalEntity {
         return 1;
     }
 
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("creatures.unknown");
+    }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        return 0;
+    }
+
+    public TextFormatting getIUCNColor() {
+        if (this.getIUCNStatus() == 0) {
+            return TextFormatting.DARK_GREEN; // least concern
+        } if (this.getIUCNStatus() == 1) {
+            return TextFormatting.GOLD; // near threatened
+        } if (this.getIUCNStatus() == 2) {
+            return TextFormatting.GOLD;  // vulnerable
+        } if (this.getIUCNStatus() == 3) {
+            return TextFormatting.RED; // endangered
+        } if (this.getIUCNStatus() == 4) {
+            return TextFormatting.DARK_RED; // critically endangered
+        } if (this.getIUCNStatus() == 5) {
+            return TextFormatting.DARK_PURPLE; // extinct in the wild
+        } if (this.getIUCNStatus() == 6) {
+            return TextFormatting.BLACK; // extinct
+        } return TextFormatting.GRAY; // unknown
+    }
+    public ITextComponent getIUCNText() {
+        if (this.getIUCNStatus() == 0) {
+            return new TranslationTextComponent("creatures.leastconcern"); // least concern
+        } if (this.getIUCNStatus() == 1) {
+            return new TranslationTextComponent("creatures.nearthreatened"); // near threatened
+        } if (this.getIUCNStatus() == 2) {
+            return new TranslationTextComponent("creatures.vulnerable");  // vulnerable
+        } if (this.getIUCNStatus() == 3) {
+            return new TranslationTextComponent("creatures.endangered"); // endangered
+        } if (this.getIUCNStatus() == 4) {
+            return new TranslationTextComponent("creatures.criticallyendangered"); // critically endangered
+        } if (this.getIUCNStatus() == 5) {
+            return new TranslationTextComponent("creatures.extinctinwild"); // extinct in the wild
+        } if (this.getIUCNStatus() == 6) {
+            return new TranslationTextComponent("creatures.extinct"); // extinct
+        } return new TranslationTextComponent("creatures.datadeficient"); // unknown
+    }
+
+    public String getScientificName() {
+        return "";
+    }
+
+    public String getGenderText() {
+        if (this.getGender() == 1) {
+            ITextComponent i = new TranslationTextComponent("gui.male");
+            return i.getString();
+        } else {
+            ITextComponent i = new TranslationTextComponent("gui.female");
+            return i.getString();
+        }
+    }
+
+    public static class CrabData extends AgeableEntity.AgeableData {
+        public final int variant;
+
+        public CrabData(int p_i231557_1_) {
+            super(true);
+            this.variant = p_i231557_1_;
+        }
+    }
+
+
 }

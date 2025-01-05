@@ -6,10 +6,7 @@ import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.*;
@@ -37,19 +34,14 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class FairywrenEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.MEALWORMS);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES;
     static {
         Map<Integer, TranslationTextComponent> map = new HashMap<>();
@@ -61,7 +53,14 @@ public class FairywrenEntity extends NonTameableFlyingBirdBase implements IAnima
         map.put(6, new TranslationTextComponent("message.creatures.superb"));
         SPECIES_NAMES = Collections.unmodifiableMap(map);
     }
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Malurus lamberti")
+            .put(2, "Malurus splendens")
+            .put(3, "Malurus leucopterus")
+            .put(4, "Malurus melanocephalus")
+            .put(5, "Malurus coronatus")
+            .put(6, "Malurus cyaneus")
+            .build();
 
     public FairywrenEntity(EntityType<? extends FairywrenEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -157,39 +156,10 @@ public class FairywrenEntity extends NonTameableFlyingBirdBase implements IAnima
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.variegated");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.splendid");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.whitewinged");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.blackwinged");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.purplecrowned");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.superb");
-            return s1.getString();
-        } else {
-            return "???";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public ItemStack getFoodItem() {
@@ -208,6 +178,14 @@ public class FairywrenEntity extends NonTameableFlyingBirdBase implements IAnima
 
     protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
         return 0.3F;
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.fairywren");
     }
 
 }

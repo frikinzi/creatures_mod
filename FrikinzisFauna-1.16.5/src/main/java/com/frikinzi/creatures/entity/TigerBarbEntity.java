@@ -4,10 +4,7 @@ import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.base.GroupFishBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -27,10 +24,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-<<<<<<< Updated upstream
-=======
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
->>>>>>> Stashed changes
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -43,21 +38,23 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class TigerBarbEntity extends GroupFishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(TigerBarbEntity.class, DataSerializers.INT);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.tigerbarb"),
             2, new TranslationTextComponent("message.creatures.blackruby")
     );
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Puntius tetrazona")
+            .put(2, "Pethia nigrofasciata")
+            .build();
+    public static Map<Integer, TranslationTextComponent> DESCRIPTIONS = ImmutableMap.of(
+            1, new TranslationTextComponent("description.creatures.tigerbarb"),
+            2, new TranslationTextComponent("description.creatures.blackruby")
+    );
     public TigerBarbEntity(EntityType<? extends TigerBarbEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
@@ -174,7 +171,7 @@ public class TigerBarbEntity extends GroupFishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
 
     protected void registerGoals() {
@@ -182,8 +179,6 @@ public class TigerBarbEntity extends GroupFishBase implements IAnimatable {
         this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, PlayerEntity.class, 8.0F, 2.2D, 2.2D));
     }
 
-<<<<<<< Updated upstream
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
@@ -195,5 +190,22 @@ public class TigerBarbEntity extends GroupFishBase implements IAnimatable {
         return 3;
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        if (this.getVariant()== 2) {
+            return 2;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        TranslationTextComponent translatable = DESCRIPTIONS.get(this.getVariant());
+        if (translatable != null) {
+            return translatable;
+        } return new TranslationTextComponent("creatures.unknown");
+    }
+
 }

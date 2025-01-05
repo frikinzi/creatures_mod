@@ -62,7 +62,16 @@ public class TameableWalkingBirdBase extends CreaturesBirdEntity {
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
-        this.setVariant(methodofDeterminingVariant(p_213386_1_));
+        int color;
+        if (p_213386_4_ instanceof CreaturesBirdEntity.BirdData) {
+            color = ((CreaturesBirdEntity.BirdData)p_213386_4_).variant;
+        } else {
+            color = methodofDeterminingVariant(p_213386_1_);
+            p_213386_4_ = new CreaturesBirdEntity.BirdData(color);
+        }
+        //this.setVariant(this.random.nextInt(determineVariant()));
+        this.setVariant(color);
+        //this.setVariant(methodofDeterminingVariant(p_213386_1_));
         this.setWandering(0);
         this.setGender(this.random.nextInt(2));
         if (p_213386_4_ == null) {
@@ -160,11 +169,7 @@ public class TameableWalkingBirdBase extends CreaturesBirdEntity {
             this.heal((float) 2.0);
             return ActionResultType.SUCCESS;
         }
-<<<<<<< Updated upstream
-        else if (!getTamedFood().contains(itemstack.getItem())  && itemstack.getItem() != CreaturesItems.FF_GUIDE && this.isTame() && this.isOwnedBy(p_230254_1_)) {
-=======
         else if (!getTamedFood().contains(itemstack.getItem()) && itemstack.getItem() != CreaturesItems.BIRD_CARRIER  && itemstack.getItem() != CreaturesItems.FF_GUIDE && this.isTame() && this.isOwnedBy(p_230254_1_)) {
->>>>>>> Stashed changes
             if (!this.level.isClientSide) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
@@ -285,11 +290,7 @@ public class TameableWalkingBirdBase extends CreaturesBirdEntity {
     }
 
 
-<<<<<<< Updated upstream
-    class SleepGoal extends Goal {
-=======
     public class SleepGoal extends Goal {
->>>>>>> Stashed changes
         public SleepGoal() {
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
         }
@@ -325,7 +326,8 @@ public class TameableWalkingBirdBase extends CreaturesBirdEntity {
     }
 
     public int methodofDeterminingVariant(IWorld p_213610_1_) {
-        return this.random.nextInt(determineVariant());
+        int variant = Math.max(determineVariant(), 2);
+        return this.random.nextInt(variant - 1) + 1;
     }
 
     public static boolean checkBirdSpawnRules(EntityType<? extends AnimalEntity> p_223317_0_, IWorld p_223317_1_, SpawnReason p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {

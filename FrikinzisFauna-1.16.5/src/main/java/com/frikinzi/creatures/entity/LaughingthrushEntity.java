@@ -5,10 +5,7 @@ import com.frikinzi.creatures.entity.base.NonTameableFlyingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.*;
@@ -22,12 +19,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.BiomeDictionary;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -36,17 +38,12 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class LaughingthrushEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.MEALWORMS);
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.<Integer, TranslationTextComponent>builder()
             .put(1, new TranslationTextComponent("message.creatures.chinesehua"))
             .put(2, new TranslationTextComponent("message.creatures.whitecrested"))
@@ -55,8 +52,18 @@ public class LaughingthrushEntity extends NonTameableFlyingBirdBase implements I
             .put(5, new TranslationTextComponent("message.creatures.bluecrowned"))
             .put(6, new TranslationTextComponent("message.creatures.whitecheeked"))
             .put(7, new TranslationTextComponent("message.creatures.redtailed"))
+            .put(8, new TranslationTextComponent("message.creatures.elliots"))
             .build();
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Garrulax canorus")
+            .put(2, "Garrulax leucolophus")
+            .put(3, "Garrulax canorus")
+            .put(4, "Garrulax milleti")
+            .put(5, "Pterorhinus courtoisi")
+            .put(6, "Pterorhinus vassali")
+            .put(7, "Trochalopteron milnei")
+            .put(8, "Trochalopteron elliotii")
+            .build();
 
     public LaughingthrushEntity(EntityType<? extends LaughingthrushEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -101,7 +108,7 @@ public class LaughingthrushEntity extends NonTameableFlyingBirdBase implements I
     }
 
     public int determineVariant() {
-        return 8;
+        return 9;
     }
 
     @Override
@@ -153,43 +160,10 @@ public class LaughingthrushEntity extends NonTameableFlyingBirdBase implements I
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.chinesehua");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.whitecrested");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.chinesehua");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.blackhooded");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.bluecrowned");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.whitecheeked");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 7) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.redtailed");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public float getHatchChance() {
@@ -208,12 +182,36 @@ public class LaughingthrushEntity extends NonTameableFlyingBirdBase implements I
         return 0.3F;
     }
 
-<<<<<<< Updated upstream
-=======
     protected float getSoundVolume() {
         return 0.7F;
     }
 
+    public int getIUCNStatus() {
+        if (this.getVariant() == 5) {
+            return 4;
+        }
+        return super.getIUCNStatus();
+    }
 
->>>>>>> Stashed changes
+    @Override
+    public int methodofDeterminingVariant(IWorld p_213610_1_) {
+        if (CreaturesConfig.biome_only_variants.get()) {
+            Biome biome = p_213610_1_.getBiome(this.blockPosition());
+            RegistryKey<Biome> biomeKey = RegistryKey.create(Registry.BIOME_REGISTRY, biome.getRegistryName());
+            Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biomeKey);
+            if (types.contains(BiomeDictionary.Type.MOUNTAIN)) {
+                return 8;
+            }
+            return this.random.nextInt(7)+1;
+        }
+        return this.random.nextInt(this.determineVariant());
+
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+
+
 }

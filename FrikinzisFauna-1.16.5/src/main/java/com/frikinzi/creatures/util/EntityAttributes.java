@@ -2,44 +2,29 @@ package com.frikinzi.creatures.util;
 
 import com.frikinzi.creatures.Creatures;
 import com.frikinzi.creatures.entity.*;
-<<<<<<< Updated upstream
-=======
 import com.frikinzi.creatures.entity.base.CreaturesBirdEntity;
->>>>>>> Stashed changes
 import com.frikinzi.creatures.entity.base.FishBase;
 import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.entity.egg.CreaturesEggEntity;
 import com.frikinzi.creatures.entity.egg.CreaturesRoeEntity;
 import com.frikinzi.creatures.registry.ModEntityTypes;
-<<<<<<< Updated upstream
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-=======
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
->>>>>>> Stashed changes
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.fish.AbstractFishEntity;
-import net.minecraft.entity.projectile.EggEntity;
 import net.minecraft.world.gen.Heightmap;
-<<<<<<< Updated upstream
-=======
 import net.minecraftforge.event.RegistryEvent;
->>>>>>> Stashed changes
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Creatures.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityAttributes {
-<<<<<<< Updated upstream
-
-=======
     private static final BiMap<Integer, EntityType<? extends CreaturesBirdEntity>> birdEntityMap = HashBiMap.create();
     private static final BiMap<Integer, EntityType<? extends AbstractFishEntity>> fishEntityMap = HashBiMap.create();
     
->>>>>>> Stashed changes
     @SubscribeEvent
     public static void entityAttributes(EntityAttributeCreationEvent event) {
         EntitySpawnPlacementRegistry.register(ModEntityTypes.KOI.get(),
@@ -93,16 +78,22 @@ public class EntityAttributes {
         EntitySpawnPlacementRegistry.register(ModEntityTypes.ARAPAIMA.get(),
                 EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                 FishBase::checkFishSpawnRules);
-<<<<<<< Updated upstream
-=======
         EntitySpawnPlacementRegistry.register(ModEntityTypes.TAMBAQUI.get(),
                 EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                 FishBase::checkFishSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.ELEPHANTNOSE.get(),
                 EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                 FishBase::checkFishSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.STINGRAY.get(),
+                EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                FishBase::checkFishSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.SAWFISH.get(),
+                EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                FishBase::checkFishSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.SWORDFISH.get(),
+                EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                FishBase::checkFishSpawnRules);
 
->>>>>>> Stashed changes
         EntitySpawnPlacementRegistry.register(ModEntityTypes.LOVEBIRD.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
@@ -129,16 +120,16 @@ public class EntityAttributes {
                 TameableBirdBase::checkBirdSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.DOVE.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
-                TameableBirdBase::checkBirdSpawnRules);
+                DoveEntity::checkDoveSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.RAVEN.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.GOLDEN_EAGLE.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 AnimalEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(ModEntityTypes.STELLERS_SEA_EAGLE.get(),
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.SEA_EAGLE.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
-                StellersSeaEagleEntity::checkSSESpawnRules);
+                SeaEagleEntity::checkSSESpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.GYRFALCON.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 AnimalEntity::checkAnimalSpawnRules);
@@ -213,7 +204,7 @@ public class EntityAttributes {
                 TameableBirdBase::checkBirdSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.SKUA.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
-                TameableBirdBase::checkBirdSpawnRules);
+                LargePenguinEntity::checkPenguinSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.BUNTING.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
@@ -231,17 +222,13 @@ public class EntityAttributes {
                 GhostCrabEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.TARANTULA.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-                GhostCrabEntity::checkAnimalSpawnRules);
+                TarantulaEntity::checkTarantulaSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.CAPERCAILLIE.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.PHEASANT.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
-<<<<<<< Updated upstream
-
-
-=======
         EntitySpawnPlacementRegistry.register(ModEntityTypes.STORK.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
@@ -257,7 +244,51 @@ public class EntityAttributes {
         EntitySpawnPlacementRegistry.register(ModEntityTypes.SHOEBILL.get(),
                 EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
                 TameableBirdBase::checkBirdSpawnRules);
->>>>>>> Stashed changes
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.STARLING.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                TameableBirdBase::checkBirdSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.CORMORANT.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                TameableBirdBase::checkBirdSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.PUFFIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                TameableBirdBase::checkBirdSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.SEAGULL.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.BOOBY.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.BANDED_PENGUIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.RAIL.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                TameableBirdBase::checkBirdSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.AVOCET.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                TameableBirdBase::checkBirdSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.CRESTED_PENGUIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.BRUSH_TAILED_PENGUIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                LargePenguinEntity::checkPenguinSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.YELLOW_EYED_PENGUIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.LARGE_PENGUIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                LargePenguinEntity::checkPenguinSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.FRIGATE.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.STILT.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                TameableBirdBase::checkBirdSpawnRules);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.LITTLE_PENGUIN.get(),
+                EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING,
+                PelicanEntity::checkPelicanSpawnRules);
 
         event.put(ModEntityTypes.KOI.get(), KoiEntity.createAttributes().build());
         event.put(ModEntityTypes.LOVEBIRD.get(), LovebirdEntity.createAttributes().build());
@@ -273,7 +304,7 @@ public class EntityAttributes {
         event.put(ModEntityTypes.DOVE.get(), DoveEntity.createAttributes().build());
         event.put(ModEntityTypes.RED_KITE.get(), RedKiteEntity.createAttributes().build());
         event.put(ModEntityTypes.GOLDEN_EAGLE.get(), GoldenEagleEntity.createAttributes().build());
-        event.put(ModEntityTypes.STELLERS_SEA_EAGLE.get(), StellersSeaEagleEntity.createAttributes().build());
+        event.put(ModEntityTypes.SEA_EAGLE.get(), SeaEagleEntity.createAttributes().build());
         event.put(ModEntityTypes.GYRFALCON.get(), GyrfalconEntity.createAttributes().build());
         event.put(ModEntityTypes.LORIKEET.get(), LorikeetEntity.createAttributes().build());
         event.put(ModEntityTypes.CONURE.get(), ConureEntity.createAttributes().build());
@@ -321,8 +352,6 @@ public class EntityAttributes {
         event.put(ModEntityTypes.PHEASANT.get(), PheasantEntity.createAttributes().build());
         event.put(ModEntityTypes.ARAPAIMA.get(), ArapaimaEntity.createAttributes().build());
         event.put(ModEntityTypes.PIRANHA.get(), PiranhaEntity.createAttributes().build());
-<<<<<<< Updated upstream
-=======
         event.put(ModEntityTypes.STORK.get(), StorkEntity.createAttributes().build());
         event.put(ModEntityTypes.WHISTLINGDUCK.get(), WhistlingDuckEntity.createAttributes().build());
         event.put(ModEntityTypes.GROUND_HORNBILL.get(), GroundHornbillEntity.createAttributes().build());
@@ -331,15 +360,38 @@ public class EntityAttributes {
         event.put(ModEntityTypes.STARLING.get(), StarlingEntity.createAttributes().build());
         event.put(ModEntityTypes.TAMBAQUI.get(), TambaquiEntity.createAttributes().build());
         event.put(ModEntityTypes.ELEPHANTNOSE.get(), ElephantNoseFishEntity.createAttributes().build());
-        event.put(ModEntityTypes.CORMORANT.get(), ShoebillEntity.createAttributes().build());
+        event.put(ModEntityTypes.CORMORANT.get(), CormorantEntity.createAttributes().build());
+        event.put(ModEntityTypes.STINGRAY.get(), StingrayEntity.createAttributes().build());
+        event.put(ModEntityTypes.PUFFIN.get(), PuffinEntity.createAttributes().build());
+        event.put(ModEntityTypes.SAWFISH.get(), SawfishEntity.createAttributes().build());
+        event.put(ModEntityTypes.SEAGULL.get(), SeagullEntity.createAttributes().build());
+        event.put(ModEntityTypes.SWORDFISH.get(), SwordfishEntity.createAttributes().build());
+        event.put(ModEntityTypes.BOOBY.get(), BoobyEntity.createAttributes().build());
+        event.put(ModEntityTypes.SQUID.get(), SquidEntity.createAttributes().build());
+        event.put(ModEntityTypes.LOOKDOWN.get(), LookdownEntity.createAttributes().build());
+        event.put(ModEntityTypes.BANDED_PENGUIN.get(), BandedPenguinEntity.createAttributes().build());
+        event.put(ModEntityTypes.MANTIS_SHRIMP.get(), MantisShrimpEntity.createAttributes().build());
+        event.put(ModEntityTypes.RAIL.get(), RailEntity.createAttributes().build());
+        event.put(ModEntityTypes.BARRACUDA.get(), BarracudaEntity.createAttributes().build());
+        event.put(ModEntityTypes.AVOCET.get(), AvocetEntity.createAttributes().build());
+        event.put(ModEntityTypes.SEADRAGON.get(), SeaDragonEntity.createAttributes().build());
+        event.put(ModEntityTypes.TRUMPETFISH.get(), TrumpetfishEntity.createAttributes().build());
+        event.put(ModEntityTypes.CRESTED_PENGUIN.get(), CrestedPenguinEntity.createAttributes().build());
+        event.put(ModEntityTypes.PARROTFISH.get(), ParrotfishEntity.createAttributes().build());
+        event.put(ModEntityTypes.YELLOW_EYED_PENGUIN.get(), YellowEyedPenguinEntity.createAttributes().build());
+        event.put(ModEntityTypes.BRUSH_TAILED_PENGUIN.get(), BrushTailedPenguinEntity.createAttributes().build());
+        event.put(ModEntityTypes.LARGE_PENGUIN.get(), LargePenguinEntity.createAttributes().build());
+        event.put(ModEntityTypes.FRIGATE.get(), FrigateBirdEntity.createAttributes().build());
+        event.put(ModEntityTypes.CLOWNFISH.get(), ClownfishEntity.createAttributes().build());
+        event.put(ModEntityTypes.STILT.get(), StiltEntity.createAttributes().build());
+        event.put(ModEntityTypes.LUNGFISH.get(), LungfishEntity.createAttributes().build());
+        event.put(ModEntityTypes.LITTLE_PENGUIN.get(), LittlePenguinEntity.createAttributes().build());
+        event.put(ModEntityTypes.EDIBLE_CRAB.get(), EdibleCrabEntity.createAttributes().build());
 
->>>>>>> Stashed changes
         event.put(ModEntityTypes.EGG.get(), CreaturesEggEntity.createAttributes().build());
         event.put(ModEntityTypes.ROE.get(), CreaturesRoeEntity.createAttributes().build());
     }
 
-<<<<<<< Updated upstream
-=======
     @SubscribeEvent
     public static void birdMap(final RegistryEvent.Register<EntityType<?>> event) {
         birdEntityMap.put(0, ModEntityTypes.LOVEBIRD.get());
@@ -350,7 +402,7 @@ public class EntityAttributes {
         birdEntityMap.put(5, ModEntityTypes.DOVE.get());
         birdEntityMap.put(6, ModEntityTypes.RED_KITE.get());
         birdEntityMap.put(7, ModEntityTypes.GOLDEN_EAGLE.get());
-        birdEntityMap.put(8, ModEntityTypes.STELLERS_SEA_EAGLE.get());
+        birdEntityMap.put(8, ModEntityTypes.SEA_EAGLE.get());
         birdEntityMap.put(9, ModEntityTypes.GYRFALCON.get());
         birdEntityMap.put(10, ModEntityTypes.LORIKEET.get());
         birdEntityMap.put(11, ModEntityTypes.CONURE.get());
@@ -390,6 +442,19 @@ public class EntityAttributes {
         birdEntityMap.put(45, ModEntityTypes.SHOEBILL.get());
         birdEntityMap.put(46, ModEntityTypes.STARLING.get());
         birdEntityMap.put(47, ModEntityTypes.CORMORANT.get());
+        birdEntityMap.put(48, ModEntityTypes.PUFFIN.get());
+        birdEntityMap.put(49, ModEntityTypes.SEAGULL.get());
+        birdEntityMap.put(50, ModEntityTypes.BOOBY.get());
+        birdEntityMap.put(51, ModEntityTypes.BANDED_PENGUIN.get());
+        birdEntityMap.put(52, ModEntityTypes.RAIL.get());
+        birdEntityMap.put(53, ModEntityTypes.AVOCET.get());
+        birdEntityMap.put(54, ModEntityTypes.CRESTED_PENGUIN.get());
+        birdEntityMap.put(55, ModEntityTypes.YELLOW_EYED_PENGUIN.get());
+        birdEntityMap.put(56, ModEntityTypes.BRUSH_TAILED_PENGUIN.get());
+        birdEntityMap.put(57, ModEntityTypes.LARGE_PENGUIN.get());
+        birdEntityMap.put(58, ModEntityTypes.FRIGATE.get());
+        birdEntityMap.put(59, ModEntityTypes.STILT.get());
+        birdEntityMap.put(60, ModEntityTypes.LITTLE_PENGUIN.get());
 
     }
 
@@ -413,6 +478,17 @@ public class EntityAttributes {
         fishEntityMap.put(16, ModEntityTypes.ARAPAIMA.get());
         fishEntityMap.put(17, ModEntityTypes.PIRANHA.get());
         fishEntityMap.put(18, ModEntityTypes.TAMBAQUI.get());
+        fishEntityMap.put(19, ModEntityTypes.ELEPHANTNOSE.get());
+        fishEntityMap.put(20, ModEntityTypes.STINGRAY.get());
+        fishEntityMap.put(21, ModEntityTypes.SAWFISH.get());
+        fishEntityMap.put(22, ModEntityTypes.SWORDFISH.get());
+        fishEntityMap.put(23, ModEntityTypes.SQUID.get());
+        fishEntityMap.put(24, ModEntityTypes.MANTIS_SHRIMP.get());
+        fishEntityMap.put(25, ModEntityTypes.BARRACUDA.get());
+        fishEntityMap.put(26, ModEntityTypes.SEADRAGON.get());
+        fishEntityMap.put(27, ModEntityTypes.PARROTFISH.get());
+        fishEntityMap.put(28, ModEntityTypes.CLOWNFISH.get());
+        fishEntityMap.put(29, ModEntityTypes.LUNGFISH.get());
 
     }
 
@@ -423,5 +499,4 @@ public class EntityAttributes {
         return fishEntityMap;
     }
 
->>>>>>> Stashed changes
 }

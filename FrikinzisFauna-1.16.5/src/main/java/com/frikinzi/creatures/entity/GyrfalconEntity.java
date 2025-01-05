@@ -146,4 +146,8 @@ public class GyrfalconEntity extends RaptorBase implements IAnimatable {
         return this.random.nextInt(CreaturesConfig.gyrfalcon_clutch_size.get());
     }
 
+    public String getScientificName() {
+        return "Falco rusticolus";
+    }
+
 }

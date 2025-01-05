@@ -14,12 +14,11 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-<<<<<<< Updated upstream
-=======
 import net.minecraft.util.DamageSource;
->>>>>>> Stashed changes
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -126,11 +125,25 @@ public class KakapoEntity extends NonTameableBirdBase implements IAnimatable {
         return this.random.nextInt(CreaturesConfig.kakapo_clutch_size.get());
     }
 
-<<<<<<< Updated upstream
-=======
     protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
         return CreaturesSound.KAKAPO_HURT;
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        return 4;
+    }
+
+    public String getScientificName() {
+        return "Strigops habroptila";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.kakapo");
+    }
+
+    @Override
+    public boolean getTime() {
+        return KakapoEntity.this.level.isDay();
+    }
+
 }

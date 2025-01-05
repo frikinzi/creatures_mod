@@ -10,12 +10,9 @@ public class ConureModel extends AnimatedGeoModel<ConureEntity> {
     @Override
     public ResourceLocation getModelLocation(ConureEntity object)
     {
-<<<<<<< Updated upstream
-=======
         if (object.isBaby()) {
             return new ResourceLocation(Creatures.MODID, "geo/entity/baby_parrot/parrotchick.geo.json");
         }
->>>>>>> Stashed changes
         if (object.isFlying()) {
             return new ResourceLocation(Creatures.MODID, "geo/entity/conure/conurefly.geo.json");
         }
@@ -25,8 +22,6 @@ public class ConureModel extends AnimatedGeoModel<ConureEntity> {
     @Override
     public ResourceLocation getTextureLocation(ConureEntity object)
     {
-<<<<<<< Updated upstream
-=======
         if (object.isBaby()) {
             if (object.isSleeping()) {
                 return new ResourceLocation(Creatures.MODID, "textures/entity/conure/conure" + object.getVariant() + "_baby_sleep.png");
@@ -35,7 +30,6 @@ public class ConureModel extends AnimatedGeoModel<ConureEntity> {
             return new ResourceLocation(Creatures.MODID, "textures/entity/conure/conure" + object.getVariant() + "_baby.png");
 
         }
->>>>>>> Stashed changes
         if (object.isFlying()) {
             return new ResourceLocation(Creatures.MODID, "textures/entity/conure/conure" + object.getVariant() + "fly.png");
         } else if (object.isSleeping()) {
@@ -47,12 +41,9 @@ public class ConureModel extends AnimatedGeoModel<ConureEntity> {
     @Override
     public ResourceLocation getAnimationFileLocation(ConureEntity object)
     {
-<<<<<<< Updated upstream
-=======
         if (object.isBaby()) {
             return new ResourceLocation(Creatures.MODID, "animations/animation.parrotbaby.json");
         }
->>>>>>> Stashed changes
         if (object.isFlying()) {
             return new ResourceLocation(Creatures.MODID, "animations/animation.conure.fly.json");
         }

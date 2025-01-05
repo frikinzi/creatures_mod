@@ -21,6 +21,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -44,6 +45,12 @@ public class WhistlingDuckEntity extends NonTameableBirdBase implements IAnimata
             .put(2, new TranslationTextComponent("message.creatures.whitefacedwhistling"))
             .put(3, new TranslationTextComponent("message.creatures.blackbelliedwhistling"))
             .put(4, new TranslationTextComponent("message.creatures.lesserwhistling"))
+            .build();
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Dendrocygna bicolor")
+            .put(2, "Dendrocygna viduata")
+            .put(3, "Dendrocygna autumnalis")
+            .put(4, "Dendrocygna javanica")
             .build();
 
     public WhistlingDuckEntity(EntityType<? extends WhistlingDuckEntity> p_i50251_1_, World p_i50251_2_) {
@@ -171,5 +178,14 @@ public class WhistlingDuckEntity extends NonTameableBirdBase implements IAnimata
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.whistlingduck_clutch_size.get());
     }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.whistlingduck");
+    }
+
 
 }

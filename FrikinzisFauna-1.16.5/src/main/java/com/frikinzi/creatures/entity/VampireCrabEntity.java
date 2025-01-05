@@ -60,7 +60,7 @@ public class VampireCrabEntity extends AbstractCrabBase implements IAnimatable {
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
-        this.setVariant(this.random.nextInt(6));
+        //this.setVariant(this.random.nextInt(6));
         this.setGender(this.random.nextInt(2));
         if (p_213386_4_ == null) {
             p_213386_4_ = new AgeableData(false);
@@ -177,6 +177,22 @@ public class VampireCrabEntity extends AbstractCrabBase implements IAnimatable {
             ITextComponent i = new TranslationTextComponent("gui.female");
             return i.getString();
         }
+    }
+
+    public int getIUCNStatus() {
+        return -1;
+    }
+
+    public String getScientificName() {
+        return "Geosesarma dennerle";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.vampirecrab");
+    }
+
+    public int determineVariant() {
+        return 6;
     }
 
 }

@@ -6,10 +6,7 @@ import com.frikinzi.creatures.entity.base.TameableWalkingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -36,11 +33,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-public class MonalEntity extends TameableWalkingBirdBase implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-    private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.BEETROOT, Items.SWEET_BERRIES, CreaturesItems.MEALWORMS);
-=======
 import java.util.Map;
 
 public class MonalEntity extends TameableWalkingBirdBase implements IAnimatable {
@@ -51,7 +43,11 @@ public class MonalEntity extends TameableWalkingBirdBase implements IAnimatable 
             2, new TranslationTextComponent("message.creatures.sclater"),
             3, new TranslationTextComponent("message.creatures.chinesemonal")
     );
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Lophophorus impejanus")
+            .put(2, "Lophophorus sclateri")
+            .put(3, "Lophophorus lhuysii")
+            .build();
 
     public MonalEntity(EntityType<? extends MonalEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -144,30 +140,11 @@ public class MonalEntity extends TameableWalkingBirdBase implements IAnimatable 
         return CreaturesLootTables.LARGE_BIRD_GENERIC;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.himalayanmonal");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.sclater");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.chinesemonal");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public ItemStack getFoodItem() {
@@ -181,5 +158,24 @@ public class MonalEntity extends TameableWalkingBirdBase implements IAnimatable 
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.monal_clutch_size.get());
     }
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 2) {
+            return 2;
+        } if (this.getVariant() == 3) {
+            return 2;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.monal");
+    }
+
+
 
 }

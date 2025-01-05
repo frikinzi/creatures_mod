@@ -5,10 +5,7 @@ import com.frikinzi.creatures.entity.base.FishBase;
 import com.frikinzi.creatures.entity.base.GroupFishBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -43,24 +40,24 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class DottybackEntity extends GroupFishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(DottybackEntity.class, DataSerializers.INT);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.neon"),
             2, new TranslationTextComponent("message.creatures.diadem"),
             3, new TranslationTextComponent("message.creatures.striped"),
             4, new TranslationTextComponent("message.creatures.springers")
     );
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Pseudochromis aldabraensis")
+            .put(2, "Pictichromis diadema")
+            .put(3, "Pseudochromis sankeyi")
+            .put(4, "Pseudochromis springeri")
+            .build();
 
->>>>>>> Stashed changes
     public DottybackEntity(EntityType<? extends DottybackEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
@@ -170,35 +167,14 @@ public class DottybackEntity extends GroupFishBase implements IAnimatable {
     }
 
     public static AttributeModifierMap.MutableAttribute createAttributes() {
-        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.1D);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.06D);
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.neon");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.diadem");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.striped");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.springers");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public float getHatchChance() {
@@ -206,7 +182,7 @@ public class DottybackEntity extends GroupFishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
 
     public double getMoveSpeed() {
@@ -217,12 +193,18 @@ public class DottybackEntity extends GroupFishBase implements IAnimatable {
         return CreaturesLootTables.TROPICAL_FISH;
     }
 
-<<<<<<< Updated upstream
-=======
     public int determineVariant()
     {
         return 5;
     }
->>>>>>> Stashed changes
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.dottyback");
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
 
 }

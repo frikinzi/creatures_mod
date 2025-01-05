@@ -48,6 +48,7 @@ public class CreaturesBlocks {
     public static final RegistryObject<Block> TOY10 = registerBlock("toyj", () -> new ToyBlock(AbstractBlock.Properties.of(Material.WOOL).strength(0.8F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> TOY11 = registerBlock("toyk", () -> new ToyBlock(AbstractBlock.Properties.of(Material.WOOL).strength(0.8F).sound(SoundType.WOOL)));
     public static final RegistryObject<Block> TOY12 = registerBlock("toyl", () -> new ToyBlock(AbstractBlock.Properties.of(Material.WOOL).strength(0.8F).sound(SoundType.WOOL)));
+    public static final RegistryObject<Block> TOY13 = registerBlock("toym", () -> new ToyBlock(AbstractBlock.Properties.of(Material.WOOL).strength(0.8F).sound(SoundType.WOOL)));
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }

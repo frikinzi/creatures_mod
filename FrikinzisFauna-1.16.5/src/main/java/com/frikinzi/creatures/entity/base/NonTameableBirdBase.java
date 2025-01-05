@@ -10,6 +10,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.horse.CoatColors;
+import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -28,10 +31,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
-<<<<<<< Updated upstream
-=======
 import net.minecraft.world.IWorld;
->>>>>>> Stashed changes
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -55,11 +55,22 @@ public class NonTameableBirdBase extends CreaturesBirdEntity {
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
-        this.setVariant(this.random.nextInt(determineVariant()));
+        int color;
+        if (p_213386_4_ instanceof CreaturesBirdEntity.BirdData) {
+            color = ((CreaturesBirdEntity.BirdData)p_213386_4_).variant;
+        } else {
+            if (p_213386_3_ == SpawnReason.SPAWN_EGG) {
+
+            }
+            color = methodofDeterminingVariant(p_213386_1_);
+            p_213386_4_ = new CreaturesBirdEntity.BirdData(color);
+        }
+        this.setVariant(color);
         this.setGender(this.random.nextInt(2));
         if (p_213386_4_ == null) {
             p_213386_4_ = new AgeableData(false);
         }
+        this.setSubVariant(this.methodOfDeterminingSubVariant());
 
         return super.finalizeSpawn(p_213386_1_, p_213386_2_, p_213386_3_, p_213386_4_, p_213386_5_);
     }
@@ -89,12 +100,10 @@ public class NonTameableBirdBase extends CreaturesBirdEntity {
     protected void checkFallDamage(double p_184231_1_, boolean p_184231_3_, BlockState p_184231_4_, BlockPos p_184231_5_) {
     }
 
-<<<<<<< Updated upstream
-=======
     public int methodofDeterminingVariant(IWorld p_213610_1_) {
-        return this.random.nextInt(determineVariant());
+        int variant = Math.max(determineVariant(), 2);
+        return this.random.nextInt(variant - 1) + 1;
     }
->>>>>>> Stashed changes
 
     public boolean canMate(AnimalEntity p_70878_1_) {
         return false;
@@ -182,11 +191,7 @@ public class NonTameableBirdBase extends CreaturesBirdEntity {
     }
 
 
-<<<<<<< Updated upstream
-    class SleepGoal extends Goal {
-=======
     public class SleepGoal extends Goal {
->>>>>>> Stashed changes
         public SleepGoal() {
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
         }
@@ -204,7 +209,7 @@ public class NonTameableBirdBase extends CreaturesBirdEntity {
         }
 
         private boolean canSleep() {
-                return NonTameableBirdBase.this.level.isNight() && !NonTameableBirdBase.this.isInWater() && !NonTameableBirdBase.this.isOnFire() && NonTameableBirdBase.this.isOnGround();
+                return getTime() && !NonTameableBirdBase.this.isInWater() && !NonTameableBirdBase.this.isOnFire() && NonTameableBirdBase.this.isOnGround();
         }
 
         public void stop() {
@@ -254,6 +259,9 @@ public class NonTameableBirdBase extends CreaturesBirdEntity {
         return new ItemStack(Items.WHEAT_SEEDS, 1);
     }
 
+    public boolean getTime() {
+        return NonTameableBirdBase.this.level.isNight();
+    }
 
 
 }

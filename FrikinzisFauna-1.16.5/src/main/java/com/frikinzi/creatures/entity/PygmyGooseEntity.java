@@ -5,11 +5,7 @@ import com.frikinzi.creatures.entity.base.NonTameableBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-import net.minecraft.client.resources.I18n;
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -25,10 +21,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-<<<<<<< Updated upstream
-import net.minecraft.util.text.ITextComponent;
-=======
->>>>>>> Stashed changes
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -41,23 +33,22 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
 
->>>>>>> Stashed changes
 public class PygmyGooseEntity extends NonTameableBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.BREAD, Items.WHEAT_SEEDS);
     public int featherTime = this.random.nextInt(6000) + 6000;
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.africanpygmy"),
             2, new TranslationTextComponent("message.creatures.cottonpygmy"),
             3, new TranslationTextComponent("message.creatures.greenpygmy")
     );
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Nettapus auritus")
+            .put(2, "Nettapus coromandelianus")
+            .put(3, "Nettapus pulchellus")
+            .build();
 
     public PygmyGooseEntity(EntityType<? extends PygmyGooseEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -179,27 +170,10 @@ public class PygmyGooseEntity extends NonTameableBirdBase implements IAnimatable
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.africanpygmy");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.cottonpygmy");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.greenpygmy");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     @Override
@@ -217,6 +191,10 @@ public class PygmyGooseEntity extends NonTameableBirdBase implements IAnimatable
 
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.pygmy_goose_clutch_size.get());
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
     }
 
 }

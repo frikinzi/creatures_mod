@@ -2,17 +2,15 @@ package com.frikinzi.creatures.entity;
 
 import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.ai.FollowFlockLeaderGoal;
+import com.frikinzi.creatures.entity.ai.LandOnOwnersShoulderGoal;
 import com.frikinzi.creatures.entity.base.CreaturesBirdEntity;
 import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.entity.egg.CreaturesEggEntity;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.registry.ModEntityTypes;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.frikinzi.creatures.util.EntityAttributes;
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -37,11 +35,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-public class FinchEntity extends TameableBirdBase implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-    private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
-=======
 import java.util.Map;
 
 public class FinchEntity extends TameableBirdBase implements IAnimatable {
@@ -60,7 +53,19 @@ public class FinchEntity extends TameableBirdBase implements IAnimatable {
             .put(10, new TranslationTextComponent("message.creatures.purplegrenadier"))
             .put(11, new TranslationTextComponent("message.creatures.europeangoldfinch"))
             .build();
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Taeniopygia castanotis")
+            .put(2, "Amandava amandava")
+            .put(3, "Taeniopygia castanotis")
+            .put(4, "Stizoptera bichenovii")
+            .put(5, "Chloebia gouldiae")
+            .put(6, "Chloebia gouldiae")
+            .put(7, "Pyrrhula pyrrhula")
+            .put(8, "Lonchura oryzivora")
+            .put(9, "Erythrura tricolor")
+            .put(10, "Granatina ianthinogaster")
+            .put(11, "Carduelis carduelis")
+            .build();
 
     public FinchEntity(EntityType<? extends FinchEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -70,6 +75,7 @@ public class FinchEntity extends TameableBirdBase implements IAnimatable {
         super.registerGoals();
         this.goalSelector.addGoal(5, new FollowFlockLeaderGoal(this));
         this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, PlayerEntity.class, 16.0F, 1.5D, 1.2D));
+        this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
@@ -130,11 +136,7 @@ public class FinchEntity extends TameableBirdBase implements IAnimatable {
 
     public CreaturesEggEntity layEgg(CreaturesBirdEntity animal) {
         CreaturesEggEntity egg = new CreaturesEggEntity(ModEntityTypes.EGG.get(), this.level);
-<<<<<<< Updated upstream
-        egg.setSpecies(ModEntityTypes.getIntFromBirdEntity(animal));
-=======
         egg.setSpecies(EntityAttributes.getBirdEntityMap().inverse().get(animal.getType()));
->>>>>>> Stashed changes
         egg.setGender(this.random.nextInt(2));
         if (this.getVariant() == 1) {
             if (this.random.nextInt(CreaturesConfig.lovebird_mutation_chance.get()) == 2) {
@@ -191,55 +193,10 @@ public class FinchEntity extends TameableBirdBase implements IAnimatable {
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.zebrafinch");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.strawberryfinch");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.zebrafinchmutation");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.owlfaced");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.gouldianfinchred");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.gouldianfinchblack");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 7) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.bullfinch");
-            return s1.getString();
-        }   else if (this.getVariant() == 8) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.javafinch");
-            return s1.getString();
-        } else if (this.getVariant() == 9) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.parrotfinch");
-            return s1.getString();
-        } else if (this.getVariant() == 10) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.purplegrenadier");
-            return s1.getString();
-        } else if (this.getVariant() == 11) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.europeangoldfinch");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public String getGenderName() {
@@ -264,6 +221,17 @@ public class FinchEntity extends TameableBirdBase implements IAnimatable {
 
     protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
         return 0.3F;
+    }
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 8) {
+            return 3;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
     }
 
 }

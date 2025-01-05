@@ -5,10 +5,7 @@ import com.frikinzi.creatures.entity.base.NonTameableFlyingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.AgeableEntity;
@@ -36,17 +33,12 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class MagpieEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.MEALWORMS);
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.<Integer, TranslationTextComponent>builder()
             .put(1, new TranslationTextComponent("message.creatures.eurasianmagpie"))
             .put(2, new TranslationTextComponent("message.creatures.australianmagpie"))
@@ -55,7 +47,15 @@ public class MagpieEntity extends NonTameableFlyingBirdBase implements IAnimatab
             .put(5, new TranslationTextComponent("message.creatures.iberianmagpie"))
             .put(6, new TranslationTextComponent("message.creatures.srilanka"))
             .build();
->>>>>>> Stashed changes
+
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Pica pica")
+            .put(2, "Gymnorhina tibicen")
+            .put(3, "Cissa thalassina")
+            .put(4, "Urocissa caerulea")
+            .put(5, "Cyanopica cooki")
+            .put(6, "Urocissa ornata")
+            .build();
 
     public MagpieEntity(EntityType<? extends MagpieEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -68,13 +68,10 @@ public class MagpieEntity extends NonTameableFlyingBirdBase implements IAnimatab
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
     {
-<<<<<<< Updated upstream
-=======
         if (this.isBaby() & this.isFlying()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("babyfly", true));
             return PlayState.CONTINUE;
         }
->>>>>>> Stashed changes
         if (event.isMoving() && this.onGround) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
             return PlayState.CONTINUE;
@@ -149,39 +146,10 @@ public class MagpieEntity extends NonTameableFlyingBirdBase implements IAnimatab
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.eurasianmagpie");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.australianmagpie");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.javan");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.taiwan");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.iberianmagpie");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.srilanka");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public float getHatchChance() {
@@ -195,5 +163,19 @@ public class MagpieEntity extends NonTameableFlyingBirdBase implements IAnimatab
     public ItemStack getFoodItem() {
         return new ItemStack(CreaturesItems.MEALWORMS, 1);
     }
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 3) {
+            return 4;
+        } if (this.getVariant() == 6) {
+            return 2;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
 
 }

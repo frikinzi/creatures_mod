@@ -30,11 +30,7 @@ public class GooseModel extends AnimatedGeoModel<GooseEntity> {
         if (object.isSleeping()) {
             return new ResourceLocation(Creatures.MODID, "textures/entity/goose/goose" + object.getVariant() + "sleep.png");
         }
-<<<<<<< Updated upstream
-        if (!object.isBaby() && object.isFlying()) {
-=======
         if (!object.isBaby() && object.isFlying() && !object.isInWater()) {
->>>>>>> Stashed changes
                 return new ResourceLocation(Creatures.MODID, "textures/entity/goose/goose" + object.getVariant() + "fly.png");
             }
         return new ResourceLocation(Creatures.MODID, "textures/entity/goose/goose" + object.getVariant() + ".png");

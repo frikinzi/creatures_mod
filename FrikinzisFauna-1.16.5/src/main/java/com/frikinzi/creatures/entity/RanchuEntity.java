@@ -19,6 +19,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -142,7 +144,17 @@ public class RanchuEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
+
+    public String getScientificName() {
+        return "Carassius auratus";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.ranchu");
+    }
+
+
 
 }

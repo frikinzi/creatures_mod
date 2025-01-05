@@ -37,6 +37,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
@@ -53,6 +54,8 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
     private static final DataParameter<Boolean> BRED = EntityDataManager.defineId(GroupFishBase.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> AGE = EntityDataManager.defineId(GroupFishBase.class, DataSerializers.INT);
     private static final DataParameter<Boolean> DATA_BABY_ID = EntityDataManager.defineId(GroupFishBase.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(GroupFishBase.class, DataSerializers.INT);
+    private static final DataParameter<Integer> SUBVARIANT = EntityDataManager.defineId(GroupFishBase.class, DataSerializers.INT);
     public int coolDown = 0;
 
     protected RandomWalkingGoal randomStrollGoal;
@@ -77,6 +80,7 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
             float f = (float) (this.random.nextGaussian() * CreaturesConfig.height_standard_deviation.get() + CreaturesConfig.height_base_multiplier.get());
             this.setHeightMultiplier(f);
         }
+        this.setGender(this.random.nextInt(2));
 
 
         return super.finalizeSpawn(p_213386_1_, p_213386_2_, p_213386_3_, p_213386_4_, p_213386_5_);
@@ -116,7 +120,7 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
         return this.entityData.get(DATA_ID_MOVING);
     }
 
-    private void setMoving(boolean p_175476_1_) {
+    public void setMoving(boolean p_175476_1_) {
         this.entityData.set(DATA_ID_MOVING, p_175476_1_);
     }
 
@@ -172,8 +176,8 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
     }
 
 
-    static class MoveHelperController extends MovementController {
-        private final GroupFishBase fishbase;
+    protected static class MoveHelperController extends MovementController {
+        protected GroupFishBase fishbase;
 
         public MoveHelperController(GroupFishBase p_i45831_1_) {
             super(p_i45831_1_);
@@ -278,6 +282,9 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
         this.entityData.define(BRED, false);
         this.entityData.define(AGE, 0);
         this.entityData.define(DATA_BABY_ID, false);
+        this.entityData.define(GENDER, 0);
+        this.entityData.define(SUBVARIANT, 0);
+
     }
 
     public void onSyncedDataUpdated(DataParameter<?> p_184206_1_) {
@@ -350,6 +357,7 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
         CompoundNBT compoundnbt = p_204211_1_.getOrCreateTag();
         compoundnbt.putFloat("HeightMultiplier", this.getHeightMultiplier());
         compoundnbt.putInt("Age", this.getAge());
+        compoundnbt.putInt("Subvariant", this.getSubVariant());
     }
 
 
@@ -357,6 +365,8 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
         p_213281_1_.putFloat("HeightMultiplier", this.getHeightMultiplier());
         p_213281_1_.putBoolean("Bred", this.wasBred());
         p_213281_1_.putInt("Age", this.getAge());
+        p_213281_1_.putInt("Subvariant", this.getSubVariant());
+        p_213281_1_.putInt("Gender", this.getGender());
         super.addAdditionalSaveData(p_213281_1_);
     }
 
@@ -364,6 +374,8 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
         super.readAdditionalSaveData(p_70037_1_);
         this.setBred(p_70037_1_.getBoolean("Bred"));
         this.setAge(p_70037_1_.getInt("Age"));
+        this.setGender(p_70037_1_.getInt("Gender"));
+        this.setSubVariant(p_70037_1_.getInt("Subvariant"));
         if (!p_70037_1_.contains("HeightMultiplier") || this.getHeightMultiplier() < 0.7F || this.getHeightMultiplier() > 1.5F) {
             this.setHeightMultiplier((float)(this.random.nextGaussian() * CreaturesConfig.height_standard_deviation.get() + CreaturesConfig.height_base_multiplier.get()));
         } else {
@@ -441,14 +453,22 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
         return 1.0D;
     }
 
+    public int getGender() {
+        return MathHelper.clamp(this.entityData.get(GENDER), 0, 2);
+    }
 
-    class EatFoodGoal extends Goal {
+    public void setGender(int p_191997_1_) {
+        this.entityData.set(GENDER, p_191997_1_);
+    }
+
+
+    public class EatFoodGoal extends Goal {
         private int cooldown;
         public final Predicate<ItemEntity> CAN_EAT = (p_205023_0_) -> {
             return p_205023_0_.getItem().getItem() == GroupFishBase.this.getFoodItem() && p_205023_0_.isAlive() && p_205023_0_.isInWater();
         };
 
-        private EatFoodGoal() {
+        public EatFoodGoal() {
         }
 
         public boolean canUse() {
@@ -464,7 +484,6 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
             List<ItemEntity> list = GroupFishBase.this.level.getEntitiesOfClass(ItemEntity.class, GroupFishBase.this.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), CAN_EAT);
             if (!list.isEmpty()) {
                 GroupFishBase.this.getNavigation().moveTo(list.get(0), (double)1.2F);
-                //FishBase.this.playSound(SoundEvents.DOLPHIN_PLAY, 1.0F, 1.0F);
             }
 
             this.cooldown = 0;
@@ -508,6 +527,9 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
                 List<GroupFishBase> list = GroupFishBase.this.level.getNearbyEntities(GroupFishBase.class, predicate, GroupFishBase.this, GroupFishBase.this.getBoundingBox().inflate(10.0D, 10.0D, 10.0D));
                 if (!list.isEmpty() ) {
                     boolean canbreed = false;
+                    if (!(p_220810_1_.getItem() == CreaturesItems.FISH_FOOD.getItem() || p_220810_1_.getItem() == CreaturesItems.ALGAE_WAFER.getItem())) {
+                        canbreed=false;
+                    }
                     int index = 0;
                     for (int lol = 0; lol < list.size(); lol++) {
                         if (list.get(lol).coolDown <= 0) {
@@ -567,16 +589,98 @@ public abstract class GroupFishBase extends AbstractGroupFishEntity {
 
     }
 
-<<<<<<< Updated upstream
-=======
     public void setVariant(int i) {
+    }
 
+    public int getSubVariant() {
+        return this.entityData.get(SUBVARIANT);
+    }
+
+    public void setSubVariant(int sub) {
+        this.entityData.set(SUBVARIANT, sub);
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("creatures.unknown");
+    }
+
+    public String getScientificName() {
+        return "";
     }
 
     public int determineVariant()
     {
         return 1;
     }
->>>>>>> Stashed changes
+
+    public int getIUCNStatus() {
+        return 0;
+    }
+
+    public TextFormatting getIUCNColor() {
+        if (this.getIUCNStatus() == 0) {
+            return TextFormatting.DARK_GREEN; // least concern
+        } if (this.getIUCNStatus() == 1) {
+            return TextFormatting.GOLD; // near threatened
+        } if (this.getIUCNStatus() == 2) {
+            return TextFormatting.GOLD;  // vulnerable
+        } if (this.getIUCNStatus() == 3) {
+            return TextFormatting.RED; // endangered
+        } if (this.getIUCNStatus() == 4) {
+            return TextFormatting.DARK_RED; // critically endangered
+        } if (this.getIUCNStatus() == 5) {
+            return TextFormatting.DARK_PURPLE; // extinct in the wild
+        } if (this.getIUCNStatus() == 6) {
+            return TextFormatting.BLACK; // extinct
+        } return TextFormatting.GRAY; // unknown
+    }
+    public ITextComponent getIUCNText() {
+        if (this.getIUCNStatus() == 0) {
+            return new TranslationTextComponent("creatures.leastconcern"); // least concern
+        } if (this.getIUCNStatus() == 1) {
+            return new TranslationTextComponent("creatures.nearthreatened"); // near threatened
+        } if (this.getIUCNStatus() == 2) {
+            return new TranslationTextComponent("creatures.vulnerable");  // vulnerable
+        } if (this.getIUCNStatus() == 3) {
+            return new TranslationTextComponent("creatures.endangered"); // endangered
+        } if (this.getIUCNStatus() == 4) {
+            return new TranslationTextComponent("creatures.criticallyendangered"); // critically endangered
+        } if (this.getIUCNStatus() == 5) {
+            return new TranslationTextComponent("creatures.extinctinwild"); // extinct in the wild
+        } if (this.getIUCNStatus() == 6) {
+            return new TranslationTextComponent("creatures.extinct"); // extinct
+        } return new TranslationTextComponent("creatures.datadeficient"); // unknown
+    }
+
+    public String getGenderText() {
+        if (this.getGender() == 1) {
+            ITextComponent i = new TranslationTextComponent("gui.male");
+            return i.getString();
+        } else {
+            ITextComponent i = new TranslationTextComponent("gui.female");
+            return i.getString();
+        }
+    }
+
+    public <T extends FishBase> T getBreedOffspring(ServerWorld world, Class<T> offspringClass) {
+        try {
+            T offspring = offspringClass.getConstructor(ServerWorld.class).newInstance(world);
+            if (offspring != null) {
+                offspring.setVariant(this.getVariant());
+                offspring.setGender(this.random.nextInt(2));
+                offspring.setHeightMultiplier(this.getHeightMultiplier());
+            }
+            return offspring;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int methodOfDeterminingSubVariant() {
+        return 1;
+    }
+
+
 
 }

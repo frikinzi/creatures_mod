@@ -9,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.IntNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -17,12 +19,19 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FFGuideItem extends Item {
     ArrayList<CreaturesBirdEntity> list = new ArrayList<CreaturesBirdEntity>();
+    Map<Integer, List<Integer>> pages;
 
     public FFGuideItem(Item.Properties properties) {
         super(properties);
+
+
     }
 
     @Override
@@ -56,6 +65,22 @@ public class FFGuideItem extends Item {
     public void openCreaturesGUI(ItemStack book) {
         Minecraft mc = Minecraft.getInstance();
         mc.setScreen(new GUICreatures());
+    }
+
+    public Map<Integer, List<Integer>> getCustomMap(ItemStack stack) {
+        CompoundNBT nbt = stack.getOrCreateTag();
+        Map<Integer, List<Integer>> map = new HashMap<>();
+
+        CompoundNBT mapNBT = nbt.getCompound("CustomMap");
+
+        for (String key : mapNBT.getAllKeys()) {
+            int intKey = Integer.parseInt(key);
+            ListNBT listNBT = mapNBT.getList(key, 3); // 3 is the tag type for int arrays
+            List<Integer> list = listNBT.stream().map(inbt -> ((IntNBT) inbt).getAsInt()).collect(Collectors.toList());
+            map.put(intKey, list);
+        }
+
+        return map;
     }
 
     public void addBirdPage(CreaturesBirdEntity e) {

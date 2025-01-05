@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,10 +24,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -175,7 +173,7 @@ public class ArapaimaEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return Items.TROPICAL_FISH;
+        return CreaturesItems.FISH_FOOD;
     }
 
     protected void layEgg(ServerWorld server, FishBase father) {
@@ -195,20 +193,15 @@ public class ArapaimaEntity extends FishBase implements IAnimatable {
                 int rnd = new Random().nextInt(vars.length);
                 egg.setVariant(vars[rnd]);
 
-                int random = this.random.nextInt(20);
+                int random = this.random.nextInt(CreaturesConfig.arapaima_mutation_chance.get());
                 if (random == 1) {
                     //leucistic variant chance
-<<<<<<< Updated upstream
-                    egg.setVariant(this.random.nextInt(3));
-=======
-                    egg.setVariant(this.random.nextInt(4));
->>>>>>> Stashed changes
+                    egg.setVariant(3);
                 }
 
                 Random rand = new Random();
                 egg.setPos(MathHelper.floor(mother.getX()) + 0.5 + (-1+rand.nextFloat()*2), MathHelper.floor(mother.getY()) + 0.5, MathHelper.floor(mother.getZ()) + 0.5 + (-1+rand.nextFloat()*2));
                 server.addFreshEntityWithPassengers(egg);
-                //System.out.println(this.bird.getClutchSize());
             }
             server.broadcastEntityEvent(this, (byte)18);
         }
@@ -229,6 +222,29 @@ public class ArapaimaEntity extends FishBase implements IAnimatable {
 
     public float getScale() {
         return this.isBaby() ? 0.2F : 1.0F;
+    }
+
+
+    public int getIUCNStatus() {
+        return -1;
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.arapaima");
+
+    }
+
+    public String getScientificName() {
+        return "Arapaima gigas";
+    }
+
+    public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+        ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
+        if (itemstack.getItem() == Items.WATER_BUCKET && this.isAlive()) {
+            return ActionResultType.PASS;
+        } else {
+            return super.mobInteract(p_230254_1_, p_230254_2_);
+        }
     }
 
 }

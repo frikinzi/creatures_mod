@@ -10,13 +10,10 @@
   "entity.kakapo.ambient": {
     "subtitle": "entity.kakapo.ambient",
     "sounds": [ "creatures:entity/kakapo/kakapo_ambient" ]
-<<<<<<< Updated upstream
-=======
   },
   "entity.kakapo.hurt": {
     "subtitle": "entity.kakapo.hurt",
     "sounds": [ "creatures:entity/kakapo/kakapo_hurt" ]
->>>>>>> Stashed changes
   },
   "entity.mandarin_duck.ambient": {
     "subtitle": "entity.mandarin_duck.ambient",
@@ -181,7 +178,7 @@
   "entity.capercaillie.ambient": {
   "subtitle": "entity.capercaillie.ambient",
   "sounds": [ "creatures:entity/capercaillie/capercaillie_ambient" ]
-},
+  },
   "entity.pheasant.ambient": {
     "subtitle": "entity.pheasant.ambient",
     "sounds": [ "creatures:entity/pheasant/pheasant_ambient" ]
@@ -198,8 +195,6 @@
     "subtitle": "entity.dove.mourning_dove_ambient",
     "sounds": [ "creatures:entity/dove/mourning_dove_ambient" ]
   },
-<<<<<<< Updated upstream
-=======
   "entity.stork.stork_ambient": {
     "subtitle": "entity.stork.stork_ambient",
     "sounds": [ "creatures:entity/stork/stork_ambient" ]
@@ -244,7 +239,70 @@
     "subtitle": "entity.cormorant.cormorant_ambient",
     "sounds": [ "creatures:entity/cormorant/cormorant_ambient" ]
   },
->>>>>>> Stashed changes
+  "entity.puffin.puffin_ambient": {
+    "subtitle": "entity.puffin.puffin_ambient",
+    "sounds": [ "creatures:entity/puffin/puffin_ambient" ]
+  },
+  "entity.puffin.puffin_hurt": {
+    "subtitle": "entity.puffin.puffin_hurt",
+    "sounds": [ "creatures:entity/puffin/puffin_hurt" ]
+  },
+  "entity.seagull.seagull_ambient": {
+    "subtitle": "entity.seagull.seagull_ambient",
+    "sounds": [ "creatures:entity/seagull/seagull_ambient" ]
+  },
+  "entity.booby.booby_ambient": {
+    "subtitle": "entity.booby.booby_ambient",
+    "sounds": [ "creatures:entity/booby/booby_ambient" ]
+  },
+  "entity.booby.booby_hurt": {
+    "subtitle": "entity.booby.booby_hurt",
+    "sounds": [ "creatures:entity/booby/booby_hurt" ]
+  },
+  "entity.bandedpenguin.bandedpenguin_ambient": {
+    "subtitle": "entity.bandedpenguin.bandedpenguin_ambient",
+    "sounds": [ "creatures:entity/bandedpenguin/bandedpenguin_ambient" ]
+  },
+  "entity.rail.rail_ambient": {
+    "subtitle": "entity.rail.rail_ambient",
+    "sounds": [ "creatures:entity/rail/rail_ambient" ]
+  },
+  "entity.avocet.avocet_ambient": {
+    "subtitle": "entity.avocet.avocet_ambient",
+    "sounds": [ "creatures:entity/avocet/avocet_ambient" ]
+  },
+  "entity.crestedpenguin.crestedpenguin_ambient": {
+    "subtitle": "entity.crestedpenguin.crestedpenguin_ambient",
+    "sounds": [ "creatures:entity/crestedpenguin/crestedpenguin_ambient" ]
+  },
+  "entity.yelloweyedpenguin.yelloweyedpenguin_ambient": {
+    "subtitle": "entity.yelloweyedpenguin.yelloweyedpenguin_ambient",
+    "sounds": [ "creatures:entity/yelloweyedpenguin/yelloweyedpenguin_ambient" ]
+  },
+  "entity.brushtailedpenguin.brushtailedpenguin_ambient": {
+    "subtitle": "entity.brushtailedpenguin.brushtailedpenguin_ambient",
+    "sounds": [ "creatures:entity/brushtailedpenguin/brushtailedpenguin_ambient" ]
+  },
+  "entity.largepenguin.largepenguin_ambient": {
+    "subtitle": "entity.largepenguin.largepenguin_ambient",
+    "sounds": [ "creatures:entity/largepenguin/largepenguin_ambient" ]
+  },
+  "entity.frigate.frigate_ambient": {
+    "subtitle": "entity.frigate.frigate_ambient",
+    "sounds": [ "creatures:entity/frigate/frigate_ambient" ]
+  },
+  "entity.stilt.stilt_ambient": {
+    "subtitle": "entity.stilt.stilt_ambient",
+    "sounds": [ "creatures:entity/stilt/stilt_ambient" ]
+  },
+  "entity.stilt.stilt_hurt": {
+    "subtitle": "entity.stilt.stilt_hurt",
+    "sounds": [ "creatures:entity/stilt/stilt_hurt" ]
+  },
+  "entity.littlepenguin.littlepenguin_ambient": {
+    "subtitle": "entity.littlepenguin.littlepenguin",
+    "sounds": [ "creatures:entity/littlepenguin/littlepenguin_ambient" ]
+  },
   "entity.egg.hatch": {
     "subtitle": "entity.egg.hatch",
     "sounds": [ "creatures:entity/egg/hatch" ]

@@ -155,4 +155,13 @@ public class CapercaillieEntity extends NonTameableBirdBase implements IAnimatab
         return this.random.nextInt(CreaturesConfig.capercaillie_clutch_size.get());
     }
 
+    public ITextComponent getFunFact() {
+
+        return new TranslationTextComponent("description.creatures.capercaillie");
+    }
+
+    public String getScientificName() {
+        return "Tetrao urogallus";
+    }
+
 }

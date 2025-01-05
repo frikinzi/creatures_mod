@@ -4,10 +4,7 @@ import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.base.FishBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -39,16 +36,11 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class GouramiEntity extends FishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(GouramiEntity.class, DataSerializers.INT);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.threespot"),
             2, new TranslationTextComponent("message.creatures.roundtailed"),
@@ -56,8 +48,21 @@ public class GouramiEntity extends FishBase implements IAnimatable {
             4, new TranslationTextComponent("message.creatures.dwarf"),
             5, new TranslationTextComponent("message.creatures.pearl")
     );
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Trichopodus trichopterus")
+            .put(2, "Macropodus ocellatus")
+            .put(3, "Trichopodus trichopterus")
+            .put(4, "Trichogaster lalius")
+            .put(5, "Trichopodus leerii")
+            .build();
+    public static Map<Integer, TranslationTextComponent> DESCRIPTIONS = ImmutableMap.of(
+            1, new TranslationTextComponent("description.creatures.threespot"),
+            2, new TranslationTextComponent("description.creatures.roundtailed"),
+            3, new TranslationTextComponent("description.creatures.goldgourami"),
+            4, new TranslationTextComponent("description.creatures.dwarf"),
+            5, new TranslationTextComponent("description.creatures.pearl")
+    );
 
->>>>>>> Stashed changes
     public GouramiEntity(EntityType<? extends GouramiEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
@@ -65,7 +70,7 @@ public class GouramiEntity extends FishBase implements IAnimatable {
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
         if (p_213386_3_ != SpawnReason.BUCKET) {
-            this.setVariant(this.random.nextInt(6));
+            this.setVariant(this.random.nextInt(5)+1);
             float f = (float) (this.random.nextGaussian() * CreaturesConfig.height_standard_deviation.get() + CreaturesConfig.height_base_multiplier.get());
             this.setHeightMultiplier(f);
         }
@@ -170,35 +175,10 @@ public class GouramiEntity extends FishBase implements IAnimatable {
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.threespot");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.goldgourami");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.roundtailed");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.pearl");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.dwarf");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public float getHatchChance() {
@@ -206,7 +186,7 @@ public class GouramiEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
 
     protected void registerGoals() {
@@ -219,12 +199,27 @@ public class GouramiEntity extends FishBase implements IAnimatable {
         return 0.2F;
     }
 
-<<<<<<< Updated upstream
-=======
     public int determineVariant()
     {
         return 5;
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        if (this.getVariant()== 5) {
+            return 1;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        TranslationTextComponent translatable = DESCRIPTIONS.get(this.getVariant());
+        if (translatable != null) {
+            return translatable;
+        } return new TranslationTextComponent("creatures.unknown");
+    }
+
 }

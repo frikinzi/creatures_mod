@@ -19,6 +19,8 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
@@ -170,5 +172,14 @@ public class MandarinDuckEntity extends NonTameableBirdBase implements IAnimatab
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.mandarin_duck_clutch_size.get());
     }
+
+    public String getScientificName() {
+        return "Aix galericulata";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.mandarinduck");
+    }
+
 
 }

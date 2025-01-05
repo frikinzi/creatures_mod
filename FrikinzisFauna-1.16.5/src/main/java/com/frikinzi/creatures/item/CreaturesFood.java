@@ -26,10 +26,23 @@ public class CreaturesFood {
     public static final Food RAW_PIRANHA = (new Food.Builder()).nutrition(3).saturationMod(0.3F).build();
     public static final Food COOKED_PIRANHA = (new Food.Builder()).nutrition(8).saturationMod(0.6F).build();
     public static final Food MEALWORMS = (new Food.Builder()).nutrition(1).saturationMod(0.3F).build();
-<<<<<<< Updated upstream
-=======
     public static final Food RAW_TAMBAQUI = (new Food.Builder()).nutrition(3).saturationMod(0.3F).build();
     public static final Food COOKED_TAMBAQUI = (new Food.Builder()).nutrition(8).saturationMod(0.6F).build();
-
->>>>>>> Stashed changes
+    public static final Food RAW_SWORDFISH = (new Food.Builder()).nutrition(3).saturationMod(0.3F).build();
+    public static final Food COOKED_SWORDFISH = (new Food.Builder()).nutrition(8).saturationMod(0.6F).build();
+    public static final Food RAW_SQUID = (new Food.Builder()).nutrition(2).saturationMod(0.3F).build();
+    public static final Food CALAMARI = (new Food.Builder()).nutrition(6).saturationMod(0.6F).build();
+    public static final Food RED_SNAPPER_SASHIMI = (new Food.Builder()).nutrition(6).saturationMod(0.4F).build();
+    public static final Food RAW_EDIBLECRAB = (new Food.Builder()).nutrition(2).saturationMod(0.3F).build();
+    public static final Food COOKED_EDIBLECRAB = (new Food.Builder()).nutrition(6).saturationMod(0.6F).build();
+    public static final Food RAW_LUNGFISH = (new Food.Builder()).nutrition(4).saturationMod(0.3F).build();
+    public static final Food COOKED_LUNGFISH = (new Food.Builder()).nutrition(8).saturationMod(0.6F).build();
+    public static final Food RAW_BLUE_CRAB = (new Food.Builder()).nutrition(2).saturationMod(0.3F).build();
+    public static final Food COOKED_BLUE_CRAB = (new Food.Builder()).nutrition(6).saturationMod(0.6F).build();
+    public static final Food RAW_DUNGENESS_CRAB = (new Food.Builder()).nutrition(2).saturationMod(0.3F).build();
+    public static final Food COOKED_DUNGENESS_CRAB = (new Food.Builder()).nutrition(6).saturationMod(0.6F).build();
+    public static final Food RAW_PARROTFISH = (new Food.Builder()).nutrition(4).saturationMod(0.3F).build();
+    public static final Food COOKED_PARROTFISH = (new Food.Builder()).nutrition(7).saturationMod(0.6F).build();
+    public static final Food RAW_ROCK_CRAB = (new Food.Builder()).nutrition(2).saturationMod(0.3F).build();
+    public static final Food COOKED_ROCK_CRAB = (new Food.Builder()).nutrition(6).saturationMod(0.6F).build();
 }

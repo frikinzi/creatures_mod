@@ -152,4 +152,9 @@ public class RedKiteEntity extends RaptorBase implements IAnimatable {
         return true;
     }
 
+    public String getScientificName() {
+        return "Milvus milvus";
+    }
+
+
 }

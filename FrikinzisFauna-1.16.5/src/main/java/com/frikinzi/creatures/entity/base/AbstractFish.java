@@ -273,11 +273,8 @@ public abstract class AbstractFish extends AnimalEntity {
     public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
         return null;
     }
-<<<<<<< Updated upstream
-=======
 
     public void setVariant(int i) {
 
     }
->>>>>>> Stashed changes
 }

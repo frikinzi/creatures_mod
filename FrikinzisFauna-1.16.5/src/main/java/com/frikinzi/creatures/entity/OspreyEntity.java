@@ -22,6 +22,8 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -160,5 +162,14 @@ public class OspreyEntity extends RaptorBase implements IAnimatable {
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.osprey_clutch_size.get());
     }
+
+    public String getScientificName() {
+        return "Pandion haliaetus";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.osprey");
+    }
+
 
 }

@@ -5,10 +5,7 @@ import com.frikinzi.creatures.entity.base.NonTameableFlyingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -35,17 +32,13 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
+import java.util.HashMap;
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class BuntingEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.MEALWORMS);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.painted"),
             2, new TranslationTextComponent("message.creatures.indigo"),
@@ -53,7 +46,20 @@ public class BuntingEntity extends NonTameableFlyingBirdBase implements IAnimata
             4, new TranslationTextComponent("message.creatures.orangebellied"),
             5, new TranslationTextComponent("message.creatures.varied")
     );
->>>>>>> Stashed changes
+    public static Map<Integer, TranslationTextComponent> DESCRIPTIONS = ImmutableMap.of(
+            1, new TranslationTextComponent("description.creatures.painted"),
+            2, new TranslationTextComponent("description.creatures.indigo"),
+            3, new TranslationTextComponent("description.creatures.rosebellied"),
+            4, new TranslationTextComponent("description.creatures.orangebellied"),
+            5, new TranslationTextComponent("description.creatures.varied")
+    );
+    public static Map<Integer, String> SCIENTIFIC_NAMES = new HashMap<Integer, String>() {{
+        put(1, "Passerina ciris");
+        put(2, "Passerina cyanea");
+        put(3, "Passerina rositae");
+        put(4, "Passerina leclancherii");
+        put(5, "Passerina versicolor");
+    }};
 
     public BuntingEntity(EntityType<? extends BuntingEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -150,35 +156,10 @@ public class BuntingEntity extends NonTameableFlyingBirdBase implements IAnimata
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.painted");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.indigo");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.rosebellied");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.orangebellied");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.varied");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public float getHatchChance() {
@@ -195,6 +176,24 @@ public class BuntingEntity extends NonTameableFlyingBirdBase implements IAnimata
 
     protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
         return 0.3F;
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public int getIUCNStatus() {
+        if (this.getVariant() == 3) {
+            return 1; // near threatened
+        }
+        return super.getIUCNStatus();
+    }
+
+    public ITextComponent getFunFact() {
+        TranslationTextComponent translatable = DESCRIPTIONS.get(this.getVariant());
+        if (translatable != null) {
+            return translatable;
+        } return new TranslationTextComponent("creatures.unknown");
     }
 
 }

@@ -56,16 +56,17 @@ public class GUICreatures extends Screen {
             if (entity instanceof TameableBirdBase) {
                 TameableBirdBase bird = (TameableBirdBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
                 ITextComponent g = new TranslationTextComponent("gui.sex");
-                this.font.draw(matrices, g.getString() + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
                 matrices.popPose();
                 matrices.pushPose();
                 //matrices.scale(0.9f,0.9f, 0.9f);
                 ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
                 ITextComponent owner;
                 if (bird.getOwner() == null) {
                     owner = new TranslationTextComponent("gui.untamed");
@@ -73,31 +74,35 @@ public class GUICreatures extends Screen {
                     owner = bird.getOwner().getDisplayName();
                 }
                 ITextComponent o = new TranslationTextComponent("gui.owner");
-                this.font.draw(matrices, o.getString() + " " + owner.getString(), offLeft, offTop + 100, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + o.getString() + TextFormatting.RESET + " " + owner.getString(), offLeft, offTop + 100, 0);
                 ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, bird.getSpeciesName(), offLeft, offTop + 110, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
                 ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 140, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
                 this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
 
             }
             if (entity instanceof TameableWalkingBirdBase) {
                 TameableWalkingBirdBase bird = (TameableWalkingBirdBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
                 ITextComponent g = new TranslationTextComponent("gui.sex");
-                this.font.draw(matrices, g.getString() + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
                 matrices.popPose();
                 matrices.pushPose();
+                //matrices.scale(0.9f,0.9f, 0.9f);
                 ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
-                matrices.popPose();
-                matrices.pushPose();
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
                 ITextComponent owner;
                 if (bird.getOwner() == null) {
                     owner = new TranslationTextComponent("gui.untamed");
@@ -105,122 +110,155 @@ public class GUICreatures extends Screen {
                     owner = bird.getOwner().getDisplayName();
                 }
                 ITextComponent o = new TranslationTextComponent("gui.owner");
-                this.font.draw(matrices, o.getString() + " " + owner.getString(), offLeft, offTop + 100, 0);
-                matrices.popPose();
-                matrices.pushPose();
+                this.font.draw(matrices, TextFormatting.BOLD + o.getString() + TextFormatting.RESET + " " + owner.getString(), offLeft, offTop + 100, 0);
                 ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, bird.getSpeciesName(), offLeft, offTop + 110, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
                 ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 140, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
                 this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
             }
             if (entity instanceof NonTameableBirdBase) {
                 NonTameableBirdBase bird = (NonTameableBirdBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
                 ITextComponent g = new TranslationTextComponent("gui.sex");
-                this.font.draw(matrices, g.getString() + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
                 matrices.popPose();
                 matrices.pushPose();
+                //matrices.scale(0.9f,0.9f, 0.9f);
                 ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
-                matrices.popPose();
-                matrices.pushPose();
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
                 ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, bird.getSpeciesName(), offLeft, offTop + 100, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
                 ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 110, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 130, 0);
-                //this.font.draw(matrices, bird.getUUID().toString(), offLeft, offTop + 140, 0);
-                this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 120 + offTop);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
+                this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
             }
             if (entity instanceof NonTameableFlyingBirdBase) {
                 NonTameableFlyingBirdBase bird = (NonTameableFlyingBirdBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
                 ITextComponent g = new TranslationTextComponent("gui.sex");
-                this.font.draw(matrices, g.getString() + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderString(), offLeft, offTop + 80, 0);
                 matrices.popPose();
                 matrices.pushPose();
+                //matrices.scale(0.9f,0.9f, 0.9f);
                 ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
-                matrices.popPose();
-                matrices.pushPose();
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
                 ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, bird.getSpeciesName(), offLeft, offTop + 100, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
                 ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 110, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 130, 0);
-                this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 120 + offTop);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
+                this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
             }
             if (entity instanceof FishBase) {
                 FishBase bird = (FishBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
+                ITextComponent g = new TranslationTextComponent("gui.sex");
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderText(), offLeft, offTop + 80, 0);
+                matrices.popPose();
+                matrices.pushPose();
+                //matrices.scale(0.9f,0.9f, 0.9f);
                 ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 80, 0);
-                matrices.popPose();
-                matrices.pushPose();
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
                 ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, species.getString() + " " + bird.getSpeciesName(), offLeft, offTop + 90, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
                 ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 100, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 120, 0);
-                this.itemRenderer.renderGuiItem(bird.getDisplayFood(), offLeft + 30, 110 + offTop);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
+                ItemStack itemStack = new ItemStack(bird.getFoodItem());
+                this.itemRenderer.renderGuiItem(itemStack, offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
             }
             if (entity instanceof GroupFishBase) {
                 GroupFishBase bird = (GroupFishBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
+                ITextComponent g = new TranslationTextComponent("gui.sex");
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderText(), offLeft, offTop + 80, 0);
+                matrices.popPose();
+                matrices.pushPose();
+                //matrices.scale(0.9f,0.9f, 0.9f);
                 ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 80, 0);
-                matrices.popPose();
-                matrices.pushPose();
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
                 ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, species.getString() + " " + bird.getSpeciesName(), offLeft, offTop + 90, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
                 ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 100, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 120, 0);
-                this.itemRenderer.renderGuiItem(bird.getDisplayFood(), offLeft + 30, 110 + offTop);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
+                ItemStack itemStack = new ItemStack(bird.getFoodItem());
+                this.itemRenderer.renderGuiItem(itemStack, offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
             }
             if (entity instanceof AbstractCrabBase) {
                 AbstractCrabBase bird = (AbstractCrabBase) entity;
                 matrices.pushPose();
-                this.font.draw(matrices, bird.getDisplayName(), offLeft, offTop + 60, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getDisplayName().getString(), offLeft, offTop + 50, 0);
+                this.font.draw(matrices, TextFormatting.ITALIC + bird.getScientificName(), offLeft, offTop + 60, 0);
                 matrices.popPose();
                 matrices.pushPose();
-                ITextComponent h = new TranslationTextComponent("gui.health");
-                this.font.draw(matrices, h.getString() + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 80, 0);
-                matrices.popPose();
-                matrices.pushPose();
-                ITextComponent species = new TranslationTextComponent("gui.species");
-                this.font.draw(matrices, bird.getSpeciesName(), offLeft, offTop + 90, 0);
-                ITextComponent height = new TranslationTextComponent("gui.height");
-                this.font.draw(matrices, height.getString() + " " + bird.getHeightString(), offLeft, offTop + 100, 0);
                 ITextComponent g = new TranslationTextComponent("gui.sex");
-                this.font.draw(matrices, g.getString() + " " + bird.getGenderString(), offLeft, offTop + 110, 0);
+                this.font.draw(matrices, TextFormatting.BOLD + g.getString() + TextFormatting.RESET + " " + bird.getGenderText(), offLeft, offTop + 80, 0);
+                matrices.popPose();
+                matrices.pushPose();
+                //matrices.scale(0.9f,0.9f, 0.9f);
+                ITextComponent h = new TranslationTextComponent("gui.health");
+                this.font.draw(matrices, TextFormatting.BOLD + h.getString() + TextFormatting.RESET + " " + bird.getHealth() + "/" + bird.getMaxHealth(), offLeft, offTop + 90, 0);
+                ITextComponent species = new TranslationTextComponent("gui.species");
+                this.font.draw(matrices, TextFormatting.BOLD + bird.getSpeciesName(), offLeft, offTop + 110, 0);
+                ITextComponent height = new TranslationTextComponent("gui.height");
+                this.font.draw(matrices, TextFormatting.BOLD + height.getString() + TextFormatting.RESET + " " + bird.getHeightString(), offLeft, offTop + 120, 0);
                 ITextComponent food = new TranslationTextComponent("gui.food");
-                this.font.draw(matrices, food.getString() + " ", offLeft, offTop + 130, 0);
-                this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 120 + offTop);
+                this.font.draw(matrices, TextFormatting.BOLD + food.getString() + TextFormatting.RESET + " ", offLeft, offTop + 140, 0);
+                this.itemRenderer.renderGuiItem(bird.getFoodItem(), offLeft + 30, 130 + offTop);
+                this.font.drawWordWrap(bird.getFunFact(), offLeft + 160, 120 + offTop, 114, 0);
+                ITextComponent iucn_status = new TranslationTextComponent("gui.iucn");
+                this.font.draw(matrices, TextFormatting.BOLD + iucn_status.getString() + " " + bird.getIUCNColor() + bird.getIUCNText().getString(), offLeft, offTop + 160, 0);
+
                 matrices.popPose();
             }  if (entity instanceof CreaturesEggEntity) {
             CreaturesEggEntity bird = (CreaturesEggEntity) entity;
@@ -236,8 +274,6 @@ public class GUICreatures extends Screen {
             ITextComponent species = new TranslationTextComponent("gui.species");
             this.font.draw(matrices, bird.getEggItem().getDisplayName(), offLeft, offTop + 90, 0);
             ITextComponent food = new TranslationTextComponent("gui.egg");
-            //this.font.draw(matrices, bird.getParentUUID().toString(), offLeft, offTop + 100, 0);
-            //this.font.draw(matrices, bird.getSpecies() + " ", offLeft, offTop + 110, 0);
             this.itemRenderer.renderGuiItem(bird.getEggItem(), offLeft + 0, 110 + offTop);
             matrices.popPose();
         }  if (entity instanceof CreaturesRoeEntity) {
@@ -248,7 +284,7 @@ public class GUICreatures extends Screen {
             matrices.popPose();
         }
 
-            InventoryScreen.renderEntityInInventory(offLeft + 215, 120 + offTop, 60, (float) (i) - mousePosX, (float) (j + 75 - 50) - mousePosY, entity);
+            InventoryScreen.renderEntityInInventory(offLeft + 215, 100 + offTop, 60, (float) (i) - mousePosX, (float) (j + 75 - 50) - mousePosY, entity);
             super.render(matrices, mouseX, mouseY, delta);
 
     }

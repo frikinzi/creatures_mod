@@ -21,6 +21,8 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -152,7 +154,7 @@ public class GoldenEagleEntity extends RaptorBase implements IAnimatable {
 
     @Override
     public Set<Item> getTamedFood() {
-        TAME_FOOD = Sets.newHashSet(Items.CHICKEN, Items.ROTTEN_FLESH, CreaturesItems.SMALL_BIRD_MEAT, Items.RABBIT);
+        TAME_FOOD = Sets.newHashSet(Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, CreaturesItems.SMALL_BIRD_MEAT, CreaturesItems.LARGE_BIRD_MEAT, Items.PORKCHOP, Items.BEEF);
         return TAME_FOOD;
     }
 
@@ -170,6 +172,14 @@ public class GoldenEagleEntity extends RaptorBase implements IAnimatable {
 
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.golden_eagle_clutch_size.get());
+    }
+
+    public String getScientificName() {
+        return "Aquila chrysaetos";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.goldeneagle");
     }
 
 }

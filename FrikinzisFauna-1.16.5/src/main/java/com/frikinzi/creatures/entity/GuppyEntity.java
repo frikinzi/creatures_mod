@@ -20,10 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-<<<<<<< Updated upstream
-=======
 import net.minecraft.util.text.TranslationTextComponent;
->>>>>>> Stashed changes
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -36,18 +33,13 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class GuppyEntity extends GroupFishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(GuppyEntity.class, DataSerializers.INT);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES;
     static {
         Map<Integer, TranslationTextComponent> map = new HashMap<>();
@@ -61,7 +53,6 @@ public class GuppyEntity extends GroupFishBase implements IAnimatable {
     }
 
 
->>>>>>> Stashed changes
     public GuppyEntity(EntityType<? extends GuppyEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
@@ -173,16 +164,12 @@ public class GuppyEntity extends GroupFishBase implements IAnimatable {
         return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.1D);
     }
 
-    public ResourceLocation getDefaultLootTable() {
-        return CreaturesLootTables.GUPPY;
-    }
-
     public float getHatchChance() {
         return Double.valueOf(CreaturesConfig.guppy_hatch_chance.get()).floatValue();
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
 
     public double getMoveSpeed() {
@@ -198,8 +185,6 @@ public class GuppyEntity extends GroupFishBase implements IAnimatable {
         return 0.1F;
     }
 
-<<<<<<< Updated upstream
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
@@ -211,6 +196,9 @@ public class GuppyEntity extends GroupFishBase implements IAnimatable {
     {
         return 7;
     }
->>>>>>> Stashed changes
+
+    public String getScientificName() {
+        return "Poecilia reticulata";
+    }
 
 }

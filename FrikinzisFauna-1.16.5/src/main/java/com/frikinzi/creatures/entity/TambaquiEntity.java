@@ -19,10 +19,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -152,7 +149,7 @@ public class TambaquiEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return Items.KELP;
+        return CreaturesItems.ALGAE_WAFER;
     }
 
     protected void registerGoals() {
@@ -169,6 +166,23 @@ public class TambaquiEntity extends FishBase implements IAnimatable {
             }
             return 6;
         }
+    }
+
+    public int getIUCNStatus() {
+        return -1;
+    }
+
+    public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+        ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
+        if (itemstack.getItem() == Items.WATER_BUCKET && this.isAlive()) {
+            return ActionResultType.PASS;
+        } else {
+            return super.mobInteract(p_230254_1_, p_230254_2_);
+        }
+    }
+
+    public String getScientificName() {
+        return "Colossoma macropomum";
     }
 
 }

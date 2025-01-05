@@ -16,7 +16,7 @@ public class RedSnapperModel extends AnimatedGeoModel<RedSnapperEntity> {
     @Override
     public ResourceLocation getTextureLocation(RedSnapperEntity object)
     {
-        return new ResourceLocation(Creatures.MODID, "textures/entity/red_snapper/redsnapper.png");
+        return new ResourceLocation(Creatures.MODID, "textures/entity/red_snapper/snapper" + object.getVariant() + ".png");
     }
 
     @Override

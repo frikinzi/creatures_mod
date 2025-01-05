@@ -169,7 +169,19 @@ public class ArowanaEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
+
+    public int getIUCNStatus() {
+        if (this.getVariant() == 2) {
+            return 0;
+        }
+        return 3;
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.arowana");
+    }
+
 
 }

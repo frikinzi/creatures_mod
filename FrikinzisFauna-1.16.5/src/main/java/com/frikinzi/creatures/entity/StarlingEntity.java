@@ -18,11 +18,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.BiomeDictionary;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -44,6 +49,14 @@ public class StarlingEntity extends NonTameableFlyingBirdBase implements IAnimat
             .put(4, new TranslationTextComponent("message.creatures.europeanstarling"))
             .put(5, new TranslationTextComponent("message.creatures.metallicstarling"))
             .put(6, new TranslationTextComponent("message.creatures.emeraldstarling"))
+            .build();
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Lamprotornis regius")
+            .put(2, "Cinnyricinclus leucogaster")
+            .put(3, "Lamprotornis superbus")
+            .put(4, "Sturnus vulgaris")
+            .put(5, "Aplonis metallica")
+            .put(6, "Lamprotornis iris")
             .build();
 
     public StarlingEntity(EntityType<? extends StarlingEntity> p_i50251_1_, World p_i50251_2_) {
@@ -93,11 +106,11 @@ public class StarlingEntity extends NonTameableFlyingBirdBase implements IAnimat
 
     @Override
     public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        StarlingEntity rollerentity = (StarlingEntity) getType().create(p_241840_1_);
-        rollerentity.setVariant(this.getVariant());
-        rollerentity.setGender(this.random.nextInt(2));
-        rollerentity.setHeightMultiplier(getSpawnEggOffspringHeight());
-        return rollerentity;
+        StarlingEntity starlingentity = (StarlingEntity) getType().create(p_241840_1_);
+        starlingentity.setVariant(this.getVariant());
+        starlingentity.setGender(this.random.nextInt(2));
+        starlingentity.setHeightMultiplier(getSpawnEggOffspringHeight());
+        return starlingentity;
     }
 
     @Override

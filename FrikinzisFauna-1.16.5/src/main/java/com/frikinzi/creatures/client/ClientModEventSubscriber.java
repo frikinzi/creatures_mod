@@ -2,22 +2,11 @@ package com.frikinzi.creatures.client;
 
 import com.frikinzi.creatures.Creatures;
 import com.frikinzi.creatures.client.render.*;
-<<<<<<< Updated upstream
-import com.frikinzi.creatures.entity.TanagerEntity;
 import com.frikinzi.creatures.registry.ModEntityTypes;
-import net.minecraft.client.renderer.entity.ChickenRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraftforge.api.distmarker.Dist;
-=======
-import com.frikinzi.creatures.entity.GroundHornbillEntity;
-import com.frikinzi.creatures.entity.HpapilioEntity;
-import com.frikinzi.creatures.entity.TanagerEntity;
-import com.frikinzi.creatures.registry.ModEntityTypes;
-import net.minecraft.client.renderer.entity.ChickenRenderer;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderLivingEvent;
->>>>>>> Stashed changes
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -25,13 +14,24 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Creatures.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
+
+
     @SubscribeEvent
     public static void onClientSetup(final FMLClientSetupEvent event) {
+        EntityRendererManager renderManager = Minecraft.getInstance().getEntityRenderDispatcher();
+
+        PlayerRenderer rendererDefault = (PlayerRenderer) renderManager.getSkinMap().get("default");
+        PlayerRenderer rendererSlim = (PlayerRenderer) renderManager.getSkinMap().get("slim");
+
+        if (rendererDefault != null) {
+            rendererDefault.addLayer(new ShoulderLayer<>(rendererDefault));
+        }
+
+        if (rendererSlim != null) {
+            rendererSlim.addLayer(new ShoulderLayer<>(rendererSlim));
+        }
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.KOI.get(), KoiRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOVEBIRD.get(), LovebirdRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DOTTYBACK.get(), DottybackRenderer::new);
@@ -46,7 +46,7 @@ public class ClientModEventSubscriber {
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DOVE.get(), DoveRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.RED_KITE.get(), RedKiteRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GOLDEN_EAGLE.get(), GoldenEagleRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.STELLERS_SEA_EAGLE.get(), StellersSeaEagleRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SEA_EAGLE.get(), SeaEagleRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GYRFALCON.get(), GyrfalconRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LORIKEET.get(), LorikeetRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CONURE.get(), ConureRenderer::new);
@@ -94,8 +94,6 @@ public class ClientModEventSubscriber {
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PHEASANT.get(), PheasantRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ARAPAIMA.get(), ArapaimaRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PIRANHA.get(), PiranhaRenderer::new);
-<<<<<<< Updated upstream
-=======
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.STORK.get(), StorkRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.WHISTLINGDUCK.get(), WhistlingDuckRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.GROUND_HORNBILL.get(), GroundHornbillRenderer::new);
@@ -105,8 +103,33 @@ public class ClientModEventSubscriber {
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TAMBAQUI.get(), TambaquiRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ELEPHANTNOSE.get(), ElephantNoseFishRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CORMORANT.get(), CormorantRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.STINGRAY.get(), StingrayRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PUFFIN.get(), PuffinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SAWFISH.get(), SawfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SEAGULL.get(), SeagullRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SWORDFISH.get(), SwordfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BOOBY.get(), BoobyRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SQUID.get(), SquidRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LOOKDOWN.get(), LookdownRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BANDED_PENGUIN.get(), BandedPenguinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MANTIS_SHRIMP.get(), MantisShrimpRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.RAIL.get(), RailRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BARRACUDA.get(), BarracudaRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.AVOCET.get(), AvocetRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SEADRAGON.get(), SeaDragonRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TRUMPETFISH.get(), TrumpetfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CRESTED_PENGUIN.get(), CrestedPenguinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PARROTFISH.get(), ParrotfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.YELLOW_EYED_PENGUIN.get(), YellowEyedPenguinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BRUSH_TAILED_PENGUIN.get(), BrushTailedPenguinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LARGE_PENGUIN.get(), LargePenguinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.FRIGATE.get(), FrigateRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CLOWNFISH.get(), ClownfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.STILT.get(), StiltRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LUNGFISH.get(), LungfishRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LITTLE_PENGUIN.get(), LittlePenguinRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EDIBLE_CRAB.get(), EdibleCrabRenderer::new);
 
->>>>>>> Stashed changes
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.EGG.get(), EggRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.ROE.get(), RoeRenderer::new);
     }

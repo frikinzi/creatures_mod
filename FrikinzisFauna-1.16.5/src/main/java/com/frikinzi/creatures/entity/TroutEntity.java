@@ -4,10 +4,7 @@ import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.base.FishBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -40,24 +37,24 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class TroutEntity extends FishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(TroutEntity.class, DataSerializers.INT);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.<Integer, TranslationTextComponent>builder()
             .put(1, new TranslationTextComponent("message.creatures.rainbow"))
             .put(2, new TranslationTextComponent("message.creatures.browntrout"))
             .put(3, new TranslationTextComponent("message.creatures.brook"))
             .put(4, new TranslationTextComponent("message.creatures.goldentrout"))
             .build();
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Oncorhynchus mykiss")
+            .put(2, "Salmo trutta")
+            .put(3, "Salvelinus fontinalis")
+            .put(4, "Oncorhynchus aguabonita")
+            .build();
 
->>>>>>> Stashed changes
     public TroutEntity(EntityType<? extends TroutEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
@@ -164,41 +161,14 @@ public class TroutEntity extends FishBase implements IAnimatable {
         return CreaturesLootTables.TROUT;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.rainbow");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.browntrout");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.brook");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.goldentrout");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-    }
-
-=======
->>>>>>> Stashed changes
     public float getHatchChance() {
         return Double.valueOf(CreaturesConfig.trout_hatch_chance.get()).floatValue();
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.MEALWORMS;
+        return CreaturesItems.FISH_FOOD;
     }
 
-<<<<<<< Updated upstream
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
@@ -210,5 +180,20 @@ public class TroutEntity extends FishBase implements IAnimatable {
         return 5;
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        if (this.getVariant()== 4) {
+            return 4;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.trout");
+    }
+
+
 }

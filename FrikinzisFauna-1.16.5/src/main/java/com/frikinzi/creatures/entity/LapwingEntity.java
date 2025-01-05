@@ -6,10 +6,7 @@ import com.frikinzi.creatures.entity.base.NonTameableFlyingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
@@ -39,17 +36,12 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class LapwingEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, CreaturesItems.CRAB_PINCERS);
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.<Integer, TranslationTextComponent>builder()
             .put(1, new TranslationTextComponent("message.creatures.longtoed"))
             .put(2, new TranslationTextComponent("message.creatures.senegal"))
@@ -59,7 +51,15 @@ public class LapwingEntity extends NonTameableFlyingBirdBase implements IAnimata
             .put(6, new TranslationTextComponent("message.creatures.southernlapwing"))
             .put(7, new TranslationTextComponent("message.creatures.bandedlapwing"))
             .build();
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Vanellus crassirostris")
+            .put(2, "Vanellus lugubris")
+            .put(3, "Vanellus vanellus")
+            .put(4, "Vanellus miles")
+            .put(5, "Vanellus gregarius")
+            .put(6, "Vanellus chilensis")
+            .put(7, "Vanellus tricolor")
+            .build();
 
     public LapwingEntity(EntityType<? extends LapwingEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -105,11 +105,7 @@ public class LapwingEntity extends NonTameableFlyingBirdBase implements IAnimata
     }
 
     public int determineVariant() {
-<<<<<<< Updated upstream
-        return 6;
-=======
         return 8;
->>>>>>> Stashed changes
     }
 
     @Override
@@ -151,38 +147,11 @@ public class LapwingEntity extends NonTameableFlyingBirdBase implements IAnimata
         return CreaturesLootTables.SMALL_BIRD_GENERIC;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.longtoed");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.senegal");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.northern");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.masked");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.sociable");
-            return s1.getString();
-        }else {
-            return "Unknown";
-        }
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public String getFoodName() {
@@ -200,5 +169,23 @@ public class LapwingEntity extends NonTameableFlyingBirdBase implements IAnimata
     public int getMaxFlockSize() {
         return 10;
     }
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 3) {
+            return 1;
+        } if (this.getVariant() == 5) {
+            return 4;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.lapwing");
+    }
+
 
 }

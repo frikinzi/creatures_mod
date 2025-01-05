@@ -2,17 +2,15 @@ package com.frikinzi.creatures.entity;
 
 import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.ai.FollowFlockLeaderGoal;
+import com.frikinzi.creatures.entity.ai.LandOnOwnersShoulderGoal;
 import com.frikinzi.creatures.entity.base.CreaturesBirdEntity;
 import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.entity.egg.CreaturesEggEntity;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.registry.ModEntityTypes;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.frikinzi.creatures.util.EntityAttributes;
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
@@ -27,11 +25,9 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-<<<<<<< Updated upstream
-=======
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IWorld;
->>>>>>> Stashed changes
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -42,17 +38,12 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class RavenEntity extends TameableBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.ROTTEN_FLESH, Items.EGG, Items.CHICKEN);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.commonraven"),
             2, new TranslationTextComponent("message.creatures.brownheadedraven"),
@@ -60,7 +51,13 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
             4, new TranslationTextComponent("message.creatures.thickbilledraven"),
             5, new TranslationTextComponent("message.creatures.commonravenalbino")
     );
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Corvus corax")
+            .put(2, "Corvus ruficollis")
+            .put(3, "Corvus albicollis")
+            .put(4, "Corvus crassirostris")
+            .put(5, "Corvus corax")
+            .build();
 
     public RavenEntity(EntityType<? extends RavenEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -74,6 +71,7 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(1, new CreaturesBirdEntity.DefendBabyGoal());
         this.goalSelector.addGoal(6, new FollowFlockLeaderGoal(this));
+        this.goalSelector.addGoal(4, new LandOnOwnersShoulderGoal(this));
 
     }
 
@@ -112,19 +110,12 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
         return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D).add(Attributes.FLYING_SPEED, (double)0.8F).add(Attributes.MOVEMENT_SPEED, (double)0.4F).add(Attributes.ATTACK_DAMAGE, 2.0D);
     }
 
-<<<<<<< Updated upstream
-    public int determineVariant() {
-        if (this.random.nextInt(CreaturesConfig.raven_albino_chance.get()) == 1) {
-        return 3; } else {
-            return 2;
-=======
     public int methodofDeterminingVariant(IWorld p_213610_1_) {
         if (this.random.nextInt(CreaturesConfig.raven_albino_chance.get()) == 1) {
             return 5;
         }
         else {
             return this.random.nextInt(5);
->>>>>>> Stashed changes
         }
     }
 
@@ -144,20 +135,12 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
     public CreaturesEggEntity layEgg(CreaturesBirdEntity animal) {
         CreaturesEggEntity egg = new CreaturesEggEntity(ModEntityTypes.EGG.get(), this.level);
         if (this.random.nextInt(CreaturesConfig.raven_albino_chance.get() * 2) == 1) {
-<<<<<<< Updated upstream
-            egg.setVariant(2);
-=======
             egg.setVariant(5);
->>>>>>> Stashed changes
         } else {
             egg.setVariant(this.getVariant());
         }
         egg.setGender(this.random.nextInt(2));
-<<<<<<< Updated upstream
-        egg.setSpecies(ModEntityTypes.getIntFromBirdEntity(animal));
-=======
         egg.setSpecies(EntityAttributes.getBirdEntityMap().inverse().get(animal.getType()));
->>>>>>> Stashed changes
         return egg;
     }
 
@@ -203,13 +186,10 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
         return this.random.nextInt(CreaturesConfig.raven_clutch_size.get());
     }
 
-<<<<<<< Updated upstream
-=======
     public int determineVariant() {
         return 6;
     }
 
->>>>>>> Stashed changes
     public boolean isMonogamous() {
         return true;
     }
@@ -218,8 +198,6 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
         return 4;
     }
 
-<<<<<<< Updated upstream
-=======
     protected float getSoundVolume() {
         return 0.2F;
     }
@@ -235,5 +213,20 @@ public class RavenEntity extends TameableBirdBase implements IAnimatable {
         } return "Unknown";
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        if (this.getVariant()== 2) {
+            return 1;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.raven");
+    }
+
+
 }

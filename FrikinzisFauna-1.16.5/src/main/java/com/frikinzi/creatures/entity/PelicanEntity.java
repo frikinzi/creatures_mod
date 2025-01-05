@@ -6,10 +6,7 @@ import com.frikinzi.creatures.entity.base.NonTameableFlyingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -46,18 +43,13 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Random;
 import java.util.Set;
 
 public class PelicanEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.COD, Items.SALMON, Items.TROPICAL_FISH, CreaturesItems.CRAB_PINCERS, CreaturesItems.RAW_TROUT, Items.TROPICAL_FISH);
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.<Integer, TranslationTextComponent>builder()
             .put(1, new TranslationTextComponent("message.creatures.greatwhite"))
             .put(2, new TranslationTextComponent("message.creatures.brownpelican"))
@@ -68,7 +60,17 @@ public class PelicanEntity extends NonTameableFlyingBirdBase implements IAnimata
             .put(7, new TranslationTextComponent("message.creatures.peruvianpelican"))
             .put(8, new TranslationTextComponent("message.creatures.spotbilledpelican"))
             .build();
->>>>>>> Stashed changes
+
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Pelecanus onocrotalus")
+            .put(2, "Pelecanus occidentalis")
+            .put(3, "Pelecanus conspicillatus")
+            .put(4, "Pelecanus rufescens")
+            .put(5, "Pelecanus erythrorhynchos")
+            .put(6, "Pelecanus crispus")
+            .put(7, "Pelecanus thagus")
+            .put(8, "Pelecanus philippensis")
+            .build();
 
     public PelicanEntity(EntityType<? extends PelicanEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -118,11 +120,7 @@ public class PelicanEntity extends NonTameableFlyingBirdBase implements IAnimata
     }
 
     public int determineVariant() {
-<<<<<<< Updated upstream
-        return 6;
-=======
         return 9;
->>>>>>> Stashed changes
     }
 
     @Override
@@ -164,39 +162,11 @@ public class PelicanEntity extends NonTameableFlyingBirdBase implements IAnimata
         return CreaturesLootTables.SMALL_BIRD_GENERIC;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.greatwhite");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.brownpelican");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.australianpelican");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.pinkbacked");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.americanwhite");
-            return s1.getString();
-        }
-        else {
-            return "Unknown";
-        }
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public ItemStack getFoodItem() {
@@ -222,5 +192,22 @@ public class PelicanEntity extends NonTameableFlyingBirdBase implements IAnimata
     public int getMaxFlockSize() {
         return 5;
     }
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 6 || this.getVariant() == 7 || this.getVariant() == 8) {
+            return 1;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.pelican");
+    }
+
+
 
 }

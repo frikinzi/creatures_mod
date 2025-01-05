@@ -3,6 +3,7 @@ package com.frikinzi.creatures.entity;
 import com.frikinzi.creatures.entity.base.AbstractCrabBase;
 import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.util.CreaturesLootTables;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.*;
@@ -39,6 +40,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Random;
 
 public class GhostCrabEntity extends AbstractCrabBase implements IAnimatable {
@@ -46,6 +48,12 @@ public class GhostCrabEntity extends AbstractCrabBase implements IAnimatable {
     private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(GhostCrabEntity.class, DataSerializers.INT);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.DEAD_BUSH, Items.DEAD_BRAIN_CORAL, Items.DEAD_BRAIN_CORAL_FAN, Items.DEAD_BUBBLE_CORAL, Items.DEAD_FIRE_CORAL);
     private AnimationFactory factory = new AnimationFactory(this);
+    public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
+            1, new TranslationTextComponent("message.creatures.redghost"),
+            2, new TranslationTextComponent("message.creatures.atlanticghost"),
+            3, new TranslationTextComponent("message.creatures.greenhorned"),
+            4, new TranslationTextComponent("message.creatures.purplehorned")
+    );
 
     public GhostCrabEntity(EntityType<? extends GhostCrabEntity> p_i48567_1_, World p_i48567_2_) {
         super(p_i48567_1_, p_i48567_2_);
@@ -63,11 +71,7 @@ public class GhostCrabEntity extends AbstractCrabBase implements IAnimatable {
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
-<<<<<<< Updated upstream
-        this.setVariant(this.random.nextInt(5));
-=======
         this.setVariant(this.random.nextInt(determineVariant()));
->>>>>>> Stashed changes
         this.setGender(this.random.nextInt(2));
         if (p_213386_4_ == null) {
             p_213386_4_ = new AgeableEntity.AgeableData(false);
@@ -184,6 +188,23 @@ public class GhostCrabEntity extends AbstractCrabBase implements IAnimatable {
         }
     }
 
+    public String getScientificName() {
+        if (this.getVariant() == 1) {
+            return "Ocypode macrocera";
+        }
+        else if (this.getVariant() == 2) {
+            return "Ocypode quadrata";
+        }
+        else if (this.getVariant() == 3) {
+            return "Ocypode ceratophthalmus";
+        }
+        else if (this.getVariant() == 4) {
+            return "Ocypode ceratophthalmus";
+        } else {
+            return "Unknown";
+        }
+    }
+
     public String getGenderString() {
         if (this.getGender() == 1) {
             ITextComponent i = new TranslationTextComponent("gui.male");
@@ -202,11 +223,12 @@ public class GhostCrabEntity extends AbstractCrabBase implements IAnimatable {
         this.entityData.set(GENDER, p_191997_1_);
     }
 
-<<<<<<< Updated upstream
-=======
     public int determineVariant() {
         return 5;
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        return -1;
+    }
+
 }

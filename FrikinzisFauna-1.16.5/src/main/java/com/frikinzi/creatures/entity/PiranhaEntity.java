@@ -5,20 +5,13 @@ import com.frikinzi.creatures.entity.base.GroupFishBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-<<<<<<< Updated upstream
-import net.minecraft.entity.monster.SpiderEntity;
-=======
->>>>>>> Stashed changes
 import net.minecraft.entity.passive.fish.SalmonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -47,16 +40,11 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class PiranhaEntity extends GroupFishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(PiranhaEntity.class, DataSerializers.INT);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.redbelliedpiranha"),
             2, new TranslationTextComponent("message.creatures.blackdotpiranha"),
@@ -64,7 +52,13 @@ public class PiranhaEntity extends GroupFishBase implements IAnimatable {
             4, new TranslationTextComponent("message.creatures.pirayapiranha"),
             5, new TranslationTextComponent("message.creatures.rubyredpiranha")
     );
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Pygocentrus nattereri")
+            .put(2, "Pygocentrus cariba")
+            .put(3, "Serrasalmus rhombeus")
+            .put(4, "Pygocentrus piraya")
+            .put(5, "Serrasalmus sanchezi")
+            .build();
     public PiranhaEntity(EntityType<? extends PiranhaEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
@@ -77,13 +71,10 @@ public class PiranhaEntity extends GroupFishBase implements IAnimatable {
             this.setHeightMultiplier(f);
         }
         if (p_213386_5_ != null) {
-<<<<<<< Updated upstream
-=======
             if (p_213386_5_.contains("BucketVariantTag", 3)) {
                 this.setVariant(p_213386_5_.getInt("BucketVariantTag"));
                 //return p_213386_4_;
             }
->>>>>>> Stashed changes
             if (p_213386_5_.contains("BucketHeightMultiplier")) {
                 this.setHeightMultiplier(p_213386_5_.getFloat("BucketHeightMultiplier"));
             } if (p_213386_5_.contains("Age")) {
@@ -198,35 +189,7 @@ public class PiranhaEntity extends GroupFishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-<<<<<<< Updated upstream
-        return Items.SALMON;
-    }
-
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.redbelliedpiranha");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.blackdotpiranha");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.blackpiranha");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.pirayapiranha");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.rubyredpiranha");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
-        return Items.PORKCHOP;
+        return CreaturesItems.FISH_FOOD;
     }
 
     public String getSpeciesName() {
@@ -234,7 +197,6 @@ public class PiranhaEntity extends GroupFishBase implements IAnimatable {
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     static class TargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
@@ -250,12 +212,24 @@ public class PiranhaEntity extends GroupFishBase implements IAnimatable {
         }
     }
 
-<<<<<<< Updated upstream
-=======
     public int determineVariant() {
         return 6;
     }
 
->>>>>>> Stashed changes
+    public int getIUCNStatus() {
+        if (this.getVariant()== 2) {
+            return -1;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.piranha");
+    }
+
 
 }

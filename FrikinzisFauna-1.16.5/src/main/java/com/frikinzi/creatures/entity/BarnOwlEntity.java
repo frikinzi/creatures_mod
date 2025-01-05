@@ -19,6 +19,8 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.codehaus.plexus.util.StringUtils;
@@ -47,13 +49,10 @@ public class BarnOwlEntity extends RaptorBase implements IAnimatable {
             return PlayState.CONTINUE;
         }
         if (!this.onGround || this.isFlying()) {
-<<<<<<< Updated upstream
-=======
             if (this.isBaby()) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("baby_fly", true));
                 return PlayState.CONTINUE;
             }
->>>>>>> Stashed changes
             event.getController().setAnimation(new AnimationBuilder().addAnimation("fly", true));
             return PlayState.CONTINUE;
         }
@@ -126,11 +125,7 @@ public class BarnOwlEntity extends RaptorBase implements IAnimatable {
 
     @Override
     public Set<Item> getTamedFood() {
-<<<<<<< Updated upstream
-        TAME_FOOD = Sets.newHashSet(Items.CHICKEN, Items.ROTTEN_FLESH, CreaturesItems.SMALL_BIRD_MEAT);
-=======
         TAME_FOOD = Sets.newHashSet(Items.RABBIT);
->>>>>>> Stashed changes
         return TAME_FOOD;
     }
 
@@ -148,11 +143,7 @@ public class BarnOwlEntity extends RaptorBase implements IAnimatable {
     }
 
     public ItemStack getFoodItem() {
-<<<<<<< Updated upstream
-        return new ItemStack(Items.CHICKEN, 1);
-=======
         return new ItemStack(Items.RABBIT, 1);
->>>>>>> Stashed changes
     }
 
     public float getHatchChance() {
@@ -161,6 +152,14 @@ public class BarnOwlEntity extends RaptorBase implements IAnimatable {
 
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.barn_owl_clutch_size.get());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.barnowl");
+    }
+
+    public String getScientificName() {
+        return "Tyto alba";
     }
 
 }

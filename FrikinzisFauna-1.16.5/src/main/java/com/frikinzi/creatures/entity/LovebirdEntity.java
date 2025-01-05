@@ -3,16 +3,14 @@ package com.frikinzi.creatures.entity;
 import com.frikinzi.creatures.client.model.LovebirdModel;
 import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.ai.FollowFlockLeaderGoal;
+import com.frikinzi.creatures.entity.ai.LandOnOwnersShoulderGoal;
 import com.frikinzi.creatures.entity.base.CreaturesBirdEntity;
 import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.entity.egg.CreaturesEggEntity;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.registry.ModEntityTypes;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.frikinzi.creatures.util.EntityAttributes;
->>>>>>> Stashed changes
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -39,12 +37,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-    private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
-
-=======
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,8 +58,37 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
         put(12, new TranslationTextComponent("message.creatures.lovebird.aquamarine"));
         put(13, new TranslationTextComponent("message.creatures.lovebird.bluepeachfaced"));
     }};
+    public static Map<Integer, TranslationTextComponent> DESCRIPTIONS = new HashMap<Integer, TranslationTextComponent>() {{
+        put(1, new TranslationTextComponent("description.lovebird.fischers"));
+        put(2, new TranslationTextComponent("description.lovebird.fischersmutation"));
+        put(3, new TranslationTextComponent("description.lovebird.masked"));
+        put(4, new TranslationTextComponent("description.lovebird.maskedmutation"));
+        put(5, new TranslationTextComponent("description.lovebird.peach"));
+        put(6, new TranslationTextComponent("description.lovebird.madagascar"));
+        put(7, new TranslationTextComponent("description.lovebird.blackwingedlovebird"));
+        put(8, new TranslationTextComponent("description.lovebird.redfaced"));
+        put(9, new TranslationTextComponent("description.lovebird.swindern"));
+        put(10, new TranslationTextComponent("description.lovebird.blackcheeked"));
+        put(11, new TranslationTextComponent("description.lovebird.lilians"));
+        put(12, new TranslationTextComponent("description.lovebird.aquamarine"));
+        put(13, new TranslationTextComponent("description.lovebird.bluepeachfaced"));
+    }};
+    public static Map<Integer, String> SCIENTIFIC_NAMES = new HashMap<Integer, String>() {{
+        put(1, "Agapornis fischeri");
+        put(2, "Agapornis fischeri");
+        put(3, "Agapornis personatus");
+        put(4, "Agapornis personatus");
+        put(5, "Agapornis roseicollis");
+        put(6, "Agapornis canus");
+        put(7, "Agapornis taranta");
+        put(8, "Agapornis pullarius");
+        put(9, "Agapornis swindernianus");
+        put(10, "Agapornis nigrigenis");
+        put(11, "Agapornis lilianae");
+        put(12, "Agapornis roseicollis");
+        put(13, "Agapornis roseicollis");
+    }};
     
->>>>>>> Stashed changes
     public LovebirdEntity(EntityType<? extends LovebirdEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
     }
@@ -75,6 +96,7 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(5, new FollowFlockLeaderGoal(this));
+        this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
@@ -168,11 +190,7 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
 
     public CreaturesEggEntity layEgg(CreaturesBirdEntity animal) {
         CreaturesEggEntity egg = new CreaturesEggEntity(ModEntityTypes.EGG.get(), this.level);
-<<<<<<< Updated upstream
-        egg.setSpecies(ModEntityTypes.getIntFromBirdEntity(animal));
-=======
         egg.setSpecies(EntityAttributes.getBirdEntityMap().inverse().get(animal.getType()));
->>>>>>> Stashed changes
         egg.setGender(this.random.nextInt(2));
         if (this.getVariant() == 1) {
             if (this.random.nextInt(CreaturesConfig.lovebird_mutation_chance.get()) == 2) {
@@ -200,6 +218,7 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
         else {
             egg.setVariant(this.getVariant());
         }
+        egg.setPos(MathHelper.floor(this.getX()) + 0.5, MathHelper.floor(this.getY()) + 0.5, MathHelper.floor(this.getZ()) + 0.5);
         return egg;
     }
 
@@ -231,7 +250,7 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
 
     @Override
     public int methodofDeterminingVariant(IWorld p_213610_1_) {
-        if (CreaturesConfig.breed_only_variants.get() == true) {
+        if (CreaturesConfig.breed_only_variants.get()) {
         int i = this.random.nextInt(determineVariant());
         while (i == 2 || i == 4 || i == 12 || i == 13) {
             i = this.random.nextInt(determineVariant());
@@ -245,61 +264,10 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.fischers");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.fischersmutation");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.masked");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.maskedmutation");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.peach");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.madagascar");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 7) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.blackwingedlovebird");
-            return s1.getString();
-        }   else if (this.getVariant() == 8) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.redfaced");
-            return s1.getString();
-        } else if (this.getVariant() == 9) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.swindern");
-            return s1.getString();
-        } else if (this.getVariant() == 10) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.blackcheeked");
-            return s1.getString();
-        } else if (this.getVariant() == 11) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.lilians");
-            return s1.getString();
-        } else if (this.getVariant() == 12) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.aquamarine");
-            return s1.getString();
-        } else if (this.getVariant() == 13) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lovebird.bluepeachfaced");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     @Override
@@ -316,7 +284,7 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
     }
 
     public int getMaxFlockSize() {
-        this.hurt(DamageSource.CACTUS,10);
+        //this.hurt(DamageSource.CACTUS,10);
         return 10;
     }
 
@@ -331,6 +299,25 @@ public class LovebirdEntity extends TameableBirdBase implements IAnimatable {
         return 0.3F;
     }
 
+    public ITextComponent getFunFact() {
+        TranslationTextComponent translatable = DESCRIPTIONS.get(this.getVariant());
+        if (translatable != null) {
+            return translatable;
+        } return new TranslationTextComponent("creatures.unknown");
+    }
+
+    public int getIUCNStatus() {
+        if (this.getVariant() == 1 || this.getVariant() == 2 || this.getVariant() == 11) {
+            return 1; // near threatened
+        } if (this.getVariant() == 10) {
+            return 2; // vulnerable
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
 
 
 }

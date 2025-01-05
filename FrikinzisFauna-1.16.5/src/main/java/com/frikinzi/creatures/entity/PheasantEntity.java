@@ -5,10 +5,7 @@ import com.frikinzi.creatures.entity.base.NonTameableBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -34,11 +31,6 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-public class PheasantEntity extends NonTameableBirdBase implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-    private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, Items.PUMPKIN_SEEDS, Items.MELON_SEEDS, Items.BEETROOT_SEEDS, Items.SWEET_BERRIES, CreaturesItems.MEALWORMS);
-=======
 import java.util.Map;
 
 public class PheasantEntity extends NonTameableBirdBase implements IAnimatable {
@@ -49,7 +41,17 @@ public class PheasantEntity extends NonTameableBirdBase implements IAnimatable {
             2, new TranslationTextComponent("message.creatures.ladyamherst"),
             3, new TranslationTextComponent("message.creatures.silverpheasant")
     );
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Chrysolophus pictus")
+            .put(2, "Chrysolophus amherstiae")
+            .put(3, "Lophura nycthemera")
+            .build();
+
+    public static Map<Integer, TranslationTextComponent> DESCRIPTIONS = ImmutableMap.of(
+            1, new TranslationTextComponent("description.creatures.goldenpheasant"),
+            2, new TranslationTextComponent("description.creatures.ladyamherst"),
+            3, new TranslationTextComponent("description.creatures.silverpheasant")
+    );
 
     public PheasantEntity(EntityType<? extends PheasantEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -125,12 +127,9 @@ public class PheasantEntity extends NonTameableBirdBase implements IAnimatable {
 
     protected SoundEvent getAmbientSound() {
         if (!this.isSleeping()) {
-<<<<<<< Updated upstream
-=======
             if (this.getVariant() == 2) {
                 return CreaturesSound.LADY_AMHERST;
             }
->>>>>>> Stashed changes
             return CreaturesSound.PHEASANT_AMBIENT;
         }
         else
@@ -151,29 +150,11 @@ public class PheasantEntity extends NonTameableBirdBase implements IAnimatable {
         return CreaturesLootTables.LARGE_BIRD_GENERIC;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.goldenpheasant");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.ladyamherst");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.silverpheasant");
-            return s1.getString();
-        }
-        return "unknown";
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public ItemStack getFoodItem() {
@@ -186,6 +167,17 @@ public class PheasantEntity extends NonTameableBirdBase implements IAnimatable {
 
     public int getClutchSize() {
         return this.random.nextInt(CreaturesConfig.capercaillie_clutch_size.get());
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        TranslationTextComponent translatable = DESCRIPTIONS.get(this.getVariant());
+        if (translatable != null) {
+            return translatable;
+        } return new TranslationTextComponent("creatures.unknown");
     }
 
 }

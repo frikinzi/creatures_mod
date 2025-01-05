@@ -23,6 +23,7 @@ import net.minecraft.entity.monster.GhastEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -61,6 +62,7 @@ public class TameableBirdBase extends CreaturesBirdEntity implements IFlyingAnim
     private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(TameableBirdBase.class, DataSerializers.INT);
     public static Set<Item> TAME_FOOD = Sets.newHashSet(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS);
     public float flap;
+    private int rideCooldownCounter;
     public float flapSpeed;
     public float oFlapSpeed;
     public float oFlap;
@@ -80,7 +82,16 @@ public class TameableBirdBase extends CreaturesBirdEntity implements IFlyingAnim
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
-        this.setVariant(methodofDeterminingVariant(p_213386_1_));
+        int color;
+        if (p_213386_4_ instanceof CreaturesBirdEntity.BirdData) {
+            color = ((CreaturesBirdEntity.BirdData)p_213386_4_).variant;
+        } else {
+            color = methodofDeterminingVariant(p_213386_1_);
+            p_213386_4_ = new CreaturesBirdEntity.BirdData(color);
+        }
+        //this.setVariant(this.random.nextInt(determineVariant()));
+        this.setVariant(color);
+        //this.setVariant(methodofDeterminingVariant(p_213386_1_));
         this.setWandering(0);
         this.setGender(this.random.nextInt(2));
         if (p_213386_4_ == null) {
@@ -88,6 +99,10 @@ public class TameableBirdBase extends CreaturesBirdEntity implements IFlyingAnim
         }
 
         return super.finalizeSpawn(p_213386_1_, p_213386_2_, p_213386_3_, p_213386_4_, p_213386_5_);
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("creatures.unknown");
     }
 
 
@@ -203,11 +218,7 @@ public class TameableBirdBase extends CreaturesBirdEntity implements IFlyingAnim
                 this.heal((float) 4.0);
                 return ActionResultType.SUCCESS;
             }
-<<<<<<< Updated upstream
-        else if (!this.isFlying() && itemstack.getItem() != CreaturesItems.FF_GUIDE && !getTamedFood().contains(itemstack.getItem()) && this.isTame() && this.isOwnedBy(p_230254_1_)) {
-=======
         else if (!this.isFlying() && itemstack.getItem() != CreaturesItems.FF_GUIDE && itemstack.getItem() != CreaturesItems.BIRD_CARRIER && !getTamedFood().contains(itemstack.getItem()) && this.isTame() && this.isOwnedBy(p_230254_1_)) {
->>>>>>> Stashed changes
             if (!this.level.isClientSide) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
@@ -379,7 +390,8 @@ public class TameableBirdBase extends CreaturesBirdEntity implements IFlyingAnim
     }
 
     public int methodofDeterminingVariant(IWorld p_213610_1_) {
-        return this.random.nextInt(determineVariant());
+        int variant = Math.max(determineVariant(), 2);
+        return this.random.nextInt(variant - 1) + 1;
     }
 
     public static boolean checkBirdSpawnRules(EntityType<? extends AnimalEntity> p_223317_0_, IWorld p_223317_1_, SpawnReason p_223317_2_, BlockPos p_223317_3_, Random p_223317_4_) {
@@ -651,6 +663,28 @@ public class TameableBirdBase extends CreaturesBirdEntity implements IFlyingAnim
             } else {
                 return !(p_142018_1_ instanceof TameableEntity) || !((TameableEntity)p_142018_1_).isTame();
             }
+    }
+
+
+    public boolean setEntityOnShoulder(ServerPlayerEntity p_213439_1_) {
+        CompoundNBT compoundnbt = new CompoundNBT();
+        compoundnbt.putString("id", this.getEncodeId());
+        this.saveWithoutId(compoundnbt);
+        if (p_213439_1_.setEntityOnShoulder(compoundnbt)) {
+            this.remove();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void tick() {
+        ++this.rideCooldownCounter;
+        super.tick();
+    }
+
+    public boolean canSitOnShoulder() {
+        return this.rideCooldownCounter > 100;
     }
 
 }

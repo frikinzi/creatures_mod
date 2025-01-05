@@ -4,6 +4,7 @@ import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.base.AbstractCrabBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.util.CreaturesLootTables;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -25,6 +26,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
@@ -43,26 +45,18 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
-=======
 import java.util.*;
->>>>>>> Stashed changes
 
 public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
     final private int[] old_worlds = new int[] {6,9,11,13};
     final private int[] jungle_variants = new int[] {1,2,4,5,8,9,12,13,14};
-    final private int[] desert_variants = new int[] {3,6,7,10,11};
+    final private int[] desert_variants = new int[] {3,6,7,10,11, 15};
     private static final DataParameter<Byte> DATA_FLAGS_ID = EntityDataManager.defineId(TarantulaEntity.class, DataSerializers.BYTE);
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(TarantulaEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(TarantulaEntity.class, DataSerializers.INT);
     private static final DataParameter<Boolean> THREAT = EntityDataManager.defineId(TarantulaEntity.class, DataSerializers.BOOLEAN);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.MEALWORMS);
     private AnimationFactory factory = new AnimationFactory(this);
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES;
 
     static {
@@ -81,10 +75,27 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
         map.put(12, new TranslationTextComponent("message.creatures.purpletree"));
         map.put(13, new TranslationTextComponent("message.creatures.neonblueleg"));
         map.put(14, new TranslationTextComponent("message.creatures.juruensis"));
+        map.put(15, new TranslationTextComponent("message.creatures.emilia"));
         SPECIES_NAMES = Collections.unmodifiableMap(map);
     }
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Cyriocosmus elegans")
+            .put(2, "Hapalopus formosus")
+            .put(3, "Brachypelma boehmei")
+            .put(4, "Grammostola iheringi")
+            .put(5, "Typhochlaena seladonia")
+            .put(6, "Pterinochilus murinus")
+            .put(7, "Grammostola pulchripes")
+            .put(8, "Davus sp.")
+            .put(9, "Poecilotheria metallica")
+            .put(10, "Aphonopelma chalcodes")
+            .put(11, "Harpactira pulchripes")
+            .put(12, "Avicularia purpurea")
+            .put(13, "Birupes simoroxigorum")
+            .put(14, "Avicularia juruensis")
+            .put(15, "Brachypelma emilia")
+            .build();
 
->>>>>>> Stashed changes
 
     public TarantulaEntity(EntityType<? extends TarantulaEntity> p_i48550_1_, World p_i48550_2_) {
         super(p_i48550_1_, p_i48550_2_);
@@ -205,10 +216,10 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
 
     @Override
     public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
-        TarantulaEntity fiddlercrabentity = (TarantulaEntity) getType().create(p_241840_1_);
-        fiddlercrabentity.setVariant(this.getVariant());
-        fiddlercrabentity.setGender(this.random.nextInt(2));
-        return fiddlercrabentity;
+        TarantulaEntity tarantulaentity = (TarantulaEntity) getType().create(p_241840_1_);
+        tarantulaentity.setVariant(this.getVariant());
+        tarantulaentity.setGender(this.random.nextInt(2));
+        return tarantulaentity;
     }
 
     public boolean doHurtTarget(Entity p_70652_1_) {
@@ -284,6 +295,10 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
         }
     }
 
+    private boolean canMove() {
+        return !this.isThreatPose();
+    }
+
     @Override
     public AnimationFactory getFactory()
     {
@@ -299,7 +314,7 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
     }
 
     public int getVariant() {
-        return MathHelper.clamp(this.entityData.get(DATA_VARIANT_ID), 1, 14);
+        return MathHelper.clamp(this.entityData.get(DATA_VARIANT_ID), 1, 16);
     }
 
     public int getGender() {
@@ -327,21 +342,14 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
                 return desert_variants[i];
             }
         }
-<<<<<<< Updated upstream
-        return this.random.nextInt(15);
-
-    }
-
-=======
         return this.random.nextInt(determineVariant());
 
     }
 
     public int determineVariant() {
-        return 15;
+        return 16;
     }
 
->>>>>>> Stashed changes
     public boolean contains(int[] s, int type) {
         for (int t : s) {
             if (t == type) {
@@ -453,71 +461,10 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
 
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.celegans");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.pumpkinpatch");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.mexicanfireleg");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.entrerios");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.brazilianjewel");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.orangebaboon");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 7) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.chacogoldenknee");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 8) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lavatarantula");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 9) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.gootysapphire");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 10) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.arizonablonde");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 11) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.goldenblueleg");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 12) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.purpletree");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 13) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.neonblueleg");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 14) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.juruensis");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public ItemStack getFoodItem() {
@@ -573,6 +520,27 @@ public class TarantulaEntity extends AbstractCrabBase implements IAnimatable {
 
     public ResourceLocation getDefaultLootTable() {
         return CreaturesLootTables.TARANTULA;
+    }
+
+    public int getIUCNStatus() {
+        if (this.getVariant() == 3) {
+            return 3;
+        } if (this.getVariant() == 9) {
+            return 4;
+        }
+        return -1;
+    }
+
+    public static boolean checkTarantulaSpawnRules(EntityType<? extends AnimalEntity> p_223316_0_, IWorld p_223316_1_, SpawnReason p_223316_2_, BlockPos p_223316_3_, Random p_223316_4_) {
+        return p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.SAND) || p_223316_1_.getBlockState(p_223316_3_.below()).is(Blocks.GRASS_BLOCK) && p_223316_1_.getRawBrightness(p_223316_3_, 0) > 8;
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.tarantula");
     }
 
 

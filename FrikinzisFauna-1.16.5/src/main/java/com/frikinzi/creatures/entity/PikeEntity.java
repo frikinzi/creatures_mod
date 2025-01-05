@@ -13,6 +13,7 @@ import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.AbstractSkeletonEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -20,10 +21,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -94,17 +92,10 @@ public class PikeEntity extends FishBase implements IAnimatable {
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event)
     {
         if (!this.isInWater()) {
-<<<<<<< Updated upstream
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pike.flop", true));
-            return PlayState.CONTINUE;
-        }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.pike.swim", true));
-=======
             event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
             return PlayState.CONTINUE;
         }
         event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
->>>>>>> Stashed changes
         return PlayState.CONTINUE;
     }
 
@@ -150,7 +141,21 @@ public class PikeEntity extends FishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return Items.COD;
+        return CreaturesItems.FISH_FOOD;
     }
+
+    public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
+        ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
+        if (itemstack.getItem() == Items.WATER_BUCKET && this.isAlive()) {
+            return ActionResultType.PASS;
+        } else {
+            return super.mobInteract(p_230254_1_, p_230254_2_);
+        }
+    }
+
+    public String getScientificName() {
+        return "Esox lucius";
+    }
+
 
 }

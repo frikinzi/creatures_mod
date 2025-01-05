@@ -4,10 +4,7 @@ import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.base.GroupFishBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.util.CreaturesLootTables;
-<<<<<<< Updated upstream
-=======
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -26,10 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-<<<<<<< Updated upstream
-=======
 import net.minecraft.util.text.TranslationTextComponent;
->>>>>>> Stashed changes
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -42,10 +36,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 
 public class RedSnapperEntity extends GroupFishBase implements IAnimatable {
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(RedSnapperEntity.class, DataSerializers.INT);
@@ -53,19 +44,17 @@ public class RedSnapperEntity extends GroupFishBase implements IAnimatable {
     public RedSnapperEntity(EntityType<? extends RedSnapperEntity> p_i50246_1_, World p_i50246_2_) {
         super(p_i50246_1_, p_i50246_2_);
     }
-<<<<<<< Updated upstream
-=======
     public static Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.of(
             1, new TranslationTextComponent("message.creatures.redsnapper"),
             2, new TranslationTextComponent("message.creatures.emperorsnapper")
     );
->>>>>>> Stashed changes
 
     @Nullable
     public ILivingEntityData finalizeSpawn(IServerWorld p_213386_1_, DifficultyInstance p_213386_2_, SpawnReason p_213386_3_, @Nullable ILivingEntityData p_213386_4_, @Nullable CompoundNBT p_213386_5_) {
         if (p_213386_3_ != SpawnReason.BUCKET) {
             float f = (float) (this.random.nextGaussian() * CreaturesConfig.height_standard_deviation.get() + CreaturesConfig.height_base_multiplier.get());
             this.setHeightMultiplier(f);
+            this.setVariant(this.random.nextInt(2)+1);
         }
         if (p_213386_5_ != null) {
             if (p_213386_5_.contains("BucketHeightMultiplier")) {
@@ -102,7 +91,6 @@ public class RedSnapperEntity extends GroupFishBase implements IAnimatable {
         return this.factory;
     }
 
-
     public int getMaxSchoolSize() {
         return 10;
     }
@@ -136,11 +124,7 @@ public class RedSnapperEntity extends GroupFishBase implements IAnimatable {
     }
 
     public int getVariant() {
-<<<<<<< Updated upstream
-        return MathHelper.clamp(this.entityData.get(DATA_VARIANT_ID), 1, 1);
-=======
         return MathHelper.clamp(this.entityData.get(DATA_VARIANT_ID), 1, 3);
->>>>>>> Stashed changes
     }
 
     public void setVariant(int p_191997_1_) {
@@ -176,11 +160,9 @@ public class RedSnapperEntity extends GroupFishBase implements IAnimatable {
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.RAW_SHRIMP;
+        return CreaturesItems.FISH_FOOD;
     }
 
-<<<<<<< Updated upstream
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
@@ -192,6 +174,19 @@ public class RedSnapperEntity extends GroupFishBase implements IAnimatable {
     {
         return 3;
     }
->>>>>>> Stashed changes
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 1) {
+            return 2;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        if (this.getVariant() == 1) {
+            return "Lutjanus campechanus";
+        } return "Lutjanus sebae";
+    }
+
 
 }

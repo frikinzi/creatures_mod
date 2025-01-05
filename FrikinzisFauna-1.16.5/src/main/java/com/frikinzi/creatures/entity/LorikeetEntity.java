@@ -2,17 +2,15 @@ package com.frikinzi.creatures.entity;
 
 import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.entity.ai.FollowFlockLeaderGoal;
+import com.frikinzi.creatures.entity.ai.LandOnOwnersShoulderGoal;
 import com.frikinzi.creatures.entity.base.CreaturesBirdEntity;
 import com.frikinzi.creatures.entity.base.TameableBirdBase;
 import com.frikinzi.creatures.entity.egg.CreaturesEggEntity;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.registry.ModEntityTypes;
-<<<<<<< Updated upstream
-=======
 import com.frikinzi.creatures.util.EntityAttributes;
 import com.google.common.collect.ImmutableMap;
->>>>>>> Stashed changes
 import com.google.common.collect.Sets;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
@@ -43,18 +41,13 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-<<<<<<< Updated upstream
-=======
 import java.util.Map;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class LorikeetEntity extends TameableBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.NECTAR);
     private boolean isGumi;
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES = ImmutableMap.<Integer, TranslationTextComponent>builder()
             .put(1, new TranslationTextComponent("message.creatures.lorikeet.rainbow"))
             .put(2, new TranslationTextComponent("message.creatures.lorikeet.black"))
@@ -63,7 +56,14 @@ public class LorikeetEntity extends TameableBirdBase implements IAnimatable {
             .put(5, new TranslationTextComponent("message.creatures.lorikeet.chattering"))
             .put(6, new TranslationTextComponent("message.creatures.lorikeet.duskylory"))
             .build();
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Trichoglossus moluccanus")
+            .put(2, "Eos cyanogenia")
+            .put(3, "Trichoglossus moluccanus")
+            .put(4, "Trichoglossus euteles")
+            .put(5, "Lorius garrulus")
+            .put(6, "Pseudeos fuscata")
+            .build();
 
     public LorikeetEntity(EntityType<? extends LorikeetEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -72,6 +72,7 @@ public class LorikeetEntity extends TameableBirdBase implements IAnimatable {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(6, new FollowFlockLeaderGoal(this));
+        this.goalSelector.addGoal(3, new LandOnOwnersShoulderGoal(this));
 
     }
 
@@ -134,11 +135,7 @@ public class LorikeetEntity extends TameableBirdBase implements IAnimatable {
 
     public CreaturesEggEntity layEgg(CreaturesBirdEntity animal) {
         CreaturesEggEntity egg = new CreaturesEggEntity(ModEntityTypes.EGG.get(), this.level);
-<<<<<<< Updated upstream
-        egg.setSpecies(ModEntityTypes.getIntFromBirdEntity(animal));
-=======
         egg.setSpecies(EntityAttributes.getBirdEntityMap().inverse().get(animal.getType()));
->>>>>>> Stashed changes
         egg.setGender(this.random.nextInt(2));
         if (this.getVariant() == 1) {
             if (this.random.nextInt(CreaturesConfig.lorikeet_mutation_chance.get()) == 1) {
@@ -221,39 +218,10 @@ public class LorikeetEntity extends TameableBirdBase implements IAnimatable {
     }
 
     public String getSpeciesName() {
-<<<<<<< Updated upstream
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lorikeet.rainbow");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lorikeet.black");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lorikeet.blue");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lorikeet.olive");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lorikeet.chattering");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.lorikeet.duskylory");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public ItemStack getFoodItem() {
@@ -270,6 +238,23 @@ public class LorikeetEntity extends TameableBirdBase implements IAnimatable {
 
     public int getMaxFlockSize() {
         return 10;
+    }
+
+    public int getIUCNStatus() {
+        if (this.getVariant()== 2) {
+            return 1;
+        } if (this.getVariant() == 4) {
+            return 2;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.lorikeet");
     }
 
 }

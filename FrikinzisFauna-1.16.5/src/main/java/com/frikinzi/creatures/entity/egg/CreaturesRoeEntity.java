@@ -48,6 +48,7 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final DataParameter<Integer> SPECIES_ID = EntityDataManager.defineId(CreaturesRoeEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> DATA_VARIANT_ID = EntityDataManager.defineId(CreaturesRoeEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> DATA_SUBVARIANT_ID = EntityDataManager.defineId(CreaturesRoeEntity.class, DataSerializers.INT);
     private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(CreaturesRoeEntity.class, DataSerializers.INT);
     private static final DataParameter<Boolean> HATCHING = EntityDataManager.defineId(CreaturesRoeEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Float> HEIGHT_MULTIPLIER = EntityDataManager.defineId(CreaturesRoeEntity.class, DataSerializers.FLOAT);
@@ -119,6 +120,12 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
     public void setVariant(int p_191997_1_) {
         this.entityData.set(DATA_VARIANT_ID, p_191997_1_);
     }
+    public int getSubVariant() {
+        return MathHelper.clamp(this.entityData.get(DATA_SUBVARIANT_ID), 1, 30);
+    }
+    public void setSubVariant(int p_191997_1_) {
+        this.entityData.set(DATA_SUBVARIANT_ID, p_191997_1_);
+    }
 
     public int getGender() {
         return MathHelper.clamp(this.entityData.get(GENDER), 0, 2);
@@ -139,6 +146,7 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_VARIANT_ID, 0);
+        this.entityData.define(DATA_SUBVARIANT_ID, 0);
         this.entityData.define(GENDER, 0);
         this.entityData.define(SPECIES_ID, 0);
         this.entityData.define(HATCHING, false);
@@ -151,6 +159,7 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
         super.addAdditionalSaveData(p_213281_1_);
         p_213281_1_.putBoolean("Hatching", this.isHatching());
         p_213281_1_.putInt("Variant", this.getVariant());
+        p_213281_1_.putInt("Subvariant", this.getSubVariant());
         p_213281_1_.putInt("Species", this.getSpecies());
         p_213281_1_.putInt("Gender", this.getGender());
         p_213281_1_.putFloat("HeightMultiplier", this.getHeightMultiplier());
@@ -163,6 +172,7 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
         super.readAdditionalSaveData(p_70037_1_);
         this.setHatching(p_70037_1_.getBoolean("Hatching"));
         this.setVariant(p_70037_1_.getInt("Variant"));
+        this.setSubVariant(p_70037_1_.getInt("Subvariant"));
         this.setSpecies(p_70037_1_.getInt("Species"));
         this.setGender(p_70037_1_.getInt("Gender"));
         this.setHeightMultiplier(p_70037_1_.getFloat("HeightMultiplier"));
@@ -200,6 +210,9 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
     }
 
     public void hatchEgg(CreaturesRoeEntity egg) {
+        if (egg.getSpecies() == 19) {
+            egg.hatchTime = 0;
+        }
         if (--egg.hatchTime <= 0) {
             if (egg.getSpecies() == 0 & !this.level.isClientSide) {
                 KoiEntity fish = new KoiEntity(ModEntityTypes.KOI.get(), egg.level);
@@ -454,6 +467,202 @@ public class CreaturesRoeEntity extends WaterMobEntity implements IAnimatable {
                 fish.setHeightMultiplier(this.getHeightMultiplier());
                 fish.setPos(egg.getX(), egg.getY(), egg.getZ());
                 fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 17 & !this.level.isClientSide) {
+                TambaquiEntity fish = new TambaquiEntity(ModEntityTypes.TAMBAQUI.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 18 & !this.level.isClientSide) {
+                ElephantNoseFishEntity fish = new ElephantNoseFishEntity(ModEntityTypes.ELEPHANTNOSE.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 19 & !this.level.isClientSide) {
+                StingrayEntity fish = new StingrayEntity(ModEntityTypes.STINGRAY.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                this.level.addFreshEntity(fish); // live birth
+                egg.remove();
+            }
+            if (egg.getSpecies() == 20 & !this.level.isClientSide) {
+                SawfishEntity fish = new SawfishEntity(ModEntityTypes.SAWFISH.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 21 & !this.level.isClientSide) {
+                SwordfishEntity fish = new SwordfishEntity(ModEntityTypes.SWORDFISH.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 22 & !this.level.isClientSide) {
+                SquidEntity fish = new SquidEntity(ModEntityTypes.SQUID.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 23 & !this.level.isClientSide) {
+                LookdownEntity fish = new LookdownEntity(ModEntityTypes.LOOKDOWN.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 24 & !this.level.isClientSide) {
+                BarracudaEntity fish = new BarracudaEntity(ModEntityTypes.BARRACUDA.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 25 & !this.level.isClientSide) {
+                SeaDragonEntity fish = new SeaDragonEntity(ModEntityTypes.SEADRAGON.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 26 & !this.level.isClientSide) {
+                TrumpetfishEntity fish = new TrumpetfishEntity(ModEntityTypes.TRUMPETFISH.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 27 & !this.level.isClientSide) {
+                ParrotfishEntity fish = new ParrotfishEntity(ModEntityTypes.PARROTFISH.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 28 & !this.level.isClientSide) {
+                ClownfishEntity fish = new ClownfishEntity(ModEntityTypes.CLOWNFISH.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setSubVariant(this.getSubVariant());
+                fish.setBred(true);
+                if (this.random.nextFloat() < fish.getHatchChance()) {
+                    this.level.addFreshEntity(fish); }
+                egg.remove();
+            }
+            if (egg.getSpecies() == 29 & !this.level.isClientSide) {
+                LungfishEntity fish = new LungfishEntity(ModEntityTypes.LUNGFISH.get(), egg.level);
+
+                if (egg.hasCustomName()) {
+                    fish.setCustomName(egg.getCustomName());
+                }
+                fish.setVariant(this.getVariant());
+                fish.setHeightMultiplier(this.getHeightMultiplier());
+                fish.setPos(egg.getX(), egg.getY(), egg.getZ());
+                fish.setBaby(true);
+                fish.setSubVariant(this.getSubVariant());
                 fish.setBred(true);
                 if (this.random.nextFloat() < fish.getHatchChance()) {
                     this.level.addFreshEntity(fish); }

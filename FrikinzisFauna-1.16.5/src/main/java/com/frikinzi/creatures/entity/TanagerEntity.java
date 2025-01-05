@@ -6,6 +6,7 @@ import com.frikinzi.creatures.entity.base.NonTameableFlyingBirdBase;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.CreaturesSound;
 import com.frikinzi.creatures.util.CreaturesLootTables;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -33,19 +34,14 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-<<<<<<< Updated upstream
-=======
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
->>>>>>> Stashed changes
 import java.util.Set;
 
 public class TanagerEntity extends NonTameableFlyingBirdBase implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final Ingredient FOOD_ITEMS = Ingredient.of(CreaturesItems.MEALWORMS, Items.MELON_SLICE, Items.SWEET_BERRIES);
-<<<<<<< Updated upstream
-=======
     public static final Map<Integer, TranslationTextComponent> SPECIES_NAMES;
 
     static {
@@ -61,7 +57,17 @@ public class TanagerEntity extends NonTameableFlyingBirdBase implements IAnimata
         messageMap.put(9, new TranslationTextComponent("message.creatures.bluegraytanager"));
         SPECIES_NAMES = Collections.unmodifiableMap(messageMap);
     }
->>>>>>> Stashed changes
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Tangara chilensis")
+            .put(2, "Tangara nigroviridis")
+            .put(3, "Nemosia rourei")
+            .put(4, "Tangara seledon")
+            .put(5, "Piranga erythrocephala")
+            .put(6, "Piranga olivacea")
+            .put(7, "Ramphocelus carbo")
+            .put(8, "Chlorochrysa nitidissima")
+            .put(9, "Thraupis episcopus")
+            .build();
 
     public TanagerEntity(EntityType<? extends TanagerEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -150,54 +156,11 @@ public class TanagerEntity extends NonTameableFlyingBirdBase implements IAnimata
         return CreaturesLootTables.SMALL_BIRD_GENERIC;
     }
 
-<<<<<<< Updated upstream
-    @Override
-    public String getSpeciesName() {
-        if (this.getVariant() == 1) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.paradisetanager");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 2) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.spangledberyl");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 3) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.cherrythroated");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 4) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.greenheaded");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 5) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.redheadedtanager");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 6) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.scarlettanager");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 7) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.silverbeaked");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 8) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.bluegraytanager");
-            return s1.getString();
-        }
-        else if (this.getVariant() == 9) {
-            ITextComponent s1 = new TranslationTextComponent("message.creatures.multicoloredtanager");
-            return s1.getString();
-        } else {
-            return "Unknown";
-        }
-=======
     public String getSpeciesName() {
         TranslationTextComponent translatable = SPECIES_NAMES.get(this.getVariant());
         if (translatable != null) {
             return translatable.getString();
         } return "Unknown";
->>>>>>> Stashed changes
     }
 
     public String getFoodName() {
@@ -225,5 +188,19 @@ public class TanagerEntity extends NonTameableFlyingBirdBase implements IAnimata
     protected float getStandingEyeHeight(Pose p_213348_1_, EntitySize p_213348_2_) {
         return 0.3F;
     }
+
+    public int getIUCNStatus() {
+        if (this.getVariant() == 3) {
+            return 4;
+        } if (this.getVariant() == 8) {
+            return 1;
+        }
+        return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
+
 
 }

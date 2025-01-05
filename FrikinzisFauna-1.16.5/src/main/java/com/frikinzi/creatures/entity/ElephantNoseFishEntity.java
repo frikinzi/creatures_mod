@@ -25,6 +25,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
@@ -153,7 +155,7 @@ public class ElephantNoseFishEntity extends GroupFishBase implements IAnimatable
     }
 
     public Item getFoodItem() {
-        return CreaturesItems.MEALWORMS;
+        return CreaturesItems.FISH_FOOD;
     }
 
     protected void registerGoals() {
@@ -163,6 +165,14 @@ public class ElephantNoseFishEntity extends GroupFishBase implements IAnimatable
 
     public int determineVariant() {
         return 5;
+    }
+
+    public String getScientificName() {
+        return "Gnathonemus petersii";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.elephantnosefish");
     }
 
 }

@@ -52,6 +52,12 @@ public class StorkEntity extends NonTameableFlyingBirdBase implements IAnimatabl
             3, new TranslationTextComponent("message.creatures.milkystork"),
             4, new TranslationTextComponent("message.creatures.woodstork")
     );
+    public static final Map<Integer, String> SCIENTIFIC_NAMES = ImmutableMap.<Integer, String>builder()
+            .put(1, "Mycteria ibis")
+            .put(2, "Mycteria leucocephala")
+            .put(3, "Mycteria cinerea")
+            .put(4, "Mycteria americana")
+            .build();
 
     public StorkEntity(EntityType<? extends StorkEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
@@ -174,5 +180,14 @@ public class StorkEntity extends NonTameableFlyingBirdBase implements IAnimatabl
         return 1;
     }
 
+    public int getIUCNStatus() {
+        if (this.getVariant() == 3) {
+            return 3;
+        } return super.getIUCNStatus();
+    }
+
+    public String getScientificName() {
+        return SCIENTIFIC_NAMES.get(this.getVariant());
+    }
 
 }

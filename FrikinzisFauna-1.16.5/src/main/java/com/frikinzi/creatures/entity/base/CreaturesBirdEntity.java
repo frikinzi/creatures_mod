@@ -5,15 +5,13 @@ import com.frikinzi.creatures.entity.ai.StayCloseToEggGoal;
 import com.frikinzi.creatures.entity.egg.CreaturesEggEntity;
 import com.frikinzi.creatures.registry.CreaturesItems;
 import com.frikinzi.creatures.registry.ModEntityTypes;
-<<<<<<< Updated upstream
-=======
 import com.frikinzi.creatures.util.EntityAttributes;
->>>>>>> Stashed changes
 import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.horse.CoatColors;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,10 +19,12 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.*;
 
@@ -40,15 +40,21 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
     World world;
     CreaturesBirdEntity mate;
     private CreaturesBirdEntity leader;
+    public int sitProgress;
+    public int ticksToSit;
     private int schoolSize = 1;
     private int moreCarrotTicks;
-
+    private static final DataParameter<Integer> GENDER = EntityDataManager.defineId(CreaturesBirdEntity.class, DataSerializers.INT);
+    private static final DataParameter<Boolean> GROOMING = EntityDataManager.defineId(CreaturesBirdEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Float> HEIGHT_MULTIPLIER = EntityDataManager.defineId(CreaturesBirdEntity.class, DataSerializers.FLOAT);
     protected static final DataParameter<Optional<UUID>> DATA_MATEUUID_ID = EntityDataManager.defineId(CreaturesBirdEntity.class, DataSerializers.OPTIONAL_UUID);
+    protected static final DataParameter<Optional<UUID>> DATA_PARENTUUID_ID = EntityDataManager.defineId(CreaturesBirdEntity.class, DataSerializers.OPTIONAL_UUID);
+
 
     public CreaturesBirdEntity(EntityType<? extends CreaturesBirdEntity> p_i50251_1_, World p_i50251_2_) {
         super(p_i50251_1_, p_i50251_2_);
         mate = null;
+        this.ticksToSit = 40;
     }
 
     protected void registerGoals() {
@@ -75,6 +81,8 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
         super.defineSynchedData();
         this.entityData.define(HEIGHT_MULTIPLIER, 1.0F);
         this.entityData.define(DATA_MATEUUID_ID, Optional.empty());
+        this.entityData.define(DATA_PARENTUUID_ID, Optional.empty());
+        this.entityData.define(GROOMING, false);
     }
 
     public CreaturesBirdEntity getMate() {
@@ -87,6 +95,14 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
 
     public float getHeightMultiplier() {
         return this.entityData.get(HEIGHT_MULTIPLIER);
+    }
+
+    public boolean isGrooming() {
+        return this.entityData.get(GROOMING);
+    }
+
+    public void setGrooming(boolean p_70606_1_) {
+        this.entityData.set(GROOMING, p_70606_1_);
     }
 
     public void setHeightMultiplier(float p_70606_1_) {
@@ -132,9 +148,13 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
 
 
     public void addAdditionalSaveData(CompoundNBT p_213281_1_) {
+        p_213281_1_.putBoolean("Grooming", this.isGrooming());
         p_213281_1_.putFloat("HeightMultiplier", this.getHeightMultiplier());
         if (this.getMateUUID() != null) {
             p_213281_1_.putUUID("Mate", this.getMateUUID());
+        }
+        if (this.getParentUUID() != null) {
+            p_213281_1_.putUUID("Parent", this.getParentUUID());
         }
         p_213281_1_.putInt("MoreCarrotTicks", this.moreCarrotTicks);
         super.addAdditionalSaveData(p_213281_1_);
@@ -160,6 +180,32 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
                 }
             }
         }
+        if (p_70037_1_.hasUUID("Parent")) {
+            uuid = p_70037_1_.getUUID("Parent");
+            if (uuid != null) {
+                try {
+                    this.setParentUUID(uuid);
+                } catch (Throwable throwable) {
+                }
+            }
+        }
+    }
+
+    public void aiStep() {
+        if (this.isGrooming()) {
+            this.getNavigation().stop();
+        }
+        if (!this.level.isClientSide) {
+            if (!this.getNavigation().isDone() && (this.isGrooming() || this.isSleeping())) {
+                this.setGrooming(false);
+            }
+        }
+        if (this.isGrooming() && this.sitProgress < this.ticksToSit) {
+            this.sitProgress++;
+        } else if (!this.isGrooming() && this.sitProgress > 0) {
+            this.sitProgress--;
+        }
+        super.aiStep();
     }
 
     @Nullable
@@ -167,23 +213,26 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
         return this.entityData.get(DATA_MATEUUID_ID).orElse((UUID)null);
     }
 
+    public UUID getParentUUID() {
+        return this.entityData.get(DATA_PARENTUUID_ID).orElse((UUID)null);
+    }
+
+
     public void setMateUUID(@Nullable UUID p_184754_1_) {
         this.entityData.set(DATA_MATEUUID_ID, Optional.ofNullable(p_184754_1_));
     }
 
+    public void setParentUUID(@Nullable UUID p_184754_1_) {
+        this.entityData.set(DATA_PARENTUUID_ID, Optional.ofNullable(p_184754_1_));
+    }
+
     public CreaturesEggEntity layEgg(CreaturesBirdEntity animal) {
         CreaturesEggEntity egg = new CreaturesEggEntity(ModEntityTypes.EGG.get(), this.level);
-<<<<<<< Updated upstream
-        egg.setSpecies(ModEntityTypes.getIntFromBirdEntity(animal));
-        egg.setGender(this.random.nextInt(2));
-        egg.setVariant(this.getVariant());
-=======
         egg.setSpecies(EntityAttributes.getBirdEntityMap().inverse().get(animal.getType()));
         egg.setGender(this.random.nextInt(2));
         int[] variants = {this.getVariant(), animal.getVariant()};
         int rand = this.random.nextInt(2);
         egg.setVariant(variants[rand]);
->>>>>>> Stashed changes
         egg.setPos(MathHelper.floor(this.getX()) + 0.5, MathHelper.floor(this.getY()) + 0.5, MathHelper.floor(this.getZ()) + 0.5);
         return egg;
     }
@@ -191,11 +240,16 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
     public int getVariant() {
         return 0;
     }
-<<<<<<< Updated upstream
-=======
     
     abstract public void setVariant(int i);
->>>>>>> Stashed changes
+
+    public void setSubVariant(int i) {
+
+    }
+
+    public int getSubVariant() {
+        return 0;
+    }
 
     public float getHatchChance() {
         return 1;
@@ -210,7 +264,7 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
     }
 
     public int getGender() {
-        return 1;
+        return MathHelper.clamp(this.entityData.get(GENDER), 0, 2);
     }
 
     public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_) {
@@ -221,11 +275,7 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
                 if (itemstack.getTag() == null) {
                     itemstack.getOrCreateTag();
                 }
-<<<<<<< Updated upstream
-                String s = String.valueOf(ModEntityTypes.getIntFromBirdEntity(this));
-=======
                 String s = String.valueOf(EntityAttributes.getBirdEntityMap().inverse().get(this.getType()));
->>>>>>> Stashed changes
                 if (!itemstack.getTag().contains(s)) {
                     if (this.determineVariant() == 1) {
                         itemstack.getTag().putIntArray(s, new int[1]);
@@ -246,15 +296,27 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
         } return super.mobInteract(p_230254_1_, p_230254_2_);
     }
 
+    public boolean hurt(DamageSource p_29378_, float p_29379_) {
+        if (this.isGrooming()) {
+            this.setGrooming(false);
+        }
+        if (this.isInvulnerableTo(p_29378_)) {
+            return false;
+        } else {
+            if (!this.level.isClientSide) {
+                this.setOrderedToSit(false);
+            }
+
+            return super.hurt(p_29378_, p_29379_);
+        }
+    }
+
     public float getSpawnEggOffspringHeight() {
         return (float)(this.getRandom().nextGaussian() * 0.05 + this.getHeightMultiplier());
     }
 
-<<<<<<< Updated upstream
-=======
     public abstract void setGender(int gender);
 
->>>>>>> Stashed changes
     public class DefendBabyGoal extends NearestAttackableTargetGoal<LivingEntity> {
         public DefendBabyGoal() {
             super(CreaturesBirdEntity.this, LivingEntity.class, 5, true, true, (Predicate<LivingEntity>)LivingEntity::attackable);
@@ -273,11 +335,7 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
                         }
                     }
                     for (CreaturesEggEntity eggEntity : CreaturesBirdEntity.this.level.getEntitiesOfClass(CreaturesEggEntity.class, CreaturesBirdEntity.this.getBoundingBox().inflate(3.0D, 2.0D, 3.0D))) {
-<<<<<<< Updated upstream
-                        if (eggEntity.getSpecies() == ModEntityTypes.getIntFromBirdEntity(CreaturesBirdEntity.this)) {
-=======
                         if (eggEntity.getSpecies() == EntityAttributes.getBirdEntityMap().inverse().get(CreaturesBirdEntity.this.getType())) {
->>>>>>> Stashed changes
                             if (this.target.getClass() == CreaturesBirdEntity.this.getClass() || this.target.isBaby() || this.target.getClass() == CreaturesEggEntity.class) {
                                 return false;
                             }
@@ -296,8 +354,6 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
         }
     }
 
-<<<<<<< Updated upstream
-=======
     public String getGenderName() {
         if (this.getGender() == 1) {
             return "m";
@@ -306,7 +362,6 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
         }
     }
 
->>>>>>> Stashed changes
     class HurtByTargetGoal extends net.minecraft.entity.ai.goal.HurtByTargetGoal {
         public HurtByTargetGoal() {
             super(CreaturesBirdEntity.this);
@@ -394,11 +449,6 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
 
     }
 
-<<<<<<< Updated upstream
-    public void addFollowers(Stream<CreaturesBirdEntity> p_212810_1_) {
-        p_212810_1_.limit((long)(this.getMaxFlockSize() - this.schoolSize)).filter((p_212801_1_) -> {
-            return p_212801_1_ != this;
-=======
     public int getAmbientSoundInterval() {
         return 160;
     }
@@ -412,7 +462,6 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
             return p_212801_1_ != this;
         }).filter((p_212801_1_) -> {
             return p_212801_1_.getVariant() == this.getVariant();
->>>>>>> Stashed changes
         }).forEach((p_212804_1_) -> {
             p_212804_1_.startFollowing(this);
         });
@@ -495,5 +544,67 @@ abstract public class CreaturesBirdEntity extends TameableEntity {
 
             return false;
         }
+
+
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("creatures.unknown");
+    }
+
+    public int getIUCNStatus() {
+        return 0;
+    }
+
+    public TextFormatting getIUCNColor() {
+        if (this.getIUCNStatus() == 0) {
+            return TextFormatting.DARK_GREEN; // least concern
+        } if (this.getIUCNStatus() == 1) {
+            return TextFormatting.GOLD; // near threatened
+        } if (this.getIUCNStatus() == 2) {
+            return TextFormatting.GOLD;  // vulnerable
+        } if (this.getIUCNStatus() == 3) {
+            return TextFormatting.RED; // endangered
+        } if (this.getIUCNStatus() == 4) {
+            return TextFormatting.DARK_RED; // critically endangered
+        } if (this.getIUCNStatus() == 5) {
+            return TextFormatting.DARK_PURPLE; // extinct in the wild
+        } if (this.getIUCNStatus() == 6) {
+            return TextFormatting.BLACK; // extinct
+        } return TextFormatting.GRAY; // unknown
+    }
+    public ITextComponent getIUCNText() {
+        if (this.getIUCNStatus() == 0) {
+            return new TranslationTextComponent("creatures.leastconcern"); // least concern
+        } if (this.getIUCNStatus() == 1) {
+            return new TranslationTextComponent("creatures.nearthreatened"); // near threatened
+        } if (this.getIUCNStatus() == 2) {
+            return new TranslationTextComponent("creatures.vulnerable");  // vulnerable
+        } if (this.getIUCNStatus() == 3) {
+            return new TranslationTextComponent("creatures.endangered"); // endangered
+        } if (this.getIUCNStatus() == 4) {
+            return new TranslationTextComponent("creatures.criticallyendangered"); // critically endangered
+        } if (this.getIUCNStatus() == 5) {
+            return new TranslationTextComponent("creatures.extinctinwild"); // extinct in the wild
+        } if (this.getIUCNStatus() == 6) {
+            return new TranslationTextComponent("creatures.extinct"); // extinct
+        } return new TranslationTextComponent("creatures.datadeficient"); // unknown
+    }
+
+    public String getScientificName() {
+        return "";
+    }
+
+    public static class BirdData extends AgeableEntity.AgeableData {
+        public final int variant;
+
+        public BirdData(int p_i231557_1_) {
+            super(true);
+            this.variant = p_i231557_1_;
+        }
+    }
+
+    public int methodOfDeterminingSubVariant() {
+        return 1;
     }
 }

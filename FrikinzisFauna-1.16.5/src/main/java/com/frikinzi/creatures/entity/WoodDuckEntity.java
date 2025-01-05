@@ -21,6 +21,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
@@ -164,6 +166,14 @@ public class WoodDuckEntity extends NonTameableBirdBase implements IAnimatable {
 
     public int getMaxFlockSize() {
         return 4;
+    }
+
+    public String getScientificName() {
+        return "Aix sponsa";
+    }
+
+    public ITextComponent getFunFact() {
+        return new TranslationTextComponent("description.creatures.woodduck");
     }
 
 }

@@ -2,6 +2,7 @@ package com.frikinzi.creatures;
 
 import com.frikinzi.creatures.client.ClientProxy;
 import com.frikinzi.creatures.client.CommonProxy;
+import com.frikinzi.creatures.client.IUCNInteractionTrigger;
 import com.frikinzi.creatures.client.block.CreaturesBlocks;
 import com.frikinzi.creatures.config.CreaturesConfig;
 import com.frikinzi.creatures.item.ModSpawnEgg;
@@ -10,6 +11,7 @@ import com.frikinzi.creatures.registry.CreaturesSpawnEggs;
 import com.frikinzi.creatures.registry.ModEntityTypes;
 import com.frikinzi.creatures.util.FFLootModifier;
 import com.frikinzi.creatures.util.Utils;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -49,6 +51,7 @@ public class Creatures
     // Directly reference a log4j logger.
     public static final String MODID = "creatures";
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final IUCNInteractionTrigger IUCN_INTERACTION_TRIGGER = new IUCNInteractionTrigger();
 
     public Creatures() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -75,12 +78,14 @@ public class Creatures
     }
     public static CommonProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
+
     private void setup(final FMLCommonSetupEvent event)
     {
         event.enqueueWork(() ->
         {
             Utils.addSpawnEggs();
         });
+        CriteriaTriggers.register(IUCN_INTERACTION_TRIGGER);
         // some preinit code
     }
 
